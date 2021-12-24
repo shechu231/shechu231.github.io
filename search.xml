@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>动漫网站推荐</title>
+    <url>/2021/12/25/hello-world/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<p><a href="https://www.agefans.live/">AGE动漫</a></p>
+<p><a href="https://www.bilibili.com/">哔哩哔哩</a></p>
+<p><a href="https://www.acfun.cn/">ACFUN</a></p>
+<p><a href="http://www.milimili.in/">米粒米粒</a></p>
+]]></content>
+      <categories>
+        <category>动漫</category>
+      </categories>
+      <tags>
+        <tag>推荐</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2021年一月新番</title>
     <url>/2021/12/22/2021%E5%B9%B4%E4%B8%80%E6%9C%88%E6%96%B0%E7%95%AA/</url>
     <content><![CDATA[<h1 id="老番续作"><a href="#老番续作" class="headerlink" title="老番续作"></a>老番续作</h1><p>《擅长捉弄人的高木同学》第三季</p>
@@ -68,23 +85,6 @@
       </categories>
   </entry>
   <entry>
-    <title>动漫网站推荐</title>
-    <url>/2021/12/20/hello-world/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<p><a href="https://www.agefans.live/">AGE动漫</a></p>
-<p><a href="https://www.bilibili.com/">哔哩哔哩</a></p>
-<p><a href="https://www.acfun.cn/">ACFUN</a></p>
-<p><a href="http://www.milimili.in/">米粒米粒</a></p>
-]]></content>
-      <categories>
-        <category>动漫</category>
-      </categories>
-      <tags>
-        <tag>推荐</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo框架搭建博客</title>
     <url>/2016/10/12/index/</url>
     <content><![CDATA[<h1 id="Hexo-theme-diaspora"><a href="#Hexo-theme-diaspora" class="headerlink" title="Hexo-theme-diaspora"></a>Hexo-theme-diaspora</h1><p><strong><a href="http://fech.in/">在线预览 | PREVIEW </a></strong></p>
@@ -138,24 +138,6 @@
 <h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 头部菜单，title: link</span></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">首页:</span> <span class="string">/</span></span><br><span class="line">  <span class="string">分类:</span> <span class="string">/categories</span></span><br><span class="line">  <span class="string">标签:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="string">归档:</span> <span class="string">/archives</span>  </span><br><span class="line">  <span class="string">关于:</span> <span class="string">/about</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否显示目录</span></span><br><span class="line"><span class="attr">TOC:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否自动播放音乐</span></span><br><span class="line"><span class="attr">autoplay:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认音乐（随机播放）</span></span><br><span class="line"><span class="attr">mp3:</span> </span><br><span class="line">    <span class="bullet">-</span> <span class="string">http://link.hhtjim.com/163/425570952.mp3</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">http://link.hhtjim.com/163/425570952.mp3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首页封面图, 为空时取文章的cover作为封面(注意跨域问题,建议使用同源图片)</span></span><br><span class="line"><span class="attr">welcome_cover:</span> <span class="string">/img/welcome-cover.jpg</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认文章封面图（随机调用,支持外链）</span></span><br><span class="line"><span class="attr">cover:</span> </span><br><span class="line">  <span class="bullet">-</span> <span class="string">/img/cover.jpg</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">/img/welcome-cover.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否显示Twitter分享卡片图像(图像尺寸要求：1200*600，creatorid不需要带@符号。注意：链接必须是完整url，否则Twitter将无法读取图片信息）</span></span><br><span class="line"><span class="attr">twitterpic:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">src:</span> <span class="string">https://bangdream.moe/img/ident.png</span></span><br><span class="line">  <span class="attr">creatorid:</span> <span class="string">yourtwitteridhere</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否关闭默认滚动条</span></span><br><span class="line"><span class="attr">scrollbar:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地搜索,请将索引文件放在网站根目录,或修改主题js文件的path值</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">    <span class="comment"># 是否启用</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否显示 一言(hitokoto)</span></span><br><span class="line"><span class="attr">hitokoto:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 链接(可选:facebook,twitter,github,wechat,email)</span></span><br><span class="line"><span class="attr">links:</span></span><br><span class="line">    <span class="attr">facebook:</span> <span class="string">/</span></span><br><span class="line">    <span class="attr">twitter:</span> <span class="string">/</span></span><br><span class="line">    <span class="attr">github:</span> <span class="string">/</span></span><br><span class="line">    <span class="attr">wechat:</span> <span class="string">/img/logo.png</span></span><br><span class="line">    <span class="attr">email:</span> <span class="string">mailto:xxxx@gmail.com</span></span><br><span class="line">  </span><br><span class="line"><span class="comment"># 备案</span></span><br><span class="line"><span class="attr">beian:</span> </span><br><span class="line">    <span class="comment"># 是否显示备案信息</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># 是否在主页面最底下显示备案信息(虽然丑，但是完全满足规定要求)</span></span><br><span class="line">    <span class="attr">enableFooter:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># 备案号</span></span><br><span class="line">    <span class="attr">beianInfo:</span> <span class="string">冀ICP备xxxxxxx号</span></span><br><span class="line">    <span class="comment"># 链接地址</span></span><br><span class="line">    <span class="attr">link:</span> <span class="string">http://www.beian.miit.gov.cn</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否使用mathjax</span></span><br><span class="line"><span class="attr">mathjax:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gitalk 评论插件（https://github.com/gitalk/gitalk）</span></span><br><span class="line"><span class="attr">gitalk:</span></span><br><span class="line">    <span class="comment"># 是否启用评论功能</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># 是否自动展开评论框</span></span><br><span class="line">    <span class="attr">autoExpand:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># 应用编号</span></span><br><span class="line">    <span class="attr">clientID:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># 应用秘钥</span></span><br><span class="line">    <span class="attr">clientSecret:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># issue仓库名</span></span><br><span class="line">    <span class="attr">repo:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># Github名</span></span><br><span class="line">    <span class="attr">owner:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># Github名</span></span><br><span class="line">    <span class="attr">admin:</span> [<span class="string">&#x27;&#x27;</span>]</span><br><span class="line">    <span class="comment"># Ensure uniqueness and length less than 50</span></span><br><span class="line">    <span class="attr">id:</span> <span class="string">location.pathname</span></span><br><span class="line">    <span class="comment"># Facebook-like distraction free mode</span></span><br><span class="line">    <span class="attr">distractionFreeMode:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网站关键字</span></span><br><span class="line"><span class="attr">keywords:</span> <span class="string">Fechin</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 要使用google_analytics进行统计的话，这里需要配置ID</span></span><br><span class="line"><span class="attr">google_analytics:</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># 网站ico</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/img/favicon.png</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rss文件</span></span><br><span class="line"><span class="attr">rss:</span> <span class="string">atom.xml</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 ]]></content>
-  </entry>
-  <entry>
-    <title>nacos配置中心</title>
-    <url>/2021/12/23/nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</url>
-    <content><![CDATA[<h1 id="nacos配置中心"><a href="#nacos配置中心" class="headerlink" title="nacos配置中心"></a>nacos配置中心</h1>]]></content>
-      <categories>
-        <category>nacos</category>
-        <category>JAVA</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>达内老师链接</title>
-    <url>/2021/12/23/%E8%BE%BE%E5%86%85%E8%80%81%E5%B8%88%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<p><a href="https://blog.csdn.net/langlangKing520/article/details/121034505?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164022271416780271545027%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=164022271416780271545027&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-121034505.pc_search_result_cache&utm_term=cgblpx%E5%88%98%E4%BD%A9%E9%9C%9E&spm=1018.2226.3001.4187">所有老师链接</a></p>
-]]></content>
-      <categories>
-        <category>website</category>
-      </categories>
   </entry>
   <entry>
     <title>nacos入门</title>
@@ -325,6 +307,24 @@
       <categories>
         <category>nacos</category>
         <category>java</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>nacos配置中心</title>
+    <url>/2021/12/23/nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</url>
+    <content><![CDATA[<h1 id="nacos配置中心"><a href="#nacos配置中心" class="headerlink" title="nacos配置中心"></a>nacos配置中心</h1>]]></content>
+      <categories>
+        <category>nacos</category>
+        <category>JAVA</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>达内老师链接</title>
+    <url>/2021/12/23/%E8%BE%BE%E5%86%85%E8%80%81%E5%B8%88%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<p><a href="https://blog.csdn.net/langlangKing520/article/details/121034505?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164022271416780271545027%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=164022271416780271545027&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-121034505.pc_search_result_cache&utm_term=cgblpx%E5%88%98%E4%BD%A9%E9%9C%9E&spm=1018.2226.3001.4187">所有老师链接</a></p>
+]]></content>
+      <categories>
+        <category>website</category>
       </categories>
   </entry>
   <entry>
