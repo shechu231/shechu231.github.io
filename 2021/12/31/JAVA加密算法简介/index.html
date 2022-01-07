@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JAVA加密算法简介 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="看雪视频
+URL编码算法:URL编码规则:
+
+12345String original = &amp;quot;URL 参数&amp;quot;;String encoded = URLEncoder.encode,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="JAVA加密算法简介 - Hexo"/>
+    <meta name="twitter:description" content="看雪视频
+URL编码算法:URL编码规则:
+
+12345String original = &amp;quot;URL 参数&amp;quot;;String encoded = URLEncoder.encode,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="JAVA加密算法简介 - Hexo"/>
+    <meta property="og:description" content="看雪视频
+URL编码算法:URL编码规则:
+
+12345String original = &amp;quot;URL 参数&amp;quot;;String encoded = URLEncoder.encode,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">JAVA加密算法简介</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">JAVA加密算法简介</h1>
+        <div class="stuff">
+            <span>十二月 31, 2021</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV134411T7rq">看雪视频</a></p>
+<h2 id="URL编码算法"><a href="#URL编码算法" class="headerlink" title="URL编码算法:"></a>URL编码算法:</h2><p>URL编码规则:</p>
+<p><img src="https://s2.loli.net/2021/12/31/9t8xMgmaNolh1Sq.png" alt="image-20211231095801508"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String original = <span class="string">&quot;URL 参数&quot;</span>;</span><br><span class="line">String encoded = URLEncoder.encode(original, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">System.out.println(encoded);</span><br><span class="line">String ori = <span class="keyword">new</span> String(URLDecoder.decode(encoded, <span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">System.out.println(ori);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Base64编码"><a href="#Base64编码" class="headerlink" title="Base64编码:"></a>Base64编码:</h2><p><img src="https://s2.loli.net/2021/12/31/SDmYX4sdPZg5UO9.png" alt="image-20211231103138487"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String original = <span class="string">&quot;URL 参数&quot;</span>;</span><br><span class="line">String b64 = Base64.getEncoder().encodeToString(original.getBytes());</span><br><span class="line">System.out.println(b64);</span><br><span class="line">String ori = <span class="keyword">new</span> String(Base64.getDecoder().decode(b64),<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">System.out.println(ori);</span><br></pre></td></tr></table></figure>
+
+<h2 id="MD5算法"><a href="#MD5算法" class="headerlink" title="MD5算法"></a>MD5算法</h2><p><img src="https://s2.loli.net/2021/12/31/8hoUbXVPnWC5R7K.png" alt="image-20211231103314919"></p>
+<p><img src="https://s2.loli.net/2021/12/31/qkXZRalIgzjMiUF.png" alt="image-20211231105456295"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String original = <span class="string">&quot;URL 参数&quot;</span>;</span><br><span class="line">MessageDigest md = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    md=MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">md.update(original.getBytes());</span><br><span class="line">System.out.println(String.format(<span class="string">&quot;%032x&quot;</span>, <span class="keyword">new</span> BigInteger(<span class="number">1</span>, md.digest())));</span><br></pre></td></tr></table></figure>
+
+<h4 id="加盐数据"><a href="#加盐数据" class="headerlink" title="加盐数据"></a>加盐数据</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">String original = <span class="string">&quot;helloworld&quot;</span>;</span><br><span class="line">String salt = <span class="string">&quot;Random salt&quot;</span>;</span><br><span class="line">MessageDigest md = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    md=MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">md.update((salt+original).getBytes(<span class="string">&quot;utf-8&quot;</span>));</span><br><span class="line">System.out.println(String.format(<span class="string">&quot;%032x&quot;</span>, <span class="keyword">new</span> BigInteger(<span class="number">1</span>, md.digest())));</span><br></pre></td></tr></table></figure>
+
+<h2 id="SHA-1加密算法"><a href="#SHA-1加密算法" class="headerlink" title="SHA-1加密算法"></a>SHA-1加密算法</h2><p><img src="https://s2.loli.net/2021/12/31/YaLQGlTI4O9MUkn.png" alt="image-20211231143424988"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">String s = &quot;SHA1摘要算法测试&quot;;</span><br><span class="line">MessageDigest md = null;</span><br><span class="line">try &#123;</span><br><span class="line">    md=MessageDigest.getInstance(&quot;SHA-256&quot;);//SHA-256,md5,SHA-1，RipeMD160</span><br><span class="line">&#125; catch (NoSuchAlgorithmException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">md.update(s.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">byte[] r = md.digest();</span><br><span class="line">System.out.println(String.format(&quot;%x&quot;, new BigInteger(1, r)).length());</span><br></pre></td></tr></table></figure>
+
+<h2 id="HmacMD5算法："><a href="#HmacMD5算法：" class="headerlink" title="HmacMD5算法："></a>HmacMD5算法：</h2><p><img src="https://s2.loli.net/2021/12/31/FKa1u4f93SRTs5O.png" alt="image-20211231151944093"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String algorithm = &quot;HmacSHA1&quot;;</span><br><span class="line">String data=&quot;helloworld&quot;;</span><br><span class="line">KeyGenerator keyGen = null;</span><br><span class="line">keyGen = KeyGenerator.getInstance(algorithm);</span><br><span class="line">SecretKey skey = keyGen.generateKey();</span><br><span class="line">Mac mac = null;</span><br><span class="line">mac = Mac.getInstance(algorithm);</span><br><span class="line">mac.init(skey);</span><br><span class="line">mac.update(data.getBytes(&quot;UTF-8&quot;));</span><br><span class="line">byte[] result = mac.doFinal();</span><br><span class="line">System.out.println(String.format(&quot;%x&quot;,new BigInteger(1,result)));</span><br></pre></td></tr></table></figure>
+
+<h2 id="对称加密算法"><a href="#对称加密算法" class="headerlink" title="对称加密算法:"></a>对称加密算法:</h2><p><img src="https://s2.loli.net/2021/12/31/TBzAEOkXGZ29mCh.png" alt="image-20211231152023524"></p>
+<p><img src="https://s2.loli.net/2021/12/31/PGgpCNm4S2zYQxq.png" alt="image-20211231152049436"></p>
+<p><img src="https://s2.loli.net/2021/12/31/knf2PUJNjX8BAuw.png" alt="image-20211231152108989"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">byte</span>[] key = <span class="string">&quot;1234567890abcdef&quot;</span>.getBytes(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">String message=<span class="string">&quot;Hello,world! encrypted using AES&quot;</span>;</span><br><span class="line"><span class="keyword">byte</span>[] data = message.getBytes(StandardCharsets.UTF_8);</span><br><span class="line"><span class="keyword">byte</span>[] encrypted=encrypted(key, data);</span><br><span class="line">System.out.println(Base64.getEncoder().encodeToString(encrypted));</span><br><span class="line"><span class="keyword">byte</span>[] decrypted = decrypted(key, encrypted);</span><br><span class="line">System.out.println(<span class="keyword">new</span> String(decrypted,<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">byte</span>[] encrypted(<span class="keyword">byte</span>[] key,<span class="keyword">byte</span>[] data) <span class="keyword">throws</span> NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException &#123;</span><br><span class="line">        String CIPHER_NAME = <span class="string">&quot;AES/ECB/PKCS5Padding&quot;</span>;</span><br><span class="line">        Cipher cipher = Cipher.getInstance(CIPHER_NAME);</span><br><span class="line">        SecretKeySpec keySpec = <span class="keyword">new</span> SecretKeySpec(key, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        cipher.init(Cipher.ENCRYPT_MODE, keySpec);</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] decrypted(<span class="keyword">byte</span>[] key,<span class="keyword">byte</span>[] data) <span class="keyword">throws</span> NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException &#123;</span><br><span class="line">        String CIPHER_NAME = <span class="string">&quot;AES/ECB/PKCS5Padding&quot;</span>;</span><br><span class="line">        Cipher cipher = Cipher.getInstance(CIPHER_NAME);</span><br><span class="line">        SecretKeySpec keySpec = <span class="keyword">new</span> SecretKeySpec(key, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        cipher.init(Cipher.DECRYPT_MODE, keySpec);</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="口令加密算法"><a href="#口令加密算法" class="headerlink" title="口令加密算法"></a>口令加密算法</h2><p><img src="https://s2.loli.net/2021/12/31/64gyFvG1iBxEJVP.png" alt="image-20211231155250957"></p>
+<p><img src="https://s2.loli.net/2021/12/31/c7QGiHVYmFBXjUe.png" alt="image-20211231155328590"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

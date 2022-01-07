@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Spring Security - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="单点登陆系统解决方案设计
+解决方案1：用户登陆成功以后，将用户登陆状态存储到redis数据库，例如：
+
+说明,在这套方案中,用户登录成功后,会基于UUID生成一个token,然后与用户信息绑定在一起,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Spring Security - Hexo"/>
+    <meta name="twitter:description" content="单点登陆系统解决方案设计
+解决方案1：用户登陆成功以后，将用户登陆状态存储到redis数据库，例如：
+
+说明,在这套方案中,用户登录成功后,会基于UUID生成一个token,然后与用户信息绑定在一起,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Spring Security - Hexo"/>
+    <meta property="og:description" content="单点登陆系统解决方案设计
+解决方案1：用户登陆成功以后，将用户登陆状态存储到redis数据库，例如：
+
+说明,在这套方案中,用户登录成功后,会基于UUID生成一个token,然后与用户信息绑定在一起,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Spring Security</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Spring Security</h1>
+        <div class="stuff">
+            <span>一月 02, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h2 id="单点登陆系统解决方案设计"><a href="#单点登陆系统解决方案设计" class="headerlink" title="单点登陆系统解决方案设计"></a>单点登陆系统解决方案设计</h2><ul>
+<li><p>解决方案1：用户登陆成功以后，将用户登陆状态存储到redis数据库，例如：</p>
+<p><img src="https://s2.loli.net/2022/01/02/kNXm3WpAeJsMuaO.png" alt="image-20220102213249449"></p>
+<p><strong>说明,在这套方案中,用户登录成功后,会基于UUID生成一个token,然后与用户信息绑定在一起存储到数据库.后续用户在访问资源时,基于token从数据库查询用户状态,这种方式因为要基于数据库存储和查询用户状态,所以性能表现一般.</strong></p>
+<ul>
+<li><p>解决方案2：用户登陆成功以后，将用户信息存储到token（令牌），然后写到客户端进行存储。（本次设计方案）</p>
+<p><img src="https://s2.loli.net/2022/01/02/o7m31DfnadlW4E8.png" alt="image-20220102213424982"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="工程结构设计"><a href="#工程结构设计" class="headerlink" title="工程结构设计"></a>工程结构设计</h2><p>基于服务的划分，设计工程结构如下：</p>
+<p><img src="https://s2.loli.net/2022/01/02/kfv7z5N8YT2LgVG.png" alt="image-20220102213522034"></p>
+<h1 id="SSO父工程创建及初始化"><a href="#SSO父工程创建及初始化" class="headerlink" title="SSO父工程创建及初始化"></a>SSO父工程创建及初始化</h1><h2 id="创建父工程"><a href="#创建父工程" class="headerlink" title="创建父工程"></a>创建父工程</h2><p>第一步：创建父工程，例如：</p>
+<p><img src="https://s2.loli.net/2022/01/02/p6mwGPcuY4BvhLT.png" alt="image-20220102213631000"></p>
+<p>第二步：删除父工程src目录(可选)。</p>
+<h2 id="父工程pom文件初始配置"><a href="#父工程pom文件初始配置" class="headerlink" title="父工程pom文件初始配置"></a>父工程pom文件初始配置</h2><p>初始化pom文件内容，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;</span><br><span class="line">         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line"></span><br><span class="line">    &lt;groupId&gt;com.jt&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;02-sso&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;!--maven父工程的pom文件中一般要定义子模块,</span><br><span class="line">    子工程中所需依赖版本的管理,公共依赖并且父工程的打包方式一般为pom方式--&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--第一步: 定义子工程中核心依赖的版本管理(注意,只是版本管理)--&gt;</span><br><span class="line">    &lt;dependencyManagement&gt;</span><br><span class="line">        &lt;dependencies&gt;</span><br><span class="line">            &lt;!--spring boot 核心依赖版本定义(spring官方定义)--&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;2.3.2.RELEASE&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">                &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!--Spring Cloud 微服务规范(由spring官方定义)--&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;Hoxton.SR9&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;&lt;!--假如scope是import,type必须为pom--&gt;</span><br><span class="line">                &lt;scope&gt;import&lt;/scope&gt;&lt;!--引入三方依赖的版本设计--&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">            &lt;!--Spring Cloud alibaba 依赖版本管理 (参考官方说明)--&gt;</span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;2.2.6.RELEASE&lt;/version&gt;</span><br><span class="line">                &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">                &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">        &lt;/dependencies&gt;</span><br><span class="line">    &lt;/dependencyManagement&gt;</span><br><span class="line">    &lt;!--第二步: 添加子工程的所需要的公共依赖--&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;!--lombok 依赖,子工程中假如需要lombok,不需要再引入--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;lombok&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;provided&lt;/scope&gt;&lt;!--provided 表示此依赖仅在编译阶段有效--&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--单元测试依赖,子工程中需要单元测试时,不需要再次引入此依赖了--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;&lt;!--test表示只能在test目录下使用此依赖--&gt;</span><br><span class="line">            &lt;exclusions&gt;</span><br><span class="line">                &lt;exclusion&gt;&lt;!--排除一些不需要的依赖--&gt;</span><br><span class="line">                    &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;junit-jupiter-engine&lt;/artifactId&gt;</span><br><span class="line">                &lt;/exclusion&gt;</span><br><span class="line">            &lt;/exclusions&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--其它依赖...--&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">    &lt;!--第三步: 定义当前工程模块及子工程的的统一编译和运行版本--&gt;</span><br><span class="line">    &lt;build&gt;&lt;!--项目构建配置,我们基于maven完成项目的编译,测试,打包等操作,</span><br><span class="line">    都是基于pom.xml完成这一列的操作,但是编译和打包的配置都是要写到build元素</span><br><span class="line">    内的,而具体的编译和打包配置,又需要plugin去实现,plugin元素不是必须的,maven</span><br><span class="line">    有默认的plugin配置,常用插件可去本地库进行查看--&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;!--通过maven-compiler-plugin插件设置项目</span><br><span class="line">            的统一的jdk编译和运行版本--&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;!--假如本地库没有这个版本,这里会出现红色字体错误--&gt;</span><br><span class="line">                &lt;version&gt;3.8.1&lt;/version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;source&gt;8&lt;/source&gt;</span><br><span class="line">                    &lt;target&gt;8&lt;/target&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="系统基础服务工程设计及实现"><a href="#系统基础服务工程设计及实现" class="headerlink" title="系统基础服务工程设计及实现"></a>系统基础服务工程设计及实现</h1><h2 id="业务描述"><a href="#业务描述" class="headerlink" title="业务描述"></a>业务描述</h2><p>本次设计系统服务(System)，主要用于提供基础数据服务，例如日志信息，用户信息等。</p>
+<h2 id="表结构设计"><a href="#表结构设计" class="headerlink" title="表结构设计"></a>表结构设计</h2><p>系统服务模块，基本表结构设计，例如：</p>
+<p><img src="https://s2.loli.net/2022/01/02/OKc1ZLEY2tuI7wz.png" alt="image-20220102214357341"></p>
+<h4 id="多对多要表之间添加一个映射表"><a href="#多对多要表之间添加一个映射表" class="headerlink" title="多对多要表之间添加一个映射表"></a>多对多要表之间添加一个映射表</h4><h2 id="工程数据初始化"><a href="#工程数据初始化" class="headerlink" title="工程数据初始化"></a>工程数据初始化</h2><p>将jt-sso.sql文件在mysql中执行一下,其过程如下:<br>第一:登录mysql</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -proot</span><br></pre></td></tr></table></figure>
+
+<p>第二:通过source指令执行jt-sso.sql文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source d:/jt-sso.sql</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建系统服务工程并初始化"><a href="#创建系统服务工程并初始化" class="headerlink" title="创建系统服务工程并初始化"></a>创建系统服务工程并初始化</h2><h4 id="系统工程的目的是和数据库建立连接"><a href="#系统工程的目的是和数据库建立连接" class="headerlink" title="系统工程的目的是和数据库建立连接"></a>系统工程的目的是和数据库建立连接</h4><p>第一步：创建sso-system工程，例如：</p>
+<p><img src="https://s2.loli.net/2022/01/02/r5q8DaX7MAyFHg9.png" alt="image-20220102214511915"></p>
+<p>第二步：添加项目依赖，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--1.数据库访问相关--&gt;</span><br><span class="line">        &lt;!--1.1 mysql 数据库驱动--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--1.2 mybatis plus 插件--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.baomidou&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.4.2&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--服务治理相关--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;!--Web 服务相关--&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>第三步：在项目中添加bootstrap.yml文件，其内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8061</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: sso-system</span><br><span class="line">  cloud:</span><br><span class="line">    nacos:</span><br><span class="line">      discovery:</span><br><span class="line">        server-addr: localhost:8848</span><br><span class="line">      config:</span><br><span class="line">        server-addr: localhost:8848</span><br><span class="line">        file-extension: yml</span><br><span class="line">  datasource:</span><br><span class="line">    url: jdbc:mysql:///jt-sso?serverTimezone=Asia/Shanghai&amp;characterEncoding=utf8</span><br><span class="line">    username: root</span><br><span class="line">    password: root</span><br><span class="line">   sentinel:</span><br><span class="line">   	transport:</span><br><span class="line">   		dashboard: localhost:8180</span><br><span class="line">   	eager:true //取消懒加载</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>说明，可将连接数据库的配置，添加到配置中心。</p>
+<p>第四步：在项目中添加启动类，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.jt;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class SystemApplication &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(SystemApplication.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第五步：在项目中添加单元测试类，测试数据库连接，例如：</p>
+<p><img src="https://s2.loli.net/2022/01/02/YXLsVUT6xfjF5Rm.png" alt="image-20220102222044562"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package com.jt;</span><br><span class="line"></span><br><span class="line">import org.junit.jupiter.api.Test;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line">import java.sql.Connection;</span><br><span class="line">import java.sql.SQLException;</span><br><span class="line"></span><br><span class="line">@SpringBootTest</span><br><span class="line">public class DataSourceTests &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private DataSource dataSource;//HikariDataSource，HikariPool,CopyOnWriteArrayList()</span><br><span class="line">    @Test</span><br><span class="line">    void testGetConnection() throws SQLException &#123;</span><br><span class="line">    	//使用dataSource获取链接时，首先要获取的是连接池，然后从池中获取连接</span><br><span class="line">    	//这里有三个设计模式:单例模式，享元模式，桥接模式</span><br><span class="line">        Connection conn=</span><br><span class="line">        dataSource.getConnection();</span><br><span class="line">        System.out.println(conn);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="ThreadLocal面试"><a href="#ThreadLocal面试" class="headerlink" title="ThreadLocal面试"></a>ThreadLocal面试</h4><h4 id="面试-SPI"><a href="#面试-SPI" class="headerlink" title="面试 SPI"></a>面试 SPI</h4><h4 id="面试HikariCP"><a href="#面试HikariCP" class="headerlink" title="面试HikariCP"></a>面试HikariCP</h4><h4 id="门面设计模式"><a href="#门面设计模式" class="headerlink" title="门面设计模式"></a>门面设计模式</h4><h2 id="Pojo对象逻辑实现"><a href="#Pojo对象逻辑实现" class="headerlink" title="Pojo对象逻辑实现"></a>Pojo对象逻辑实现</h2><p>添加项目User对象，用于封装用户信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.jt.system.pojo;</span><br><span class="line">import lombok.Data;</span><br><span class="line">import java.io.Serializable;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 通过此对象封装用户信息</span><br><span class="line"> */</span><br><span class="line">@Data</span><br><span class="line">public class User implements Serializable &#123;</span><br><span class="line">    private static final long serialVersionUID = 4831304712151465443L;</span><br><span class="line">    private Long id;</span><br><span class="line">    private String username;</span><br><span class="line">    private String password;</span><br><span class="line">    private String status;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Dao对象逻辑实现"><a href="#Dao对象逻辑实现" class="headerlink" title="Dao对象逻辑实现"></a>Dao对象逻辑实现</h2><p>第一步：创建UserMapper接口，并定义基于用户名查询用户信息，基于用户id查询用户权限信息的方法，代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">package com.jt.system.dao;</span><br><span class="line"></span><br><span class="line">import com.baomidou.mybatisplus.core.mapper.BaseMapper;</span><br><span class="line">import com.jt.system.pojo.User;</span><br><span class="line">import org.apache.ibatis.annotations.Mapper;</span><br><span class="line">import org.apache.ibatis.annotations.Select;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">@Mapper 注解由Mybatis官方提供，用于告诉mybatis底层为此注解描述的接口</span><br><span class="line">创建其实现类及对象，然后将对象交给spring管理</span><br><span class="line">注意:@Mapper描述的数据层接口，要默认放在项目启动类所在包或子包中.会默认为spring注入一个</span><br><span class="line">Sqlsession对象。</span><br><span class="line">*/</span><br><span class="line">@Mapper</span><br><span class="line">public interface UserMapper extends BaseMapper&lt;User&gt; &#123;</span><br><span class="line">    /**</span><br><span class="line">     * 基于用户名获取用户信息</span><br><span class="line">     * @param username</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @Select(&quot;select id,username,password,status &quot; +</span><br><span class="line">            &quot;from tb_users &quot; +</span><br><span class="line">            &quot;where username=#&#123;username&#125;&quot;)</span><br><span class="line">    User selectUserByUsername(String username);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 基于用户id查询用户权限</span><br><span class="line">     * @param userId 用户id</span><br><span class="line">     * @return 用户的权限</span><br><span class="line">     * 涉及到的表:tb_user_roles,tb_role_menus,tb_menus</span><br><span class="line">     */</span><br><span class="line">    @Select(&quot;select distinct m.permission &quot; +</span><br><span class="line">            &quot;from tb_user_roles ur join tb_role_menus rm on ur.role_id=rm.role_id&quot; +</span><br><span class="line">            &quot;     join tb_menus m on rm.menu_id=m.id &quot; +</span><br><span class="line">            &quot;where ur.user_id=#&#123;userId&#125;&quot;)</span><br><span class="line">    List&lt;String&gt; selectUserPermissions(Long userId);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二步：创建UserMapperTests类，对业务方法做单元测试，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package com.jt;</span><br><span class="line"></span><br><span class="line">import com.jt.system.pojo.User;</span><br><span class="line">import com.jt.system.dao.UserMapper;</span><br><span class="line">import org.junit.jupiter.api.Test;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">@SpringBootTest</span><br><span class="line">public class UserMapperTests &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    void testSelectUserByUsername()&#123;</span><br><span class="line">        User user =</span><br><span class="line">        userMapper.selectUserByUsername(&quot;admin&quot;);</span><br><span class="line">        if(user == null)&#123;</span><br><span class="line">        	throw new IllegalArgumentException(&quot;user is not exits&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(user);</span><br><span class="line">    &#125;</span><br><span class="line">    @Test</span><br><span class="line">    void testSelectUserPermissions()&#123;</span><br><span class="line">        List&lt;String&gt; permission=</span><br><span class="line">        userMapper.selectUserPermissions(1L);</span><br><span class="line">        System.out.println(permission);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Service对象逻辑实现"><a href="#Service对象逻辑实现" class="headerlink" title="Service对象逻辑实现"></a>Service对象逻辑实现</h2><p>创建UserService接口及实现泪，定义用户及用户权限查询逻辑，代码如下：</p>
+<p>第一步:定义service接口,代码如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package com.jt.system.service;</span><br><span class="line"></span><br><span class="line">import com.jt.system.pojo.User;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">public interface UserService &#123;</span><br><span class="line">    User selectUserByUsername(String username);</span><br><span class="line">    List&lt;String&gt; selectUserPermissions(Long userId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二步:定义service接口实现类,代码如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">package com.jt.system.service.impl;</span><br><span class="line"></span><br><span class="line">import com.jt.system.dao.UserMapper;</span><br><span class="line">import com.jt.system.pojo.User;</span><br><span class="line">import com.jt.system.service.UserService;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class UserServiceImpl implements UserService &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private UserMapper userMapper;</span><br><span class="line">    @Override</span><br><span class="line">    public User selectUserByUsername(String username) &#123;</span><br><span class="line">        return userMapper.selectUserByUsername(username);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;String&gt; selectUserPermissions(Long userId) &#123;</span><br><span class="line">        return userMapper.selectUserPermissions(userId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Controller对象逻辑实现"><a href="#Controller对象逻辑实现" class="headerlink" title="Controller对象逻辑实现"></a>Controller对象逻辑实现</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package com.jt.system.controller;</span><br><span class="line"></span><br><span class="line">import com.jt.system.pojo.User;</span><br><span class="line">import com.jt.system.service.UserService;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/user/&quot;)</span><br><span class="line">public class UserController &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private UserService userService;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/login/&#123;username&#125;&quot;)</span><br><span class="line">    public User doSelectUserByUsername(</span><br><span class="line">            @PathVariable(&quot;username&quot;) String username)&#123;</span><br><span class="line">        return userService.selectUserByUsername(username);</span><br><span class="line">    &#125;</span><br><span class="line">    @GetMapping(&quot;/permission/&#123;userId&#125;&quot;)</span><br><span class="line">    public List&lt;String&gt; doSelectUserPermissions(</span><br><span class="line">            @PathVariable(&quot;userId&quot;) Long userId)&#123;</span><br><span class="line">        return userService.selectUserPermissions(userId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动服务进行访问测试"><a href="#启动服务进行访问测试" class="headerlink" title="启动服务进行访问测试"></a>启动服务进行访问测试</h2><p>启动sso-system工程服务，打开浏览器分别对用户及用户权限信息的获取进行访问测试</p>
+<p><img src="https://s2.loli.net/2022/01/02/oYldthmi6e8NPfx.png" alt="image-20220102220734118"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
