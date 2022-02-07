@@ -1,0 +1,1688 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>爬虫基础 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="fiddler抓包:    shift+delete    保存单机右键：save-&amp;gt;selected session-&amp;gt;as text    上面请求，下面响应报文    rules：,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="爬虫基础 - Hexo"/>
+    <meta name="twitter:description" content="fiddler抓包:    shift+delete    保存单机右键：save-&amp;gt;selected session-&amp;gt;as text    上面请求，下面响应报文    rules：,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="爬虫基础 - Hexo"/>
+    <meta property="og:description" content="fiddler抓包:    shift+delete    保存单机右键：save-&amp;gt;selected session-&amp;gt;as text    上面请求，下面响应报文    rules：,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">爬虫基础</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">爬虫基础</h1>
+        <div class="stuff">
+            <span>一月 20, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>fiddler抓包:<br>    shift+delete<br>    保存单机右键：save-&gt;selected session-&gt;as text<br>    上面请求，下面响应报文<br>    rules：hide connects把turned to隐藏<br>    添加备注信息。replay重发。shift+R重发，go执行，decode解码，靶选择要抓的应用程序。textwizard解码工具，customer rules自定义规则。webform表单形式。<br>    auto_response:add rule并且使用enable rule unmatched request passthrough<br>    composer:发送包，设计器<br>    reset all重置证书</p>
+<p>python基础：<br>    python类：<br>        _name = ‘protected类型的变量’<br>        __info = ‘私有类型的变量’<br>        方法也一样<br>        class Employee:<br>           ‘所有员工的基类’<br>           empCount = 0<br>           def <strong>init</strong>(self, name, salary):<br>              self.name = name<br>              self.salary = salary<br>              Employee.empCount += 1<br>           def displayCount(self):<br>             print “Total Employee %d” % Employee.empCount<br>           def displayEmployee(self):<br>              print “Name : “, self.name,  “, Salary: “, self.salary<br>            def <strong>del</strong>(self):<br>              class_name = self.<strong>class</strong>.<strong>name</strong><br>              print class_name, “销毁”<br>        Python内置类属性：<br>            <strong>dict</strong> : 类的属性（包含一个字典，由类的数据属性组成）<br>            <strong>doc</strong> :类的文档字符串<br>            <strong>name</strong>: 类名<br>            <strong>module</strong>: 类定义所在的模块（类的全名是’<strong>main</strong>.className’，如果类位于一个导入模块mymod中，那么className.<strong>module</strong> 等于 mymod）<br>            <strong>bases</strong> : 类的所有父类构成元素（包含了一个由所有父类组成的元组）</p>
+<p>第一个简单的python爬虫:<br>        #导入包<br>        import requests</p>
+<pre><code>    #在main函数中运行
+    if __name__==&quot;__main__&quot;:
+    
+    #指定url
+    url = &quot;https://www.so.com/s?ie=utf-8&amp;src=hao_360so_b_cube&amp;shb=1&amp;hsid=fcd7c6a7a1a6ae9d&quot;
+    
+    #q请求参数封装字典
+    param = &#123;
+    &quot;q&quot;: wd,
+    &#125;
+
+    headers=&#123;
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36 QIHU 360SE/12.2.1426.0&quot;
+    &#125;
+    
+    #请求过程中带上请求的参数
+    response=requests.get(url=url,param=param)
+    
+    #写入文件
+    page_text=response.text
+    fileName=kw+&quot;html&quot;
+    with open(fileName,&#39;w&#39;,encoding=&#39;utf-8&#39;) as fp:
+        fp.write(page_text)
+    print(fileName,&#39;保存成功！！！&#39;)
+    
+提交json数据：
+    # -*- coding:utf-8 -*-
+    data=&#123;&#125; #提交数据的类型:使用 data 参数时，发送的数据默认使用 application/x-www-form-urlencoded 编码方式进行处理，Content-Type 字段的值为 application/x-www-form-urlencoded
+    或者json=&#123;&#125;不用了  #提交数据的类型:Content-Type 字段的值为 application/json，证明是通过 application/json 编码发送的数据
+    然后：data=json.dumps(data)
+    json处理：
+        import json
+
+        a_file = open(&quot;netconfig.json&quot;,&quot;r&quot;)
+        json_object = json.load(a_file)
+        a_file.close()
+        print(json_object)
+
+        json_object[&quot;ssid&quot;] = &quot;mywifi&quot;
+
+        a_file=open(&quot;netconfig.json&quot;,&quot;w&quot;)
+        json.dump(json_object,a_file)
+        a_file.close()
+</code></pre>
+<p>Python爬虫之selenium模拟浏览器操作：</p>
+<pre><code>    # coding = utf-8
+    #模拟浏览器自动登录yahoo邮箱
+    from selenium import webdriver
+    from time import sleep
+    from selenium.webdriver.chrome.options import Options
+
+    #一下三行为无头模式运行，无头模式不开启浏览器，也就是在程序里面运行的
+    chrome_options = Options()
+    chrome_options.add_argument(&quot;--headless&quot;)
+    browser = webdriver.Chrome(executable_path=(r&#39;C:\Users\0923\AppData\Local\Google\Chrome\Application\chromedriver.exe&#39;), options=chrome_options)
+    # #如果不用上面三行，那么就用下面这一行。运行的时候回自动的开启浏览器，并在浏览器中自动运行，你可以看到自动运行的过程
+    # browser = webdriver.Chrome(executable_path=(r&#39;C:\Users\0923\AppData\Local\Google\Chrome\Application\chromedriver.exe&#39;))
+    #设置访问链接
+    browser.get(&quot;https://www.yahoo.com&quot;)
+    #点击登录按钮
+    browser.find_element_by_id(&quot;uh-signin&quot;).click()
+    #输入用户名
+    browser.find_element_by_id(&quot;login-username&quot;).send_keys(&quot;bjs***99&quot;)
+    #点击“下一步”
+    browser.find_element_by_id(&quot;login-signin&quot;).click()
+    #等待10秒，以防读取不到（#login-passwd）元素
+    sleep(10)
+    #输入密码
+    browser.find_element_by_id(&quot;login-passwd&quot;).send_keys(&quot;Zf***234&quot;)
+    #点击signin按钮
+    browser.find_element_by_id(&quot;login-signin&quot;).click()
+    #获取cookie
+    cookie_items = browser.get_cookies()
+    cookie_str = &quot;&quot;
+    #组装cookie字符串
+    for item_cookie in cookie_items:
+        item_str = item_cookie[&quot;name&quot;]+&quot;=&quot;+item_cookie[&quot;value&quot;]+&quot;; &quot;
+        cookie_str += item_str
+        print(item_cookie)
+    #打印出来看一下
+    print(cookie_str)
+    # sleep(5)
+    # browser.get_screenshot_as_file(&#39;test.png&#39;)
+    # browser.close()
+    # print(&#39;test!&#39;)
+
+    作用：获取动态加载，实现模拟登陆
+    
+    Goole驱动程序:http://chromedriver.storage.googleapis.com/index.html
+    Goole驱动程序器:http://bolg.csdn.net/builan_same/sarticle/details/51896672
+    #导入包：
+    form selenium import webdriver
+    #选择驱动
+    bro = webdriver.Chrome(executable_path=&quot;驱动路径&quot;)
+    #发起请求
+    bro.get(&quot;指定URL&quot;)
+    获取当前页面的源码数据：
+    page_text = bro.page_source
+    
+    然后导入lxml进行解析.....
+    #标签定位
+    search_input = bro.find_element_by_id(&#39;q&#39;)
+    #标签交互
+    search_input.send_keys(&#39;Iphone&#39;)
+    #点击搜索
+    btn = bro.find_element_by_css_selector(&#39;.btn-search&#39;)
+    btn.click()
+    #执行一组js程序
+    bro.execut_script(&#39;window.scrollTo(0,document.body.scrollHeight&#39;)
+    #后退
+    bro.back()
+    bro.forward()
+    sleep(5)
+    #退出
+    bro.quit()
+    
+    #如果定位的标签是存在于外部的iframe标签之中则必须通过如下操作在进行标签定位
+    bro.switch_to.frame(&#39;iframeResult&#39;)
+    div = bro.find_element_by_id(&#39;id标签&#39;)
+    
+    #动作链
+    导入包：from selenium.webdriver import ActionChains
+    
+    action = ActionChains(bro)
+    #点击长按的指定div标签
+    action.click_and_hold(div)#div是element对象
+    
+    for i in range(5):
+        #perform()立即执行动作链操作
+        action.move_by_offset(17,0).perform() #这个方法传两个参数,offeset(x,y)：x是水平，y是数值
+        sleep(0.3)
+    
+    #释放动作
+    action.release()
+    print(div)
+    
+    #无头浏览器，无可视化界面(无头浏览器)
+    导入包：from selenium.webdriver.chrome.options import Options
+    chrome_options=Options()
+    chrome_options.add_argument(&#39;--headless&#39;)
+    chrome_options.add_argument(&#39;--disable-gpu&#39;)
+    #然后操作浏览器代码
+    
+    #实现selenium规避检查的代码
+    导入包：from selenium.webdriver import ChromeOptions
+    option = ChromeOptions()
+    option.add_experimental_option(&#39;excludeSwitches&#39;,[&#39;enable-automation&#39;])
+    bro = webdriver.Chrome(executable_path=&#39;&#39;,chrome_options=chrome_options)
+        
+    验证码：超鹰官网：http://www.chaojiying.com/about.html
+    
+    #save_screenshot作用将当前界面截图保存
+    bro.save_screenshot(&#39;aa.png&#39;)
+    
+    #确定验证码图片左上角和右下角的坐标
+    code_img_ele = bro.find_element_by_xpath(&#39;&#39;)
+    location = code_img_ele.location#验证码图片左上角的坐标x,y
+    size = code_img_ele.size#验证码的长和宽
+    #左上角和右下角坐标
+    强转: int(x)
+    rangle=&#123;
+    &#125;
+    
+    #图片裁剪
+    导入包：from PIL import Image
+    i = Image.open(&#39;&#39;)
+    code_img_name=&#39;.code.png&#39;
+    #crop根据区域进行图片的裁剪
+    frame = i.crop(rangle)
+    frame.save(code_img_name)
+    #验证码进行识别
+    
+    点击：ActionChains(bro).move_to_element_with_offset(code_img_ele,x,y).click().perform()
+    time.sleep(0.5)
+    bro.find_element_by_id(&#39;&#39;).send_keys(&#39;&#39;)
+执行js代码：
+    driver.execute_script(&#39;document.getElementById(&quot;kw&quot;).value = &quot;test&quot;&#39;);
+    模拟键盘f12：builder.key_down(Keys.F12).perform()
+
+ActionChains(driver).move_to_element(move).perform()#移动
+click(on_element=None) ——单击鼠标左键
+click_and_hold(on_element=None) ——点击鼠标左键，不松开
+context_click(on_element=None) ——点击鼠标右键
+double_click(on_element=None) ——双击鼠标左键
+drag_and_drop(source, target) ——拖拽到某个元素然后松开
+drag_and_drop_by_offset(source, xoffset, yoffset) ——拖拽到某个坐标然后松开
+key_down(value, element=None) ——按下某个键盘上的键
+key_up(value, element=None) ——松开某个键
+move_by_offset(xoffset, yoffset) ——鼠标从当前位置移动到某个坐标
+move_to_element(to_element) ——鼠标移动到某个元素
+move_to_element_with_offset(to_element, xoffset, yoffset) ——移动到距某个元素（左上角坐标）多少距离的位置
+perform() ——执行链中的所有动作
+release(on_element=None) ——在某个元素位置松开鼠标左键
+send_keys(*keys_to_send) ——发送某个键到当前焦点的元素
+send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元素
+滑块验证方法：
+    driver.switch_to.frame(driver.find_element_by_xpath(&#39;&#39;));
+    switch_to_default_content()方法返回到主页面
+    
+    FindPic(self,target=&quot;&quot;背景图,template=&quot;&quot;):
+        target_rgb=cv2.imread(target)
+        target_gray=cv2.cvtColor(target_rgb,cv2.COLOR_BGR2GRAY)
+        template_rgb=cv2.imread(template,0)
+        res=cv2.matchTemplate(target_gray,template_rgb,cv2.TM_CCOEF_NORMED)
+        value=cv2.minMaxLoc(res)
+        print(value)
+        return value[2][0]
+    img=cv2.imread(&quot;&quot;)
+    w1=img.shape[1]
+
+
+    bro.switch_to.frame(0)
+    element=bro.find_element_by_id(&quot;slideBlock&quot;)
+    # 使用click_and_hold()方法悬停在滑块上，perform()方法用于执行
+    ActionChains(bro).click_and_hold(on_element=element).perform()
+    ActionChains(bro).move_to_element_with_offset(to_element=element,xoffset=200,yoffset=0).perform()
+    # 模拟人类对准时间
+    # 释放滑块
+    ActionChains(bro).release().perform()
+    
+切换标签页:
+    # 获取当前窗口句柄（窗口A）
+    # handle = browser.current_window_handle
+    # 获取当前所有窗口句柄（窗口A、B）
+    handles = browser.window_handles #返回数组,取值handles[0]
+    browser.close()#关闭当前标签页
+    browser.quit()#关闭浏览器
+</code></pre>
+<p>爬虫解析之BeautifulSoup用法：<br>        导入包：from bs4 import BeautifulSoup<br>        #爬取对象加载<br>        soup = BeautifulSoup(page_text,’lxml’)<br>        解析文章的标题和详情页面<br>        li_list = soup.select(‘.book-mulu&gt;ul&gt;li’)<br>        fp = open(‘./‘,’w’,encoding = ‘utf-8’)<br>        soup.find(‘div’,class_=’chapter_content’)#要加下划线</p>
+<pre><code>    print(soup.a)#返回的是第一次出现的tagName标签。
+    soup.find(&#39;div&#39;)等同于soup.div
+    soup.find(&#39;div&#39;,class/id/attr_=&#39;song&#39;)#属性定位
+    soup.find_all(&#39;a&#39;)#返回的是符合要求的所有标签
+    
+    soup.select(&#39;.tang&#39;)#.表示类选择器
+    soup.select(&#39;.tang&gt;ul&#39;)[0].text #表示类选择器下一级,text表示文本
+    soup.select(&#39;.tang&gt;ul&#39;)[0].get_text()#可以获取某一个标签中所有的文本内容
+    soup.select(&#39;.tang&gt;ul&#39;)[0][&#39;href&#39;]#获取属性值
+</code></pre>
+<p>xpath表达式:<br>        导入包：from lxml import etree</p>
+<pre><code>    r = tree.xpath(&#39;//div[@class=&quot;song&quot;][7]&#39;)#//是多级跳跃，/是单级跳跃,索引从1开始
+    
+    r = tree.xpath(&#39;//div[@class=&quot;tang&quot;]//text()&#39;)
+    r = tree.xpath(&#39;//div[@class=&quot;tang&quot;]/img/@src&#39;)
+解决方法：
+    res = requests.get(url)
+    html = etree.HTML(res.content)
+    contents = html.xpath(&#39;//div/xxxx&#39;)
+</code></pre>
+<p>第二种：<br>    res = requests.get(url)<br>    html_text = bytes(bytearray(res.text, encoding=’utf-8’))<br>    html = etree.HTML(html_text)<br>    contents = html.xpath(‘//div/xxxx’)</p>
+<p>模拟登陆：<br>        requests携带cookie值就可以了<br>        使用session发送post请求<br>        response = session.post(url = url,headers=header,data=data)<br>        data_page_text=session.get(url = url,headers=header,data=data)</p>
+<p>设置代理：<br>        response = session.post(url = url,headers=header,data=data，proxies={‘https’:’代理地址’})<br>        -透明：服务器知道该次请求使用了代理，也知道请求对应的真实ip<br>        -匿名：知道使用了代理，不知道真实ip<br>        -高匿：不知道使用了代理，更不知道真实的ip</p>
+<p>多线程之爬虫异步：<br>            #线程池<br>                导入包: from multiprocessing.dump import Pool<br>                def get_page(msg){<br>                }<br>                pool = Pool(4)<br>                pool.map(get_page,name_list)    进程部署</p>
+<pre><code>            时间验证：
+                start_time = time.time()
+                中间代码
+                end_time=time.time()
+            for req in requests:  进程仍进线程池
+    　　　　     pool.putRequest(req) 
+            pool.wait()
+    进程池：
+        from multiprocessing import Pool as ProcessPool
+        def ulib_fetch&#123;
+        &#125;#函数
+        g_url_list =[]#列表
+        process_pool = ProcessPool(3)
+        ret = process_pool.apply_async(函数, (参数,))调用开辟的进程池
+        process_pool.close()关闭
+        process_pool.join()等待
+        print json.dumps(ret.get(), False, False)
+</code></pre>
+<p>​<br>​<br>​<br>        import multiprocessing<br>        另一种麻烦的：<br>        def do(n):             # 参数n由args=(1,)传入<br>            name = multiprocessing.current_process().name        # 获取当前进程的名字<br>            print(name, ‘starting’)<br>            print(“worker “, n)<br>            return</p>
+<pre><code>    if __name__ == &#39;__main__&#39;:
+        numList = []
+        for i in range(5):
+            p = multiprocessing.Process(target=do, args=(i,))      # (i,)中加入&quot;,&quot;表示元祖
+            numList.append(p)
+            print(numList)
+            p.start()                 # 用start()方法启动进程，执行do()方法
+            p.join()                  # 等待子进程结束以后再继续往下运行，通常用于进程间的同步
+            print(&quot;Process end.&quot;)
+    
+    异步协同：
+    async def request(url):
+        #aiohttp:基于异步网络请求模块进行制定url的请求发送
+        #get(),post();
+        #headers,params/data
+        asyncio with aiohttp.ClientSession as session:
+            async with await session.get(url,headers) as response:
+                获取响应数据要手动挂起
+                #text一字符串形式响应数据
+                #read以二进制的响应数据
+                #奇偶苏宁()返回的就是json的数据对象
+                page_text = await reponse.text()
+                
+        await asyncio.sleep()
+        
+    #tasks=[]#存放多个任务列表对象
+    for url in urls:
+        c = request(url)
+        #当在asyncio中遇到阻塞操作必须手动挂起
+        task = asyncio.ensure_future(c)
+        stasks.appent(task)
+        
+    循环开启对象
+    
+    loop = asyncio.get_event_loop()
+    需要将任务列表封装到wait中
+    loop.run_until_complete(asyncio.wait(stasks))
+    
+    #json数据转换并且写入文件
+    
+    list_data = response.json()
+    fp = open(&#39;&#39;,&#39;w&#39;,encoding=&#39;utf-8&#39;)
+    json.dump(list_data,fp = fp,ensure_ascii=False)
+    img_name.encode(&#39;iso-8859-1&#39;).decode(&#39;gbk&#39;)#编码转换
+    res.text.encode(&#39;utf-8&#39;).decode(&#39;unicode_escape&#39;)#编码转换
+    print(&#39;over!!!&#39;)
+</code></pre>
+<p>​<br>        导入包：<br>                import thread<br>                import time<br>                # 为线程定义一个函数<br>                def print_time( threadName, delay):<br>                    pass<br>                # 创建两个线程<br>                try:<br>                   thread.start_new_thread( print_time, (“Thread-1”, 2, ) )<br>                   thread.start_new_thread( print_time, (“Thread-2”, 4, ) )<br>                except:<br>                   print “Error: unable to start thread”</p>
+<pre><code>    Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。
+
+    threading 模块提供的其他方法：
+
+    threading.currentThread(): 返回当前的线程变量。
+    threading.enumerate(): 返回一个包含正在运行的线程的list。正在运行指线程启动后、结束前，不包括启动前和终止后的线程。
+    threading.activeCount(): 返回正在运行的线程数量，与len(threading.enumerate())有相同的结果。
+    除了使用方法外，线程模块同样提供了Thread类来处理线程，Thread类提供了以下方法:
+
+    run(): 用以表示线程活动的方法。
+    start():启动线程活动。
+    join([time]): 等待至线程中止。这阻塞调用线程直至线程的join() 方法被调用中止-正常退出或者抛出未处理的异常-或者是可选的超时发生。
+    isAlive(): 返回线程是否活动的。
+    getName(): 返回线程名。
+    setName(): 设置线程名。
+    第一种：
+    import threading
+    函数
+    def b(x):
+        #for i in range(5):
+        print(&#39;Program b(&#39;+x+&#39;) is running... at &#39;, ctime(),u&#39;.线程名为：&#39;,threading.current_thread().name )
+        time.sleep(0.1)
+    print(&#39;Mainthread %s is running...&#39; % threading.current_thread().name)
+    thread_list = []
+    #加入线程数组
+    t3 = threading.Thread(target=b, args=(&#39;Java&#39;,))
+    thread_list.append(t3)
+    循环加入守护线程
+    for t in thread_list:
+        t.setDaemon(True)  # 设置为守护线程，不会因主线程结束而中断
+        t.start()
+    for t in thread_list:
+        t.join()  # 子线程全部加入，主线程等所有子线程运行完毕
+</code></pre>
+<p>​<br>​<br>        第二种：<br>        class myThread (threading.Thread):   #继承父类threading.Thread<br>            def <strong>init</strong>(self, threadID, name, counter):#覆写threading.Thread类<br>                threading.Thread.<strong>init</strong>(self)# 重构run函数必须要写<br>                self.threadID = threadID<br>                self.name = name<br>                self.counter = counter<br>            def run(self):                   #把要执行的代码写到run函数里面 线程在创建后会直接运行run函数<br>                print “Starting “ + self.name<br>                print_time(self.name, self.counter, 5)//外置函数<br>                print “Exiting “ + self.name<br>        # 创建新线程<br>        thread1 = myThread(1, “Thread-1”, 1)<br>        thread2 = myThread(2, “Thread-2”, 2)</p>
+<pre><code>    # 开启线程
+    thread1.start()
+    thread2.start()
+    #线程锁：
+    
+        threadLock = threading.Lock()
+    # 获得锁，成功获得锁定后返回True
+    # 可选的timeout参数不填时将一直阻塞直到获得锁定
+    # 否则超时后将返回False
+    threadLock.acquire()
+    print_time(self.name, self.counter, 3)
+    # 释放锁
+    threadLock.release()
+    #等待线程执行完毕：
+    for t in threads:
+        t.join()
+        
+    线程队列：
+        导入包：
+        
+            import Queue
+            import threading
+            import time
+            
+            exitFlag = 0
+
+            class myThread (threading.Thread):
+                def __init__(self, threadID, name, q):
+                    threading.Thread.__init__(self)# 重构run函数必须要写
+                    self.threadID = threadID
+                    self.name = name
+                    self.q = q
+                def run(self):
+                    print &quot;Starting &quot; + self.name
+                    process_data(self.name, self.q)
+                    print &quot;Exiting &quot; + self.name
+
+            def process_data(threadName, q):
+                while not exitFlag:
+                    queueLock.acquire()            队列锁
+                    if not workQueue.empty():
+                        data = q.get()
+                        queueLock.release()        队列锁释放
+                        print &quot;%s processing %s&quot; % (threadName, data)
+                    else:
+                        queueLock.release()
+                    time.sleep(1)
+
+            threadList = [&quot;Thread-1&quot;, &quot;Thread-2&quot;, &quot;Thread-3&quot;]
+            nameList = [&quot;One&quot;, &quot;Two&quot;, &quot;Three&quot;, &quot;Four&quot;, &quot;Five&quot;]
+            queueLock = threading.Lock()  线程锁
+            workQueue = Queue.Queue(10)
+            threads = []
+            threadID = 1
+            # 创建新线程
+            for tName in threadList:
+                thread = myThread(threadID, tName, workQueue)
+                thread.start()
+                threads.append(thread)
+                threadID += 1
+            # 填充队列
+            queueLock.acquire()
+            for word in nameList:
+                workQueue.put(word)
+            queueLock.release()
+             
+            # 等待队列清空
+            while not workQueue.empty():
+                pass
+             
+            # 通知线程是时候退出
+            exitFlag = 1
+            # 等待所有线程完成
+            for t in threads:
+                t.join()
+        import threading
+        import time
+
+        def run(n):
+            pass
+        if __name__ == &#39;__main__&#39;:
+        t1 = threading.Thread(target=run, args=(&quot;t1&quot;,))
+        t2 = threading.Thread(target=run, args=(&quot;t2&quot;,))
+        t.setDaemon(True)   #把子进程设置为守护线程，必须在start()之前设置
+        #共享全局变量
+        g_num = 100
+        g_num = 100
+
+        def work1():
+            global g_num
+            for i in range(3):
+                g_num += 1
+            print(&quot;in work1 g_num is : %d&quot; % g_num)
+        互斥锁：
+        import threading
+        import time
+
+        def Func(lock):
+            global gl_num
+            lock.acquire()
+            gl_num += 1
+            time.sleep(1)
+            print(gl_num)
+            lock.release()
+
+        if __name__ == &#39;__main__&#39;:
+            gl_num = 0
+            lock = threading.RLock()
+            for i in range(10):
+                t = threading.Thread(target=Func, args=(lock,))
+                t.start()
+                
+        semaphore = threading.BoundedSemaphore(5)  # 最多允许5个线程同时运行
+            semaphore.acquire()   #加锁
+            time.sleep(1)
+            print(&quot;run the thread:%s\n&quot; % n)
+            semaphore.release()     #释放
+            
+        事件（Event类）
+        python线程的事件用于主线程控制其他线程的执行，事件是一个简单的线程同步对象，其主要提供以下几个方法：
+
+        clear 将flag设置为“False”
+        set 将flag设置为“True”
+        is_set 判断是否设置了flag
+        wait 会一直监听flag，如果没有检测到flag就一直处于阻塞状态
+        事件处理的机制：全局定义了一个“Flag”，当flag值为“False”，那么event.wait()就会阻塞，当flag值为“True”，那么event.wait()便不再阻塞。
+</code></pre>
+<p>正则表达式：<br>        import re<br>        re.I    使匹配对大小写不敏感<br>        re.L    做本地化识别（locale-aware）匹配<br>        re.M    多行匹配，影响 ^ 和 $<br>        re.S    使 . 匹配包括换行在内的所有字符<br>        re.U    根据Unicode字符集解析字符。这个标志影响 \w, \W, \b, \B.<br>        re.X    该标志通过给予你更灵活的格式以便你将正则表达式写得更易于理解。</p>
+<pre><code>    re.findall(ex,page_text,re.S)
+    
+    . ：用于匹配任意一个字符，如 a.c 可以匹配 abc 、aac 、akc 等
+    ^ ：用于匹配以...开头的字符，如 ^abc 可以匹配 abcde 、abcc 、abcak 等
+    $ ：用于匹配以...结尾的字符，如 abc$ 可以匹配 xxxabc 、123abc 等
+    * ：匹配前一个字符零次或多次，如 abc* 可以匹配 ab 、abc 、abcccc 等
+    + ：匹配前一个字符一次或多次，如 abc+ 可以匹配 abc 、abcc 、abcccc 等
+    ? ：匹配前一个字符零次或一次，如 abc? 只能匹配到 ab 和 abc
+    \ ：转义字符，比如我想匹配 a.c ，应该写成 a\.c ，否则 . 会被当成匹配字符
+    | ：表示左右表达式任意匹配一个，如 aaa|bbb 可以匹配 aaa 也可以匹配 bbb
+    []：匹配中括号中的任意一个字符，如 a[bc]d 可以匹配 abd 和 acd，也可以写一个范围，如 [0-9] 、[a-z] 等
+    ()：被括起来的表达式将作为一个分组，如 (abc)&#123;2&#125; 可以匹配 abcabc ，a(123|456)b 可以匹配 a123b 或 a456b
+    &#123;m&#125;：表示匹配前一个字符m次，如 ab&#123;2&#125;c 可以匹配 abbc
+    &#123;m,n&#125;：表示匹配前一个字符 m 至 n 次，如 ab&#123;1,2&#125;c 可以匹配 abc 或 abbc
+    \d ：匹配数字，如 a\dc 可以匹配 a1c 、a2c 、a3c 等
+    \D ：匹配非数字，也就是除了数字之外的任意字符或符号，如 a\Dc 可以匹配 abc 、aac 、a.c 等
+    \s ：匹配空白字符，也就是匹配空格、换行符、制表符等等，如 a\sc 可以匹配 &#39;a c&#39; 、a\nc 、a\tc 等
+    \S ：匹配非空白字符，也就是匹配空格、换行符、制表符等之外的其他任意字符或符号，如 a\Sc 表示除了 &#39;a c&#39; 之外都能匹配，abc 、a3c 、a.c 等
+    \w ：匹配大小写字母和数字，也就是匹配 [a-zA-Z0-9] 中的字符，如 a\wc 可以匹配 abc 、aBc 、a2c 等
+    \W ：匹配非大小写字母和数字，也就是匹配大小写字母和数字之外的其他任意字符或符号，如 a\Wc 可以匹配 a.c 、a#c 、a+c 等
+        
+    (?=...)              顺序肯定环视，表示所在位置右侧能够匹配括号内正则
+    (?!...)              顺序否定环视，表示所在位置右侧不能匹配括号内正则
+    (?&lt;=...)             逆序肯定环视，表示所在位置左侧能够匹配括号内正则
+    (?&lt;!...)             逆序否定环视，表示所在位置左侧不能匹配括号内正则
+</code></pre>
+<p>[Pp]ython    匹配 “Python” 或 “python”<br>rub[ye]        匹配 “ruby” 或 “rube”<br>[aeiou]        匹配中括号内的任意一个字母<br>[0-9]        匹配任何数字。类似于 [0123456789]<br>[a-z]        匹配任何小写字母<br>[A-Z]        匹配任何大写字母<br>[a-zA-Z0-9]    匹配任何字母及数字<br>[^aeiou]    除了aeiou字母以外的所有字符<br>[^0-9]        匹配除了数字外的字符</p>
+<p>百度图像识别api调用：<br>        导入包：import base64<br>        获取access_token:<br>            # client_id 为官网获取的AK， client_secret 为官网获取的SK<br>            host = ‘<a target="_blank" rel="noopener" href="https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=NAYP4DnwMttSF82MrwcrZzuX&amp;client_secret=rVcCGqGPQSSVf6FfNZ9rlLyIGQmH7hGf&#39;">https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=NAYP4DnwMttSF82MrwcrZzuX&amp;client_secret=rVcCGqGPQSSVf6FfNZ9rlLyIGQmH7hGf&#39;</a><br>            response = requests.get(host)<br>            #获取access_tocken<br>            access_token=response.json()[‘access_token’]</p>
+<pre><code>    发送请求，获取请求的参数:
+        request_url= &quot;https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic&quot;
+        img_url=&#39;C:/Users/Administrator/Desktop/课堂笔记/mfc学习/1.png&#39;
+        f=open(img_url,&quot;rb&quot;)
+        #编码转换
+        img = base64.b64encode(f.read())
+
+        params = &#123;&#39;image&#39;: img&#125;//参数携带image的数据
+        request_url = request_url + &#39;?access_token=&#39; + access_token
+        headers = &#123;&quot;content-type&quot;: &quot;application/x-www-form-urlencoded&quot;&#125;请求头携带content-type
+        #发送请求
+        response = requests.post(request_url, data=params, headers=headers)
+        result = response.json()[&quot;words_result&quot;]
+</code></pre>
+<p>Python的迭代:<br>        class Fab(object): </p>
+<pre><code>        def __init__(self, max): 
+            self.max = max 
+            self.n, self.a, self.b = 0, 0, 1 
+     
+        def __iter__(self): 
+            return self 
+     
+        def next(self): 
+            if self.n &lt; self.max: 
+                r = self.b 
+                self.a, self.b = self.b, self.a + self.b 
+                self.n = self.n + 1 
+                return r 
+            raise StopIteration()
+     
+    for n in Fab(5): 
+        print n
+    使用yield：
+        def fab(max): 
+            n, a, b = 0, 0, 1 
+            while n &lt; max: 
+                yield b      # 使用 yield
+                # print b 
+                a, b = b, a + b 
+                n = n + 1
+         
+        for n in fab(5): 
+            print n
+        空间占用小
+</code></pre>
+<p>Python剪切数组：<br>    greater = [i for i in array[1:] if i &gt; per]<br>    len(array)数组长度<br>    随机数：<br>        随机字符：random.choice(‘abcdefg&amp;#%^*f’)<br>        随机浮点数：random.uniform(1, 10)，random.random()<br>        多个字符中选取特定数量的字符：random.sample(‘abcdefghij’,3)<br>        多个字符中选取特定数量的字符组成新字符串： string.join(random.sample([‘a’,’b’,’c’,’d’,’e’,’f’,’g’,’h’,’i’,’j’], 3)).r<br>        随机选取字符串：random.choice ( [‘apple’, ‘pear’, ‘peach’, ‘orange’, ‘lemon’] )<br>        洗牌：random.shuffle(items)<br>        随机整数：random.randint(0,99)</p>
+<p>os模块用法：<br>    遍历所有文件和目录：<br>        #!/usr/bin/python<br>        # -<em>- coding: UTF-8 -</em>-<br>        import os<br>        for root, dirs, files in os.walk(“.”, topdown=False):<br>            for name in files:<br>                print(os.path.join(root, name))<br>            for name in dirs:<br>                print(os.path.join(root, name))</p>
+<pre><code>    返回一个三元组(root,dirs,files)文件夹本身，文件夹所有目录名字，所有文件
+    topdown：如果 topdown 参数为 True，walk 会遍历top文件夹，与top 文件夹中每一个子目录。
+    onerror:异常调用    followlinks：如果为 True，则会遍历目录下的快捷方式(linux 下是软连接 symbolic link )实际所指的目录(默认关闭)，如果为 False，则优先遍历 top 的子目录。
+            
+    os.listdir(path)列出文件列表，不包括..
+    os.path.join(path,path)组成新的路径
+    os.rename(newname,newoldname)
+    
+    # 创建的目录
+    path = &quot;/tmp/home/monthly/daily&quot;
+    os.makedirs( path, 0755 );
+    print &quot;路径被创建&quot;
+    
+    mkdir()方法语法格式如下：
+    os.mkdir(path[, mode])
+    参数
+    path -- 要创建的目录，可以是相对或者绝对路径。
+    mode -- 要为目录设置的权限数字模式。
+</code></pre>
+<p>拓展:<br>    # 获取cookie<br>    url = ‘<a target="_blank" rel="noopener" href="http://www.baidu.com&/#39;">http://www.baidu.com&#39;</a><br>    r = requests.get(url)<br>    r.cookies</p>
+<pre><code># 将CookieJar转为字典：
+cookie_dict= requests.utils.dict_from_cookiejar(r.cookies)
+
+# 将字典转为CookieJar：
+cookies = requests.utils.cookiejar_from_dict(cookie_dict, cookiejar=None, overwrite=True)
+
+# 其中cookie_dict是要转换字典
+# 转换完之后就可以把它赋给cookies 并传入到session中了：
+s = requests.Session()
+s.cookies = cookies
+</code></pre>
+<p>python写入数据库:<br>    #!/usr/bin/python<br>    # -<em>- coding: UTF-8 -</em>-</p>
+<pre><code>import pymysql
+db = pymysql.connect(host=&quot;localhost&quot;,user=&quot;root&quot;,password=&quot;123456&quot;,database=&quot;jt&quot;,charset=&#39;utf8&#39;,port=3306)
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+
+# SQL 插入语句
+sql = &quot;INSERT INTO EMPLOYEE(FIRST_NAME, \
+       LAST_NAME, AGE, SEX, INCOME) \
+       VALUES (%s, %s, %s, %s, %s )&quot; % \
+       (&#39;Mac&#39;, &#39;Mohan&#39;, 20, &#39;M&#39;, 2000)
+try:
+   # 执行sql语句
+   cursor.execute(sql)
+   # 提交到数据库执行
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+   
+# 关闭数据库连接
+db.close()
+</code></pre>
+<p>数据库查询操作<br>    Python查询Mysql使用 fetchone() 方法获取单条数据, 使用fetchall() 方法获取多条数据。<br>    fetchone(): 该方法获取下一个查询结果集。结果集是一个对象<br>    fetchall():接收全部的返回结果行.<br>    rowcount: 这是一个只读属性，并返回执行execute()方法后影响的行数。</p>
+<pre><code>import pymysql
+db = pymysql.connect(host=&quot;localhost&quot;,user=&quot;root&quot;,password=&quot;123456&quot;,database=&quot;jt&quot;,charset=&#39;utf8&#39;,port=3306)
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 查询语句
+sql = &quot;SELECT * FROM demo_user&quot;
+
+try:
+    # 执行SQL语句
+    cursor.execute(sql)
+    # 获取所有记录列表
+    results = cursor.fetchall()
+    for row in results:
+        fname = row[0]
+        lname = row[1]
+        age = row[2]
+        sex = row[3]
+        # 打印结果
+        # 打印结果
+        print(fname,lname,age,sex)
+except:
+    print(&quot;Error: unable to fecth data&quot;)
+db.close
+</code></pre>
+<p>1.笔记位置:CSDN<br>2.代码:前言帖子<br>3.eclipse的快捷键:Ctrl+Y反撤销,Alt+/补全代码。ctrl+Fn+F11,ctrl+Alt+向下, Ctrl+O查看类的方法，ctrl+d向下复制(IDEA),ALT+shift+向上(IDEA)<br>断点调试:<br>    按F6<br>jdk:<br>    1.JAVA开发工具包<br>    2.基础开发库<br>环境的准备:<br>    JAVA_HOME: C:\jdk1.8.0 301<br>    classpath:C:\lib<br>    path：%JAVA_HOME%bin<br>打开Package Explorer:<br>    Windows-&gt;show View-&gt;Package Explorer<br>设置字体大小:<br>    windows-&gt;preferences-&gt;general-&gt;apperarance-&gt;Colors and Fonts-&gt;右边Basic-&gt;Text Font</p>
+<pre><code>jdk包含jre和jvm,jdk搭建在操作系统上.
+只运行代码,有jre就行.jdk开发工具包.
+</code></pre>
+<p>数据类型:<br>    byte:1    -2的7次方到2次方7-1 或者 -128到127<br>    short:2    -2的15次方到2的15次方-1 或者 -128到127<br>    int:4    -2的31次方到2次方31-1 或者 -128到127<br>    long:8    -2的63次方到2次方63-1 或者 -128到127<br>    float:4    单精度,对小数部分的精度要求不高<br>    double:8    单精度,精确的小数部分并<br>    char:2    0到65535<br>    boolean:1 true和false</p>
+<pre><code>引用类型:
+</code></pre>
+<p>课堂笔记:<br>    搜索:CGB2109,前言</p>
+<p>resolved 引用,使用<br>local variable 局部变量<br>mismatch 不匹配<br>applicable 匹配<br>arguments 参数<br>access 权限<br>declared 声明 定义<br>implment 实现<br>native 本地的</p>
+<p>静态代码块:实例化类只执行一次.<br>    static int count<br>    static{<br>        count = 1;<br>    }<br>数组创建(三种方式):<br>    char[] a1= {“a”,”b”,”c”};<br>    String[] a = {“a”,”b”,”c”};<br>    String[] b = new String[]{“a”,”b”,”c”};<br>    String[] c = new String[3];<br>    char类型的数组底层进行了处理，可以直接打印数据中的具体元素<br>    System.out.println(a2);<br>    system.out.println(Arrays.toString(a));//打印<br>    数组方法:<br>        Arrays.copyOf(form,5)//复制数组，返回新数组<br>        Iterator<Integer> c =Arrays.stream(b).iterator();//迭代输出</p>
+<p><a target="_blank" rel="noopener" href="https://pdf2word.wdku.net/">https://pdf2word.wdku.net/</a></p>
+<p>代码块执行顺序:</p>
+<p>​    构造代码块-&gt;构造方法-&gt;普通方法-&gt;局部代码块,分析</p>
+<p>​    1.创建对象时，会触发构造函数</p>
+<p>​    2.创建对象时，也会触发构造代码块，并且构造代码块优于构造方法执行</p>
+<p>​    3.我们创建好对象后才能通过对象调用普通方法</p>
+<p>​    4.如果普通方法里有局部代码块，才会触发对应的局部代码块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.子类在创建对象时，会默认先调用父类的构造方法</span><br><span class="line">2.原因是子类的构造函数中的第一行默认存在super()，--表示调用父类的无参构造</span><br><span class="line">3.当父类没有无参构造时，可以通过super(参数)调用父类的其他含参构造</span><br><span class="line">子类必须调用一个父类的构造函数，不管是无参还是含参，选一个即可</span><br><span class="line">4.构造方法不可以被继承！因为语法的原因:要求构造方法的类名必须是本类类名，不能在子类中出现一个父类名字的构造方法</span><br></pre></td></tr></table></figure>
+
+<p>static：<br>    修饰的成员变量，创建的所有类共享。<br>    子类可以继承父类的static变量<br>    子类可以覆盖父类的static变量<br>    继承可以获得父类的静态方法<br>final:<br>    类不能被继承<br>    方法不能被重写，可以被继承<br>    修饰变量，变常量，不能更改，可以被继承</p>
+<p>#3．密码长度不够,需要抛出异常<br>    #1&gt;创建异常对象–使用异常的错误信息字符串作为参数<br>    ex = Exception(‘密码长度不够’)<br>    #2&gt;抛出异常对象<br>    raise ex</p>
+<p>匿名内部类：<br>    interface Inter1{<br>        void save();<br>        void get();<br>    }<br>    main()函数:<br>        new Inter1(){<br>            @Override<br>            public void get() {<br>                System.out.println(“你好”);<br>            }</p>
+<pre><code>        @Override
+        public void save() &#123;
+
+        &#125;
+    &#125;.get();
+    
+abstract class Inter5&#123;
+    public void eat()&#123;
+
+    &#125;
+    abstract void get();
+&#125;
+main()函数:
+     new Inter5()&#123;
+        @Override
+        public void get() &#123;
+            System.out.println(&quot;我是匿名对象&quot;);
+        &#125;
+    &#125;.get();
+</code></pre>
+<p>java基础:</p>
+<pre><code>反射的方法:
+    //获取字节码对象的三种方式
+    @Deprecated
+    Class&lt;?&gt; c1 = Student.class;
+    Class&lt;?&gt; c2 = Class.forName(&quot;cn.tedu.reflection.Student&quot;);
+    Class&lt;?&gt; c3 = new Student().getClass();
+    获取包名 类名
+    clazz.getPackage().getName()//包名
+    clazz.getSimpleName()//类名
+    clazz.getName()//完整类名
+
+    获取成员变量定义信息
+    getFields()//获取所有公开的成员变量,包括继承变量
+    getDeclaredFields()//获取本类定义的成员变量,包括私有,但不包括继承的变量
+    getField(变量名)
+    getDeclaredField(变量名)
+
+    获取构造方法定义信息
+    getConstructor(参数类型列表)//获取公开的构造方法
+    getConstructors()//获取所有的公开的构造方法
+    getDeclaredConstructors()//获取所有的构造方法,包括私有
+    getDeclaredConstructor(int.class,String.class)
+
+    获取方法定义信息
+    getMethods()//获取所有可见的方法,包括继承的方法
+    getMethod(方法名,参数类型列表)
+    getDeclaredMethods()//获取本类定义的的方法,包括私有,不包括继承的方法
+    getDeclaredMethod(方法名,int.class,String.class)
+
+    反射新建实例
+    clazz.newInstance();//执行无参构造创建对象
+    clazz.newInstance(666,”海绵宝宝”);//执行含参构造创建对象
+    clazz.getConstructor(int.class,String.class)//获取构造方法
+
+    反射调用成员变量
+    clazz.getDeclaredField(变量名);//获取变量
+    clazz.setAccessible(true);//使私有成员允许访问
+    f.set(实例,值);//为指定实例的变量赋值,静态变量,第一参数给null
+    f.get(实例);//访问指定实例变量的值,静态变量,第一参数给null
+
+    反射调用成员方法
+    Method m = Clazz.getDeclaredMethod(方法名,参数类型列表);
+    m.setAccessible(true);//使私有方法允许被调用
+    m.invoke(实例,参数数据);//让指定实例来执行该方法
+
+public class Book &#123;
+    private Integer id;
+    private String name;
+    public Integer age;
+
+    public Book() &#123;
+        System.out.println(&quot;Public 无参构造函数&quot;);
+    &#125;
+    public Book(String name) &#123;
+        System.out.println(&quot;Public 带参构造函数&quot;);
+    &#125;
+    private Book(String name,Double price)&#123;
+        System.out.println(&quot;Private 带两参构造函数&quot;);
+    &#125;
+
+    public void printAll()&#123;
+        System.out.println(&quot;公开方法&quot;);
+    &#125;
+
+    private void printOne()&#123;
+        System.out.println(&quot;私有方法&quot;);
+    &#125;
+&#125;
+获取构造函数:
+    Class clz = Class.forName(&quot;com.entity.Book&quot;);
+    //获取所有的构造函数
+    Constructor[] constructors = clz.getDeclaredConstructors();
+    //获取单个所有的构造函数
+    try &#123;
+        Constructor constructor =               
+        clz.getDeclaredConstructor(String.class);
+    &#125; catch (NoSuchMethodException e) &#123;
+        e.printStackTrace();
+    &#125;
+    //获取所有的公开构造函数
+    Constructor[] constructors1 = clz.getConstructors();
+    //获取单个公开构造函数
+    try &#123;
+        Constructor constructor = clz.getConstructor(String.class);
+    &#125; catch (NoSuchMethodException e) &#123;
+        e.printStackTrace();
+    &#125;
+
+返回类型：
+    getName();　　　　//获取全名  例如：com.bean.Book
+</code></pre>
+<p>　　    getSimpleName()　　//获取类名 例如：Book<br>        package getPackage();<br>        Class clz = Book.class;<br>        String name1 = clz.getName();<br>        String name2 = clz.getSimpleName();<br>        Package aPackage = clz.getPackage();<br>    获取方法<br>        Class clz = Class.forName(“Book”);<br>        Method[] methods = clz.getMethods();    //获取所有的公开方法<br>           for (Method method : methods) {<br>               System.out.println(method.getName());<br>           }    </p>
+<pre><code>    Method method = clz.getMethod(&quot;printAll&quot;);        //获取单个的公开方法
+    method.invoke(clz.newInstance(),null);
+    Method[] methods1 = clz.getDeclaredMethods();    //获取所有方法
+实例化对象
+    第一种方式
+　　Class clz = Book.class;
+　　Object obj =  clz.newInstance();        //将创建一个无参book对象
+
+    第二种方式
+　　Class clz = Book.class;
+　　Constructor constructor = clz.getDeclaredConstructor();   //获得无参构造 
+　　Object obj = constructor.newInstance();    //实例化book对象
+使用方法
+　　　method.invoke(Object obj,Object... args)
+　　　obj：如果是实例方法，则放个该方法的类对象给它
+　　　obj：静态方法，写null
+　　　args：方法的参数值，没有写null，或不写都行
+    Method method = clz.getMethod(&quot;printAll&quot;);        //获取单个的公开方法
+    method.invoke(clz.newInstance(),null);    //使用方法
+获取字段
+    Class clz = Book.class;
+    //Public
+    Field[] fields = clz.getFields();   //所有公开字段
+    Field id = clz.getField(&quot;age&quot;); //age字段
+    //所有
+    Field[] declaredFields = clz.getDeclaredFields();   //所有字段
+    clz.getDeclaredField(&quot;name&quot;);   //name字段
+    Pojo p = new Pojo();
+    // 查看被修改之前的值
+    p.printName();
+    // 反射获取字段, name成员变量
+    Field nameField = p.getClass().getDeclaredField(&quot;name&quot;);
+    // 由于name成员变量是private, 所以需要进行访问权限设定
+    nameField.setAccessible(true);
+    // 使用反射进行赋值
+    nameField.set(p, new StringBuilder(&quot;111&quot;));
+    // 打印查看被修改后的值
+    p.printName();
+    
+    案例:
+         Class clz = Class.forName(&quot;cn.tedu.oop.Phone&quot;);
+        //获取所有的构造函数
+        Constructor[] constructors = clz.getDeclaredConstructors();
+
+        //获取单个所有的构造函数
+        Constructor constructor = clz.getDeclaredConstructor(String.class,double.class,double.class,String.class);
+        //获取所有的公开构造函数
+        Constructor[] constructors1 = clz.getConstructors();
+
+        for (Constructor constructor1:constructors)&#123;
+            System.out.println(constructor1);
+        &#125;
+        Method[] methods = clz.getMethods();    //获取所有的公开方法
+        for (Method method : methods) &#123;
+            System.out.println(method.getName());
+        &#125;
+        Method method = clz.getMethod(&quot;call&quot;);        //获取单个的公开方法
+        method.invoke(constructor.newInstance(&quot;品牌&quot;,15000,15,&quot;黑色&quot;),null);//获取形参
+</code></pre>
+<p>​<br>​<br>​<br>selenium环境搭建:<br>​    新建一个Maven的Project<br>​    添加如下到你的POM.XML, 就可以了<br>​    <dependency><br>​            <groupId>org.seleniumhq.selenium</groupId><br>​            <artifactId>selenium-java</artifactId><br>​            <version>2.44.0</version><br>​    </dependency><br>​<br>元素定位:<br>​    <input type="text" autocomplete="off" maxlength="100" id="kw" name="wd" class="s_ipt"><br>​    <input type="submit" class="btn self-btn bg s_btn" id="su" value="百度一下"><br>​    <input type="text" autocomplete="off" name="q" placeholder="书籍、电影、音乐、小组、小站、成员" size="12" maxlength="60"><br>​    WebDriver driver  = new FirefoxDriver();    //加载驱动<br>​    driver.get(“<a target="_blank" rel="noopener" href="http://www.baidu.com&quot;/">http://www.baidu.com&quot;</a>);<br>​    WebElement searchBox = driver.findElement(By.id(“kw”));    //获取设置的表单<br>​    WebElement searchBox = driver.findElement(By.name(“q”));//通过名字获取<br>​    List<WebElement> buttons = driver.findElements(By.tagName(“div”)); //通过tagname获取<br>​    WebElement searchBox = driver.findElement(By.className(“search-combobox-input”));//通过class获取元素<br>​    WebElement loginLink = driver.findElement(By.linkText(“登录”));//通过text文本获取<br>​    WebElement button = driver.findElement(By.xpath(“/html/body/div/input[@value=’查询’]”));//通过xpath定位<br>​    searchBox.sendKeys(“小坦克 博客园”);    //设置值<br>​    username.getAttribute(“placeholder”); //获取属性值<br>​    login.getText(); //获取值<br>​    login.isDisplayed(); //元素是否显示<br>​    WebElement searchButton = driver.findElement(By.id(“su”));<br>​    searchButton.submit();    //提交参数<br>​    driver.close();<br>操作浏览器:<br>​    // 浏览器最大化<br>​    driver.manage().window().maximize();<br>​    driver.navigate().to(“<a target="_blank" rel="noopener" href="http://www.baidu.com&quot;/">http://www.baidu.com&quot;</a>);<br>​    // 刷新浏览器<br>​    driver.navigate().refresh();<br>​    // 浏览器后退<br>​    driver.navigate().back();<br>​    // 浏览器前进<br>​    driver.navigate().forward();<br>​    // 浏览器退出<br>​    driver.quit();<br>​    //模拟鼠标操作<br>​    Actions action = new Actions(driver);<br>​    action.contextClick(driver.findElement(By.id(“kw”))).perform();<br>​    //杀掉windows进程<br>​    // kill firefox<br>​    WindowsUtils.tryToKillByName(“firefox.exe”);<br>​    // kill IE<br>​    WindowsUtils.tryToKillByName(“iexplore.exe”);<br>​    // kill chrome<br>​    WindowsUtils.tryToKillByName(“chrome.exe”);<br>​    // 点击按钮<br>​    addButton.click();<br>​    // 判断按钮是否enable<br>​    addButton.isEnabled();<br>selenium常用api函数:<br>​    <div><br>​        <p>下拉选择框框 Select</p><br>​        <select id="proAddItem_kind" name="kind"><br>​            <option value="1">电脑硬件</option><br>​            <option value="2">房产</option><br>​            <option value="18">种类AA</option><br>​            <option value="19">种类BB</option><br>​            <option value="20">种类BB</option><br>​            <option value="21">种类CC</option><br>​        </select><br>​    </div><br>​    // 找到元素<br>​    Select select = new Select(driver.findElement(By.id(“proAddItem_kind”)));</p>
+<pre><code>// 选择对应的选择项， index 从0开始的
+select.selectByIndex(2);
+select.selectByValue(&quot;18&quot;);
+select.selectByVisibleText(&quot;种类AA&quot;);
+
+// 获取所有的选项
+List&lt;WebElement&gt; options = select.getOptions();
+for (WebElement webElement : options) &#123;
+    System.out.println(webElement.getText());    
+&#125;
+&lt;div&gt;
+    &lt;p&gt;单选项  Radio Button&lt;/p&gt;
+    &lt;input type=&quot;radio&quot; value=&quot;Apple&quot; name=&quot;fruit&gt;&quot; /&gt;Apple
+    &lt;input type=&quot;radio&quot; value=&quot;Pear&quot; name=&quot;fruit&gt;&quot; /&gt;Pear
+    &lt;input type=&quot;radio&quot; value=&quot;Banana&quot; name=&quot;fruit&gt;&quot; /&gt;Banana
+    &lt;input type=&quot;radio&quot; value=&quot;Orange&quot; name=&quot;fruit&gt;&quot; /&gt;Orange
+&lt;/div&gt;
+// 找到单选框元素
+String xpath=&quot;//input[@type=&#39;radio&#39;][@value=&#39;Apple&#39;]&quot;;
+WebElement apple = driver.findElement(By.xpath(xpath));
+//选择某个单选框
+apple.click();
+//判断某个单选框是否已经被选择
+boolean isAppleSelect = apple.isSelected();
+// 获取元素属性
+apple.getAttribute(&quot;value&quot;);
+</code></pre>
+<p>智能等待页面加载完成<br>    隐式等待<br>    WebDriver driver = new FirefoxDriver();<br>    driver.get(“file:///C:/Users/Tank/Desktop/set_timeout.html”);    </p>
+<pre><code>driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+WebElement element = driver.findElement(By.cssSelector(&quot;.red_box&quot;));      
+((JavascriptExecutor)driver).executeScript(&quot;arguments[0].style.border = \&quot;5px solid yellow\&quot;&quot;,element);  
+
+显式等待
+driver.get(&quot;E:\\StashFolder\\huoli_28@hotmail.com\\Stash\\Tank-MoneyProject\\浦东软件园培训中心\\我的教材\\Selenium Webdriver\\set_timeout.html&quot;);    
+
+WebDriverWait wait = new WebDriverWait(driver, 20);
+wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(&quot;.red_box&quot;)));
+WebElement element = driver.findElement(By.cssSelector(&quot;.red_box&quot;));      
+((JavascriptExecutor)driver).executeScript(&quot;arguments[0].style.border = \&quot;5px solid yellow\&quot;&quot;,element);  
+frame进入方法:
+    1.iFrame有ID 或者 name的情况
+    dr.switchTo().frame(&quot;framename or id&quot;);
+    //frame直接跟id和名称均可
+    1.如果一个iFrame既没有id，也没有name,通用情况
+    // 定位frame位置，并选取frame
+    WebElement frame=driver.findElement(By.xpath( &quot;/html/body/div[2]/div[8]/div[2]/div[3]/div/div[2]/div/iframe&quot; ));
+    driver.switchTo().frame(frame);
+    
+    2.跳出iFrame
+    //跳出frame,进入default content;
+    dr.switchTo().defaultContent();
+</code></pre>
+<p>selenium执行js代码:<br>    //谷歌浏览器<br>    driver=new ChromeDriver();<br>    //将WebElement类型的driver强制转换为js类型的<br>    js=(JavascriptExecutor) driver;<br>    //设置隐性等待<br>    driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);<br>    //窗口最大化<br>    driver.manage().window().maximize();<br>    //使用Javascript语言打开百度网址<br>    js.executeScript(“window.location=’<a target="_blank" rel="noopener" href="https://www.baidu.com/&#39;;&quot;">https://www.baidu.com/&#39;;&quot;</a>);<br>    //查找元素<br>    //向下转型，将WebElement 转换为object<br>    WebElement TestBOx=(WebElement)js.executeScript(“return document.getElementById(‘kw’);”);<br>    System.out.println(“执行Javascript，根据ID查找元素完成”);<br>    TestBOx.sendKeys(“test”);<br>    //高度<br>    long height=(long) js.executeScript(“return window.innerHeight;”);</p>
+<p>浏览器截图:<br>    第一种：selenium之TakesScreenshot<br>        该方法可以只截取自动化运行的浏览器窗口内，不会截取浏览器的操作按钮和系统的任务栏区域<br>        File srcfile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);<br>        FileUtils.copyFile(srcfile, new File(“H:\12\takescreen截图.jpg”));</p>
+<pre><code>第二种：通过Robot截图
+    该方法会截取屏幕内的所有内容，包括系统自带的任务栏以及浏览器的导航栏和操作菜单
+    BufferedImage image = null;
+    image = new Robot().createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+    ImageIO.write(image, &quot;jpg&quot;, new File(&quot;H:\\12\\rebot截图.jpg&quot;));
+第三种：保存指定元素截图
+    BufferedImage img = ImageIO.read(screenshot);
+    int width = element.getSize().getWidth();
+    int height = element.getSize().getHeight();
+    //获取指定元素的坐标
+    Point point = element.getLocation();
+    //从元素左上角坐标开始，按照元素的高宽对img进行裁剪为符合需要的图片
+    BufferedImage dest = img.getSubimage(point.getX(), point.getY(), width, height);
+    ImageIO.write(dest, &quot;png&quot;, screenshot);
+    进行使用及查看
+    driver.get(&quot;https://www.baidu.com/&quot;);
+    Thread.sleep(2000);
+    WebElement setting = driver.findElement(By.id(&quot;s-usersetting-top&quot;));
+    Actions actions = new Actions(driver);
+    actions.clickAndHold(setting).perform();
+    driver.findElement(By.linkText(&quot;搜索设置&quot;)).click();
+    WebElement xuanxiang = driver.findElement(By.xpath(&quot;/html/body/div[1]/div[6]/div&quot;));
+    File src = ((FirefoxDriver) driver).getScreenshotAs(OutputType.FILE);
+    FileUtils.copyFile(src, new File(&quot;D:\\screenshoot\\result.png&quot;));
+    FileUtils.copyFile(ElementPicture.captureElement(src, xuanxiang), new File(&quot;D:\\screenshoot\\test.png&quot;));
+</code></pre>
+<p>HttpURLConnection使用:<br>    URL url = new URL(“<a target="_blank" rel="noopener" href="http://localhost:8080/TestHttpURLConnectionPro/index.jsp&quot;">http://localhost:8080/TestHttpURLConnectionPro/index.jsp&quot;</a>);<br>    URLConnection rulConnection = url.openConnection();<br>    //此处的urlConnection对象实际上是根据URL的<br>    //请求协议(此处是http)生成的URLConnection类<br>    //的子类HttpURLConnection,故此处最好将其转化<br>    //为HttpURLConnection类型的对象,以便用到<br>    //HttpURLConnection更多的API.如下:<br>    HttpURLConnection httpUrlConnection = (HttpURLConnection) rulConnection;<br>    // 设置是否向httpUrlConnection输出，因为这个是post请求，参数要放在<br>    // http正文内，因此需要设为true, 默认情况下是false;<br>    httpUrlConnection.setDoOutput(true);<br>    // 设置是否从httpUrlConnection读入，默认情况下是true;<br>    httpUrlConnection.setDoInput(true);<br>    // Post 请求不能使用缓存<br>    httpUrlConnection.setUseCaches(false);<br>    // 设定传送的内容类型是可序列化的java对象<br>    // (如果不设此项,在传送序列化对象时,当WEB服务默认的不是这种类型时可能抛java.io.EOFException)<br>    httpUrlConnection.setRequestProperty(“Content-type”, “application/x-java-serialized-object”);<br>    // 设定请求的方法为”POST”，默认是GET<br>    httpUrlConnection.setRequestMethod(“POST”);<br>    // 连接，从上述第2条中url.openConnection()至此的配置必须要在connect之前完成，<br>    httpUrlConnection.connect();<br>    //方式1<br>    int returnCode = httpUrlConnection.getResponseCode(); // 查看请求是否成功<br>    //成功返回200<br>    if (returnCode == 200) {// 请求发送成功<br>        InputStream inStream = httpRequest.getInputStream();<br>        ObjectInputStream objInStream = new ObjectInputStream(inStream);<br>        Object obj = objInStream.readObject();<br>        //后续处理<br>    }<br>    //方式2<br>    int returnCode = httpUrlConnection.getResponseCode(); // 查看请求是否成功<br>    //成功返回200<br>    if (returnCode == 200) {// 请求发送成功<br>        // 将返回的输入流转换成字符串<br>        InputStream inputStream = httpUrlConn.getInputStream();<br>        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, “utf-8”);<br>        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);</p>
+<pre><code>    String str = null;
+    while ((str = bufferedReader.readLine()) != null) &#123;
+        buffer.append(str);
+    &#125;
+&#125;
+// 此处getOutputStream会隐含的进行connect(即：如同调用上面的connect()方法， 
+// 所以在开发中不调用上述的connect()也可以)。 
+</code></pre>
+<p>​    </p>
+<pre><code> // 定义一个获取网络图片数据的方法:
+public static byte[] getImage(String path) throws Exception &#123;
+    URL url = new URL(path);
+    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    // 设置连接超时为5秒
+    conn.setConnectTimeout(5000);
+    // 设置请求类型为Get类型
+    conn.setRequestMethod(&quot;GET&quot;);
+    // 判断请求Url是否成功
+    if (conn.getResponseCode() != 200) &#123;
+        throw new RuntimeException(&quot;请求url失败&quot;);
+    &#125;
+    InputStream inStream = conn.getInputStream();
+    byte[] bt = StreamTool.read(inStream);
+    inStream.close();
+    return bt;
+&#125;
+
+// 获取网页的html源代码
+public static String getHtml(String path) throws Exception &#123;
+    URL url = new URL(path);
+    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    conn.setConnectTimeout(5000);
+    conn.setRequestMethod(&quot;GET&quot;);
+    if (conn.getResponseCode() == 200) &#123;
+        InputStream in = conn.getInputStream();
+        byte[] data = StreamTool.read(in);
+        String html = new String(data, &quot;UTF-8&quot;);
+        return html;
+    &#125;
+    return null;
+&#125;
+
+//设置请求参数
+OutputStream outStrm = httpUrlConnection.getOutputStream();
+OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), &quot;UTF-8&quot;);
+// 发送请求params参数
+out.write(paramsStr);
+out.flush();
+
+ PrintWriter printWriter = new PrintWriter(connection.getOutputStream());
+//PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(connection.getOutputStream(),&quot;UTF-8&quot;));
+// 发送请求params参数
+printWriter.write(paramsStr);
+printWriter.flush();
+
+方法如下：
+    第一次和服务器发起POST或是GET请求以后，通过getHeaderField方法获得SessionID，具体方法为：
+    String session_value=getHeaderField(&quot;Set-Cookie&quot;);
+    这里得到的session_value可能不全是sessionId，还包含其他内容，用正则或者其他方法获得session_value中的sessionId的值就可以了
+     第二次发起POST或是GET请求的时候需要把刚才获得的SessionID放置在请求的头部然后再提交，这样就能服务器就会认为是同一个Session请求了，具体方法为：
+    setRequestProperty(&quot;Cookie&quot;, session_value);
+    这样就实现了保存session向服务器提交请求
+     示例代码：
+    URL url = new URL(link);
+    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+    //获得session信息
+    session_value = urlConnection.getHeaderField(&quot;Set-Cookie&quot;);
+    String[] sessionId = session_value.split(&quot;;&quot;);
+    //保存session信息
+    urlConnection.setRequestProperty(&quot;Cookie&quot;, sessionId[0]);
+</code></pre>
+<p>httpclient使用:<br>    <dependency><br>            <groupId>org.apache.httpcomponents</groupId><br>            <artifactId>httpclient</artifactId><br>            <version>4.5.6</version><br>    </dependency><br>    <dependency><br>            <groupId>com.alibaba</groupId><br>            <artifactId>fastjson</artifactId><br>            <version>1.2.47</version><br>    </dependency><br>    代码:<br>        // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)<br>        CloseableHttpClient httpClient = HttpClientBuilder.create().build();</p>
+<pre><code>    // 响应模型
+    CloseableHttpResponse response = null;
+    StringBuffer params = new StringBuffer();
+    //添加请求参数
+    params.append(&quot;name=&quot; + URLEncoder.encode(&quot;&amp;&quot;, &quot;utf-8&quot;));
+    params.append(&quot;&amp;&quot;);
+    params.append(&quot;age=24&quot;);
+    response = httpClient.execute(httpGet);
+    // 创建Get请求
+    HttpGet httpGet = new HttpGet(&quot;http://localhost:12345/doGetControllerOne&quot;+ &quot;?&quot; + params);
+    // 从响应模型中获取响应实体
+    // 配置信息
+    RequestConfig requestConfig = RequestConfig.custom()
+            // 设置连接超时时间(单位毫秒)
+            .setConnectTimeout(5000)
+            // 设置请求超时时间(单位毫秒)
+            .setConnectionRequestTimeout(5000)
+            // socket读写超时时间(单位毫秒)
+            .setSocketTimeout(5000)
+            // 设置是否允许重定向(默认为true)
+            .setRedirectsEnabled(true).build();
+
+    // 将上面的配置信息 运用到这个Get请求里
+    httpGet.setConfig(requestConfig);
+
+    // 由客户端执行(发送)Get请求
+    response = httpClient.execute(httpGet);
+
+    // 从响应模型中获取响应实体
+    HttpEntity responseEntity = response.getEntity();
+    System.out.println(&quot;响应状态为:&quot; + response.getStatusLine());
+    if (responseEntity != null) &#123;
+        System.out.println(&quot;响应内容长度为:&quot; + responseEntity.getContentLength());
+        System.out.println(&quot;响应内容为:&quot; + EntityUtils.toString(responseEntity));
+    &#125;
+    
+    //没什么用
+        // 将参数放入键值对类NameValuePair中,再放入集合中
+        List&lt;NameValuePair&gt; params = new ArrayList&lt;&gt;();
+        params.add(new BasicNameValuePair(&quot;flag&quot;, &quot;4&quot;));
+        params.add(new BasicNameValuePair(&quot;meaning&quot;, &quot;这是什么鬼？&quot;));
+        //URI 参数
+        URI uri = null;
+        uri = new URIBuilder().setScheme(&quot;http&quot;).setHost(&quot;localhost&quot;)
+                                  .setPort(12345).setPath(&quot;/doGetControllerTwo&quot;)
+                                  .setParameters(params).build();
+        // 创建Get请求
+        HttpGet httpGet = new HttpGet(uri);
+    
+    设置请求头:
+        // 设置ContentType(注:如果只是传普通参数的话,ContentType不一定非要用application/json)
+        ttpPost.setHeader(&quot;Content-Type&quot;, &quot;application/json;charset=utf8&quot;);
+        
+    对象实体:
+    HttpPost httpPost = new HttpPost(&quot;http://localhost:12345/doPostControllerTwo&quot;);
+    User user = new User();
+    user.setName(&quot;潘晓婷&quot;);
+    user.setAge(18);
+    user.setGender(&quot;女&quot;);
+    user.setMotto(&quot;姿势要优雅~&quot;);
+    httpPost.setEntity(entity);
+    // 我这里利用阿里的fastjson，将Object转换为json字符串;
+    // (需要导入com.alibaba.fastjson.JSON包)
+    String jsonString = JSON.toJSONString(user);
+    StringEntity entity = new StringEntity(jsonString, &quot;UTF-8&quot;);
+ 
+    // post请求是将参数放在请求体里面传过去的;这里将entity放入post请求体中
+    httpPost.setEntity(entity);
+
+//设置响应编码:
+    EntityUtils.toString(responseEntity,StandardCharsets.UTF_8);
+</code></pre>
+<p>工具使用:<br>    连点两下shift，打开IDEA工具的搜索功能,注意勾选”include non-project item”,输入哟啊查的类，双击点入即可。<br>    在拓展库External Libraries找到jdk1.8-&gt;rt.jar-&gt;java.lang.Object<br>    按住ctrl键，点hashcode()查看源文件<br>Object：<br>    hashCode:<br>        本方法返回对应对象的哈希码值，本方法不同的对象返回不同的哈希码值。我们可以根据这个判断对象是否一样。<br>        new String(“你好”)和”你好”的哈希码值一样</p>
+<pre><code>Object中的equals()的默认实现使用的是==比较
+==比较的是左右两边的值，如果是及基本类型，比较的是字面值
+比如1,2,3
+如果是引用类型，比较的是引用类型变量保存的地址。
+
+equals与hashCode逻辑要保存一致，重写的话都重写，不重写都不重写。
+如果不重写:hashCode()的hashCode根据地址生成
+        equals()底层使用==比较
+重写了:hashCode的哈希码根据重写传入的属性值生成
+        equal比较的是重写后的类型+所有属性与属性值
+</code></pre>
+<p>String:<br>    String s3 = “abc”;<br>    此种创建方式不仅写法简单，效率还高，字符串存在堆内存的常量池<br>    效果：如果第一次创建值”abc”,会正常放入常量池<br>    但第二创建就不会再常量池新建了，使用的是之前创建好的值”abc”</p>
+<pre><code>String重写了equals方法,比较的是两个字符串是否相等。
+
+判断是否是子类:
+    b instanceof Object //b是否是Object的子类
+</code></pre>
+<p>测试程序执行效率:<br>    System.currentTimeMillis();//获取当前系统时间</p>
+<p>StringBuffer或StringBuilder使用:<br>    //比String拼接快一千倍<br>    StringBuffer sb = new StringBuffer();<br>    sb.append(sb);<br>    StringBuffer<br>    StringBuilder和StringBuffer的区别<br>    1.在线程安全上 :<br>    –StringBuffer是旧版本就提供的，线程安全的。@since JDK1.0<br>    –StringBuilder是jdk1.5后产生，线程不安全的。@since 1.5<br>    2. 在执行效率上，StringBuilder &gt; StringBuffer &gt; String<br>    3.源码体现：本质上都是在调用父类抽象类AbstractStringBuilder来干活，只不过Buffer把代码加了同步关键字，使得程序可以保证线程安全问题。</p>
+<p>正则表达式:<br>    String regex = “[0-9]{17}[0-9X]”;//匹配身份证号<br>    [abc]{3}//aaa,bbb,ccc<br>    [abc]?[123]//1,2,3,a1…<br>    [abc]* //出现0到多次<br>    [abc]+ //出现的次数&gt;=1次<br>    [^a-zA-Z] //排除英文字母<br>    input.matches(regex);//查看匹配程度</p>
+<p>包装类:<br>    Integer默认值是null;<br>    创建方式:<br>        Integer i1 = new Integer(int|String);<br>        /<em>Integer对象创建方式二有一个高效的效果，但是要求:<br>        * 1.是Integer类型<br>        * 2.是使用valueOf()创建<br>        * 3.数据在-128~127范围内<br>        * 只有满足以上三个条件，相同的数据只会保存一次，后续再存都是使用之前创建好的数</em>/<br>        Integer i2 = Integer.valueOf(400);</p>
+<pre><code>    只有Integer有高效效果，Double是没有的
+    Double d1 = new Double(double|String);
+    Double d2 = Double.valueOf(double|String);
+
+自动装箱和自动拆箱:
+    /*1.自动装箱:编译器会自动把基本类型int 5,包装成包装类型Integer
+    * 然后交给i3来保存,自动装箱底层发生的代码Integer.valueOf(5);
+    * valueOf()的方向: int --&gt; Integer*/
+    
+    Integer i3 = 127;//自动装箱
+    
+    /*自动拆箱:编译器会把包装类型i3拆掉箱子，变回基本类型数据127
+    然后交给基本类型的变量i4来保存，底层发生的代码:i3.intValue()
+    自动拆箱的方向:Integer[包装类型] -&gt;int [基本类型]*/
+    int i4 = i3; 
+    
+处理精度问题:
+    1.最好不要使用double作为构造函数的参数类型，不然还会有不精确地问题
+    BigDecimal a = new BigDecimal(new Scanner(System.in).nextLine());
+    BigDecimal b = new BigDecimal(new Scanner(System.in).nextLine());
+    System.out.println(a.add(b));//加法运算
+    System.out.println(a.subtract(b));//减法运算
+    方法:Divide(BigDecimal bd,保留位数,舍入方式) : 除不尽时使用
+    SSystem.out.println(a.divide(b,3,BigDecimal.ROUND_HALF_UP));//除法运算
+    System.out.println(a.multiply(b));//乘法运算
+    System.gc();
+舍入方式解析:
+    ROUND_HALF_UP 四舍五入,五入 如:4.4结果是4; 4.5结果是5
+    ROUND_HALF_DOWN 五舍六入,五不入 如:4.5结果是4; 4.6结果是5
+    ROUND_HALF_EVEN 公平舍入(银行常用)
+    比如:在5和6之间,靠近5就舍弃成5,靠近6就进位成6,如果是5.5,就找偶数,变成6
+    ROUND_UP 直接进位,不算0.1还是0.9,都进位
+    ROUND_DOWN 直接舍弃,不算0.1还是0.9,都舍弃
+    ROUND_CEILING(天花板) 向上取整,取实际值的大值
+    朝正无穷方向round 如果为正数，行为和round_up一样，如果为负数，行为和round_down一样
+    ROUND_FLOOR(地板) 向下取整,取实际值的小值
+</code></pre>
+<p>java文件操作:<br>    File file = new File(“D:\ready\1.txt”);<br>    System.out.println(file.length());//文件大小<br>    System.out.println(file.getName());//文件名字<br>    System.out.println(file.getPath());//文件路径<br>    System.out.println(file.isFile());<br>    System.out.println(file.isDirectory());//是否是目录<br>    System.out.println(file.getParent());//父目录<br>    System.out.println(file.getAbsolutePath());//绝对路径<br>    System.out.println(file.exists());//是否存在<br>    File file2 = new File(“D:\ready\2.txt”);<br>    System.out.println(file2.createNewFile()); //创建单个文件<br>    File file3 = new File(“D:\ready\n”);<br>    System.out.println(file3.mkdir()); //创建单个文件夹<br>    file3 = new File(“D:\ready\n\a\b\c”);<br>    System.out.println(file3.mkdirs()); //创建多个文件夹<br>    /<em>delete只能删除文件或者空的文件夹</em>/<br>    System.out.println(file3.delete());//只能删除单个文件，空文件夹</p>
+<pre><code>File[] fs = file4.listFiles();
+System.out.println(Arrays.toString(fs));
+
+文件读写:
+    InputStream in2 = new FileInputStream(&quot;&quot;);//获取文件输入流,FileInputStream(File file) 
+    in.read();//每次调用都会读取一个字节，读到文件数据的末尾，就会返回-1，这个方法的返回值是int，查找指定字符的对应编码打印出来。
+    方法:
+        int read() //返回字符
+        从此输入流中读取一个数据字节。 
+        int read(byte[] b) 
+        从此输入流中将最多 b.length 个字节的数据读入一个 byte 数组中,遇到末尾返回-1，没结束返回读取字节数。
+        int read(byte[] b, int off, int len) 
+        从此输入流中将最多 len 个字节的数据读入一个 byte 数组中.
+        long skip(long n) 
+        从输入流中跳过并丢弃 n 个字节的数据。
+    
+    BufferedInputStream使用(高效):
+        InputStream in = new BufferedInputStream(new FileInputStream(new File(&quot;D:\\ready\\1.txt&quot;)));
+        
+    inputStreamReader使用(不常用):
+        InputStreamReader(InputStream in) 
+        创建一个使用默认字符集的 InputStreamReader。 
+        InputStreamReader(InputStream in, Charset cs) 
+                  创建使用给定字符集的 InputStreamReader。 
+        InputStreamReader(InputStream in, CharsetDecoder dec) 
+                  创建使用给定字符集解码器的 InputStreamReader。 
+        InputStreamReader(InputStream in, String charsetName) 
+                  创建使用指定字符集的 InputStreamReader。 
+        
+        FileReader--操作文件的字符输入流
+            FileReader(String | File) 
+        BufferedReader--高效字符输入流
+            readLine();//读取一行，如果已到达流末尾，则返回 null 
+            
+    乱码解决:
+        //a. 重新对获取的字符串进行编码
+        Byte[] bytes = str.getBytes(String encodeCharName);
+        //b. 重新对bytes进行编码，创建新的字符串对象
+        str = new String(Byte[] bytes, String decodeCharsetName);
+        // 一般结合使用
+        str = new String(str.getBytes(String encodeName), String decodeCharsetName);
+        // 创建指定字符集的 InputStreamReader
+        InputStreamReader(InputStream in, String CharsetName)
+        // 创建使用指定字符集的 OutputStreamWriter
+        OutputStreamWriter(OutputStream out, String CharsetName)
+    
+    输出流:
+        OutputStream out = new BufferedOutputStream(new FileOutputStream(&quot;D:\\ready\\4.txt&quot;,true));(高效)
+        OutputStream out = new FileOutputStream(&quot;&quot;);
+        out.write(100);
+        字符输出流:
+            BufferedWriter bw = new BufferedWriter(new FileWriter(&quot;D:\\ready\\4.txt&quot;));
+            bw.write(&quot;天下太平&quot;);
+            OutputStreamWriter out = new FileWriter(&quot;D:\\ready\\4.txt&quot;);
+            out.write(&quot;你好吗？&quot;);
+    
+    流的分类:
+        (1)按照方向分类:输入流 输出流
+        (2)按照操作的单位分类:字节流 字符流
+        (3)组合情况:字节输入流 字节输出流 字符输入流 字符输出流
+        2.字节输入流：
+            (1)抽象父级：InputStream-&gt;不能实例化
+            (2)普通子级: 
+                FileInputStream-&gt;操作文件的字节输入流
+                构造方法参数:File /String
+                BufferedInputStream-&gt;高效字节输入流
+                构造方法参数:InputStream,但无法创建抽象父级的对象，所以传的是FileInputStream
+        3.字节输出流
+            (1)抽象父级：OutputStream-&gt;不能实例化
+        注意:默认存在一个参数boolean append，默认值为false，也就是覆盖输出
+        如果将FileOutputStream构造函数的第二个参数append设置为true，就会实现追加输出的效果
+            (2)普通子级: 
+                FileOutputStream-&gt;操作文件的字节输出流
+                构造方法参数:File /String
+                BufferedOutputStream-&gt;高效字节输出流
+                构造方法参数:OutputStream,但无法创建抽象父级的对象，所以传的是FileOutputStream
+        4.字符输入流
+            (1)抽象父级: Reader-&gt;不能实例化
+            (2)普通子级: 
+                FileReader-&gt;操作文件的字符输入流
+                构造方法参数:File/String
+                BufferedReader-&gt;高效字符输入流
+                构造方法参数:Reader,但无法创建抽象父级对象，所以传的是FileReader
+        5.字符输出流
+            (1)抽象父级: Writer-&gt;不能实例化
+            (2)普通子级: 
+                FileWriter-&gt;操作文件的字符输出流
+                构造方法参数:File/String
+                BufferedWriter-&gt;高效字符输出流
+                构造方法参数:Writer,但无法创建抽象父级对象，所以传的是FileWriter
+
+克隆使用:
+    浅克隆共享引用变量。深克隆不共享引用变量。
+        class Person implements Cloneable&#123; 
+            public Object clone() &#123; 
+             return super.clone();
+            &#125;     
+        &#125;
+    深克隆重写
+        public Object clone() &#123; 
+         Person person = new Person(); 
+         person.setFname(this.fname); 
+         person.setLname(this.lname); 
+         return person; 
+        &#125; 
+        @Override
+        public Object clone() throws CloneNotSupportedException &#123;
+            // TODO Auto-generated method stub
+            //注意以下代码
+            Teacher teacher = (Teacher)super.clone();
+            teacher.setStudent((Student)teacher.getStudent().clone());
+            return teacher;
+        &#125;
+        
+序列化和反序列化:
+    2 特点/应用场景
+        1.需要序列化的文件必须实现Serializable接口,用来启用序列化功能
+        2.不需要序列化的数据可以修饰成static,原因:static资源属于类资源,不随着对象被序列化输出
+        3.每一个被序列化的文件都有一个唯一的id,如果没有添加此id,编译器会自动根据类的定义信息计算产生一个
+        4.在反序列化时,如果和序列化的版本号不一致,无法完成反序列化
+        5.常用与服务器之间的数据传输,序列化成文件,反序列化读取数据
+        6.常用使用套接字流在主机之间传递对象
+        7.不需要序列化的数据也可以被修饰成transient(临时的),只在程序运行期间在内存中存在,不会被序列化持久保存
+
+    1.为什么反序列化版本号需要与序列化版本号一致？
+        我们在反序列化时，JVM会拿着反序列化流中的serialVersionUID与序列化时相应的实体类中的serialVersionUID来比较，如果不一致，就无法正常反序列化，出现序列化版本不一致的异常InvalidClassException。
+        而且我们在定义需要序列化的实体类时，如果没有手动添加UID,
+        Java序列化机制会根据编译的class自动生成一个，那么只有同一次编译生成的class才是一样的UID。
+        如果我们手动添加了UID,只要这个值不修改，就可以不论编译次数，进行序列化和反序列化操作。
+
+    2.IDEA中设置自动生成serialVersionUID的提示：
+        Setting-&gt;Editor-&gt;Inspections-&gt;上搜索UID-&gt;勾选Serializable class..
+    public class Student implements Serializable&#123;
+        private static final long serialVersionUID = -3193364654654535741L;
+        private String name;//姓名
+    &#125;
+        
+    序列化:
+        3 涉及到的流对象
+            序列化：ObjectOutputStream
+            构造方法:
+                ObjectOutputStream(OutputStream out)
+                创建写入指定 OutputStream 的 ObjectOutputStream
+                普通方法:
+                writeObject(Object obj)
+                将指定的对象写入 ObjectOutputStream
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(&quot;D://ready//1.txt&quot;));
+        //2.指定要序列化(输出)的对象
+        Student obj = new Student(&quot;海绵宝宝&quot;,3,&quot;大海底部&quot;,&#39;男&#39;);
+        //3.通过OOS流对象来序列化输出Student对象
+        out.writeObject(obj);
+        写入文件。
+    
+    反序列化:
+        反序列化：ObjectInputStream
+            构造方法:
+            ObjectInputStream(InputStream in) 创建从指定 InputStream 读取的 ObjectInputStream
+            普通方法:
+            readObject() 从 ObjectInputStream 读取对象
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(&quot;D://ready//1.txt&quot;));
+        //2.通过流对象反序列化生成指定对象
+        Object o = in.readObject();
+        System.out.println(o);
+        System.out.println(&quot;恭喜您!反序列化成功!&quot;);
+
+java集合框架:
+    泛型声明:
+        方法:
+            public  static &lt;T&gt; void print(T[] array)&#123;&#125;
+            &lt;T&gt; T[] toArray(T[] a)&#123;&#125;;
+        类:
+            public interface Collection&lt;E&gt; extends Iterable&lt;E&gt; &#123;&#125;
+            public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt; implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable
+    
+    Collection方法:
+        add(E e),addAll(Collection&lt;? extends E&gt; c),clear(),contains(Object o)
+        equals(Object o),hashCode(),Iterator&lt;E&gt; iterator(),remove(Object o) 
+        boolean retainAll(Collection&lt;?&gt; c)//取交集,size(),Object[] toArray(),&lt;T&gt; T[] toArray(T[] a)   
+    
+    集合的继承结构:
+        Collection接口
+        List 接口【数据有下标，有序，可重复】
+        ArrayList子类
+        LinkedList子类
+        Set 接口【数据无下标，无序，不可重复】
+        HashSet子类
+        Map 接口【键值对的方式存数据】
+        HashMap子类
+        
+        List集合(相对于Collection&lt;E&gt;方法):
+            indexOf(Object o),lastIndexOf(Object o),get(int index),E set(int index, E element),List&lt;E&gt; subList(int fromIndex, int toIndex) 
+    
+    HashMap使用:
+        Map&lt;Integer,String&gt; map = new HashMap&lt;&gt;();
+        HashMap的结构是数组+链表 或者 数组+红黑树 的形式
+        HashMap底层的Entry[ ]数组，初始容量为16，加载因子是0.75f,扩容按约为2倍扩容
+        当存放数据时,会根据hash(key)%n算法来计算数据的存放位置，n就是数组的长度,其实也就是集合的容量
+        当计算到的位置之前没有存过数据的时候,会直接存放数据
+        当计算的位置,有数据时,会发生hash冲突/hash碰撞
+        解决的办法就是采用链表的结构,在数组中指定位置处以后元素之后插入新的元素
+        也就是说数组中的元素都是最早加入的节点
+        如果链表的长度&gt;8时，数组长度到64，链表会转为红黑树，当链表的长度&lt;6时，会重新恢复成链表
+
+        迭代方式:
+            第一种:
+                Set&lt;Integer&gt; set = map.keySet();
+                Iterator&lt;Integer&gt; it = set.iterator();
+                while (it.hasNext())&#123;
+                    Integer key = it.next();
+                    String value = map.get(key);
+                    System.out.println(&quot;(&quot;+key+&quot;=&quot;+value+&quot;)&quot;);
+                &#125;
+            第二种:
+                Set&lt;Map.Entry&lt;Integer, String&gt;&gt; entries = map.entrySet();
+                Iterator&lt;Map.Entry&lt;Integer, String&gt;&gt; iterator = entries.iterator();
+                while (iterator.hasNext())&#123;
+                    //System.out.println(&quot;(&quot;+iterator.next()+&quot;)&quot;);
+                    Map.Entry&lt;Integer,String&gt; entry= iterator.next();
+                    Integer key1 = entry.getKey();
+                    String value = entry.getValue();
+                    System.out.println(&quot;*&quot;+key1+&quot;=&quot;+value);
+                &#125;
+    ArrayList:
+        存在java.util包中
+        内部是用数组结构存放数据,封装数组的操作,每个对象都有下标
+        内部数组默认的初始容量是10,如果不够会以1.5倍的容量增长
+        查询快,增删数据效率会低
+    LinkedList:
+        内存地址不连续，靠节点连接
+        也是有下标的，从0开始，也就是说头结点是0号节点
+        普通节点保存的是上一个节点的地址与下一个节点的地址
+        头结点保存的只有下一个节点的地址，为节点保存的只有上一个节点的地址
+    set自定义类去重:
+        /*如果set中存放的是我们自定义的类型
+        * 需要给自定义类中添加重写的equals()与hashCode(),才会去重
+        * 不然会认为s2和s3的地址值不同，是两个不同的对象，不会去重*/
+            1.创建学生类
+            2.创建属性并封装
+            3.生成全参构造
+            4.重写equals和hashcode方法
+
+进程和线程:
+    电脑的操作系统OS:
+        进程:谷歌 IDEA
+        线程:如果有一个线程:单线程程序
+        如果有多个线程:多线程程序
+    线程的状态
+    由于线程状态比较复杂,我们由易到难,先学习线程的三种基础状态及其转换,简称”三态模型” :
+        就绪(可运行)状态：线程已经准备好运行，只要获得CPU，就可立即执行
+        执行(运行)状态：线程已经获得CPU，其程序正在运行的状态
+        阻塞状态：正在运行的线程由于某些事件（I/O请求等）暂时无法执行的状态，即线程执行阻
+    synchronized是Java中的关键字，是一种同步锁。它修饰的对象有以下几种：
+        1. 修饰一个代码块，被修饰的代码块称为同步语句块，其作用的范围是大括号&#123;&#125;括起来的代码，作用的对象是调用这个代码块的对象；
+        2. 修饰一个方法，被修饰的方法称为同步方法，其作用的范围是整个方法，作用的对象是调用这个方法的对象；
+        3. 修改一个静态的方法，其作用的范围是整个静态方法，作用的对象是这个类的所有对象；
+        4. 修改一个类，其作用的范围是synchronized后面括号括起来的部分，作用主的对象是这个类的所有对象。
+    
+    synchronized同步关键字可以用来修饰代码块,称为同步代码块,使用的锁对象类型任意，但注意：必须唯一！
+    synchronized同步关键字可以用来修饰方法,称为同步方法
+    同步的缺点是会降低程序的执行效率，但我们为了保证线程的安全,有些性能是必须要牺牲的
+    但是为了性能,加锁的范围需要控制好,比如我们不需要给整个商场加锁,试衣间加锁就可以了
+
+    案例:
+        class TicketThreadV3 extends Thread&#123;
+        static int tickets = 100;
+        static Object o = new Object();
+        @Override
+        public void run() &#123;
+                while (true)&#123;
+                    if(tickets&gt;0)&#123;
+                        try &#123;
+                            Thread.sleep(1000);
+                        &#125; catch (InterruptedException e) &#123;
+                            e.printStackTrace();
+                        &#125;
+                    &#125;
+                    synchronized (o)&#123;//锁对象只要唯一就行，TicketThreadV3.class
+                        if (tickets &lt;= 0) break;
+                        System.out.println(Thread.currentThread().getName()+&quot;   &quot;+tickets--);
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        
+        /*同步锁：给容易出现问题的代码加了一把锁，包裹了所有可能会出现数据安全的代码
+        * 加锁之后，就有了同步(排队)的效果，但是，加锁的范围需要考虑
+        * 不能太大，太大，干啥都得排队，太小，锁不住，还是会有安全隐患*/
+        class TicketThreadV2 implements Runnable&#123;
+            public Integer tickets = 100;
+            Object o = new Object();//创建锁对象，不重卖
+            @Override
+            public void run() &#123;
+                while (true) &#123;
+                    /*同步代码块:synchronized(锁对象)&#123;会出现安全隐患的所有代码&#125;
+                    * 在同步代码块中的代码，同一时刻只会被一个线程执行
+                    * 同步代码块必须保证所有线程对象使用同一把唯一的锁
+                    * 锁对象必须唯一！！！锁对象的类型不做限制，唯一就行*/
+                    //synchronized (o)&#123;&#125;这样锁不唯一
+
+                    synchronized (o)&#123;
+                        if(tickets&gt;0)&#123;
+                            try &#123;
+                                Thread.sleep(1000);
+                            &#125; catch (InterruptedException e) &#123;
+                                e.printStackTrace();
+                            &#125;
+                            System.out.println(Thread.currentThread().getName()+&quot;   &quot;+tickets--);
+                        &#125;
+                        if (tickets &lt;= 0) break;
+                    &#125;
+
+
+                &#125;
+            &#125;
+        &#125;
+        
+        线程池:
+</code></pre>
+<p>​            </p>
+<pre><code>        3 拓展:线程锁
+            3.1 悲观锁和乐观锁
+            悲观锁：像它的名字一样，对于并发间操作产生的线程安全问题持悲观状态.
+            悲观锁认为竞争总是会发生，因此每次对某资源进行操作时，都会持有一个独占的锁,就像synchronized,不管三七二十一，直接上了锁就操作资源了。
+
+            乐观锁：还是像它的名字一样，对于并发间操作产生的线程安全问题持乐观状态.
+            乐观锁认为竞争不总是会发生，因此它不需要持有锁，将”比较-替换”这两个动作作为一个原子操作尝试去修改内存中的变量，如果失败则表示发生冲突，那么就应该有相应的重试逻辑。
+        3.2 两种常见的锁
+            static ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
+            //2.在操作共享资源前上锁
+            lock.writeLock().lock();
+            lock.writeLock().unlock();
+            
+            synchronized 互斥锁（悲观锁，有罪假设）
+            采用synchronized修饰符实现的同步机制叫做互斥锁机制，它所获得的锁叫做互斥锁。
+            每个对象都有一个monitor(锁标记)，当线程拥有这个锁标记时才能访问这个资源，没有锁标记便进入锁池。任何一个对象系统都会为其创建一个互斥锁，这个锁是为了分配给线程的，防止打断原子操作。每个对象的锁只能分配给一个线程，因此叫做互斥锁。
+
+            ReentrantLock 排他锁（悲观锁，有罪假设）
+            ReentrantLock是排他锁，排他锁在同一时刻仅有一个线程可以进行访问，实际上独占锁是一种相对比较保守的锁策略，在这种情况下任何“读/读”、“读/写”、“写/写”操作都不能同时发生，这在一定程度上降低了吞吐量。然而读操作之间不存在数据竞争问题，如果”读/读”操作能够以共享锁的方式进行，那会进一步提升性能。
+
+            ReentrantReadWriteLock 读写锁（乐观锁，无罪假设）
+            因此引入了ReentrantReadWriteLock，顾名思义，ReentrantReadWriteLock是Reentrant（可重入）Read（读）Write（写）Lock（锁），我们下面称它为读写锁。
+            读写锁内部又分为读锁和写锁，读锁可以在没有写锁的时候被多个线程同时持有，写锁是独占的。
+            读锁和写锁分离从而提升程序性能，读写锁主要应用于读多写少的场景。
+
+注解和反射配合使用:
+    @Override:用来标识重写
+    @Target 注解用在哪里：类上、方法上、属性上等等
+    描述注解存在的位置：
+        ElementType.TYPE 应用于类的元素
+        ElementType.METHOD 应用于方法级
+        ElementType.FIELD 应用于字段或属性(成员变量)
+        ElementType.ANNOTATION_TYPE 应用于注解类型
+        ElementType.CONSTRUCTOR 应用于构造函数
+        ElementType.LOCAL_VARIABLE 应用于局部变量
+        ElementType.PACKAGE 应用于包声明
+        ElementType.PARAMETER 应用于方法的参数
+
+    @Retention 注解的生命周期：源文件中、字节码文件中、运行中
+    Class&lt;?&gt; c = st.getClass();
+    Field[] fArr = c.getDeclaredFields();//获取本类所有属性，包括私有属性
+    //    fArr = c.getFields();//只获取公有属性，且包括继承来的属性
+    for (Field field : fArr) &#123;
+        field.setAccessible(true);//注意，我们的模板类写的是几个私有成员，这条是开启权限，使得我们都能够操作和读取私有属性的值
+        System.out.println(field.getName()+&quot;:&quot; +field.get(st));
+    &#125;
+    System.out.println(&quot;----------反射+注解示例1:没有注解的不打印&quot;);
+    for (Field field : fArr) &#123;
+        field.setAccessible(true);//注意，我们的模板类写的是几个私有成员，这条是开启权限，使得我们都能够操作和读取私有属性的值
+        MyField anno = field.getDeclaredAnnotation(MyField.class);
+        if(null==anno)
+            continue;
+        System.out.println(field.getName()+&quot;:&quot; +field.get(st));
+    &#125;
+    
+Date使用:
+    常用时间缩写
+    GMT 格林尼治时间 = UTC 协调世界时间
+    UTC + 时区差 ＝ 本地时间,我们是在东八区，东加西减，所以
+    CST 中国标准时间：China Standard Time UT+8:00
+    Date d = new Date();
+    //SimpleDateFormat sdf = new SimpleDateFormat();
+    SimpleDateFormat sdf2 = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss&quot;);
+    //3.通过刚刚创建好的工具类对象转换日期的格式
+    String s = sdf2.format(d);
+    //自定义时间格式：2021/09/23 10:21:39
+    System.out.println(s);
+    String s2 = &quot;2021/9/23 22:24:03&quot;;
+    SimpleDateFormat sdf3 = new SimpleDateFormat(&quot;yyyy/MM/dd hh:mm:ss&quot;);
+    Date d2= sdf3.parse(s2);
+    System.out.println(d2);//Thu Sep 23 22:24:03 CST 2021
+</code></pre>
+<p>JDBC：<br>    Class.forName(“com.mysql.cj.jdbc.Driver”);<br>    Connection connection = DriverManager.getConnection(url,user,pwd);<br>    Statement statement = connection.createStatement();<br>    ResultSet rs=statement.executeQuery(“select * from courses”);<br>    while (rs.next()){<br>        String a = rs.getString(1);<br>        String b = rs.getString(2);<br>        String c = rs.getString(3);<br>        System.out.println(a+b+c);<br>    }<br>    format使用教程:<br>        str=String.format(“Hi,%s”, “飞龙”);    // 格式化字符串<br>        System.out.printf(“3&gt;7的结果是：%b %n”, 3&gt;7);<br>        System.out.printf(“100的16进制数是：%x %n”, 100);<br>        System.out.printf(“字母A的散列码是：%h %n”, ‘A’);
+        </p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

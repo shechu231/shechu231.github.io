@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RabbitMQ学习记录 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Docker 启动Rabbitmq下载镜像，rabbitmq:management 镜像中已经安装了管理界面
+1docker pull rabbitmq:management
+
+关闭防火墙
+1234,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="RabbitMQ学习记录 - Hexo"/>
+    <meta name="twitter:description" content="Docker 启动Rabbitmq下载镜像，rabbitmq:management 镜像中已经安装了管理界面
+1docker pull rabbitmq:management
+
+关闭防火墙
+1234,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="RabbitMQ学习记录 - Hexo"/>
+    <meta property="og:description" content="Docker 启动Rabbitmq下载镜像，rabbitmq:management 镜像中已经安装了管理界面
+1docker pull rabbitmq:management
+
+关闭防火墙
+1234,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">RabbitMQ学习记录</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">RabbitMQ学习记录</h1>
+        <div class="stuff">
+            <span>一月 19, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h2 id="Docker-启动Rabbitmq"><a href="#Docker-启动Rabbitmq" class="headerlink" title="Docker 启动Rabbitmq"></a>Docker 启动Rabbitmq</h2><p>下载镜像，<code>rabbitmq:management</code> 镜像中已经安装了管理界面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull rabbitmq:management</span><br></pre></td></tr></table></figure>
+
+<p>关闭防火墙</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"> </span><br><span class="line"># 重启 docker 系统服务</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<p>配置管理员用户名和密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir /etc/rabbitmq</span><br><span class="line">vim /etc/rabbitmq/rabbitmq.conf</span><br><span class="line"></span><br><span class="line"># 添加两行配置：</span><br><span class="line">default_user = admin</span><br><span class="line">default_pass = admin</span><br></pre></td></tr></table></figure>
+
+<p>启动Rabbitmq</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name rabbit \</span><br><span class="line">-p 5672:5672 \</span><br><span class="line">-p 15672:15672 \</span><br><span class="line">-v /etc/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf \</span><br><span class="line">-e RABBITMQ_CONFIG_FILE=/etc/rabbitmq/rabbitmq.conf \</span><br><span class="line">--restart=always \</span><br><span class="line">rabbitmq:management</span><br></pre></td></tr></table></figure>
+
+<p>访问管理控制台 <a target="_blank" rel="noopener" href="http://192.168.64.140:15672/">http://192.168.199.128:15672</a><br>用户名密码是 admin</p>
+<h2 id="离线安装"><a href="#离线安装" class="headerlink" title="离线安装"></a>离线安装</h2><p><strong>下载离线安装包文件</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://download.csdn.net/download/weixin_38305440/12265906">https://download.csdn.net/download/weixin_38305440/12265906</a></li>
+</ul>
+<p><strong>上传离线安装包</strong></p>
+<ul>
+<li><code>rabbitmq-install</code> 目录上传到 <code>/root</code></li>
+</ul>
+<p><strong>切换到<code>rabbitmq-install</code>目录</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd rabbitmq-install</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh *.rpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="导入镜像"><a href="#导入镜像" class="headerlink" title="导入镜像"></a>导入镜像</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br><span class="line">docker load -i rabbit-image.gz</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Yum在线安装"><a href="#Yum在线安装" class="headerlink" title="Yum在线安装"></a>Yum在线安装</h2><p>以下内容来自 RabbitMQ 官方手册</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">rpm --import https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># centos7 用这个</span><br><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/rabbitmq.repo</span><br><span class="line">[bintray-rabbitmq-server]</span><br><span class="line">name=bintray-rabbitmq-rpm</span><br><span class="line">baseurl=https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.8.x/el/7/</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># centos6 用这个</span><br><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/rabbitmq.repo</span><br><span class="line">[bintray-rabbitmq-server]</span><br><span class="line">name=bintray-rabbitmq-rpm</span><br><span class="line">baseurl=https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.8.x/el/6/</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line">yum install socat</span><br><span class="line"></span><br><span class="line">wget https://github.com/rabbitmq/erlang-rpm/releases/download/v21.3.8.12/erlang-21.3.8.12-1.el7.x86_64.rpm</span><br><span class="line">rpm -ivh erlang-21.3.8.12-1.el7.x86_64.rpm --force --nodeps</span><br><span class="line"></span><br><span class="line">yum install rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动rabbitmq服务器"><a href="#启动rabbitmq服务器" class="headerlink" title="启动rabbitmq服务器"></a>启动rabbitmq服务器</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 设置服务,开机自动启动</span><br><span class="line">systemctl enable rabbitmq-server</span><br><span class="line"></span><br><span class="line"># 启动服务</span><br><span class="line">systemctl start rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="rabbitmq管理界面"><a href="#rabbitmq管理界面" class="headerlink" title="rabbitmq管理界面"></a>rabbitmq管理界面</h2><h3 id="启用管理界面"><a href="#启用管理界面" class="headerlink" title="启用管理界面"></a>启用管理界面</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 开启管理界面插件</span><br><span class="line">rabbitmq-plugins enable rabbitmq_management</span><br><span class="line"></span><br><span class="line"># 防火墙打开 15672 管理端口</span><br><span class="line">firewall-cmd --zone=public --add-port=15672/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启RabbitMQ服务"><a href="#重启RabbitMQ服务" class="headerlink" title="重启RabbitMQ服务"></a>重启RabbitMQ服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<p>访问<br>访问服务器的15672端口,例如:</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.64.140:15672/">http://192.168.64.140:15672</a></p>
+<p>添加用户<br>添加用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 添加用户</span><br><span class="line">rabbitmqctl add_user admin admin</span><br><span class="line"># 新用户设置用户为超级管理员</span><br><span class="line">rabbitmqctl set_user_tags admin administrator</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="生产消费者模式"><a href="#生产消费者模式" class="headerlink" title="生产消费者模式"></a>生产消费者模式</h3><h4 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.199.128&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        // 在服务器上创建一个队列：helloworld</span><br><span class="line">        // 如果队列在服务器上已经存在，不会重复创建</span><br><span class="line">        /*</span><br><span class="line">        参数：</span><br><span class="line">          第2个参数： 是否是持久队列</span><br><span class="line">          第3个参数： 是否是排他队列、独占队列</span><br><span class="line">          第4个参数： 是否自动删除</span><br><span class="line">          第5个参数： 队列的其他属性</span><br><span class="line">         */</span><br><span class="line">        c.queueDeclare(&quot;helloworld&quot;,false,false,false,null);</span><br><span class="line"></span><br><span class="line">        // 向 helloworld 队列发送消息</span><br><span class="line">        /*</span><br><span class="line">        &quot;&quot; - 默认的交换机</span><br><span class="line">        null - 消息的其他参数属性</span><br><span class="line">         */</span><br><span class="line">        c.basicPublish(&quot;&quot;, &quot;helloworld&quot;, null, &quot;Hello world!&quot;.getBytes());</span><br><span class="line"></span><br><span class="line">        c.close();</span><br><span class="line">        con.close();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a>消费者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.199.128&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        c.queueDeclare(&quot;helloworld&quot;,false,false,false,null);</span><br><span class="line"></span><br><span class="line">        // 创建回调对象</span><br><span class="line">        DeliverCallback deliverCallback = (consumerTag, message) -&gt; &#123;</span><br><span class="line">            byte[] a = message.getBody();</span><br><span class="line">            String s = new String(a);</span><br><span class="line">            System.out.println(&quot;收到： &quot;+s);</span><br><span class="line">        &#125;;</span><br><span class="line">        CancelCallback cancelCallback = consumerTag -&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line">        // 开始接收消息，把消息传递给一个回调对象进行处理</span><br><span class="line">        /*</span><br><span class="line">        第二个参数：</span><br><span class="line">            是否自动确认， autoAck</span><br><span class="line">            Ack - Acknowledgement</span><br><span class="line">         */</span><br><span class="line">        c.basicConsume(&quot;helloworld&quot;, true, deliverCallback, cancelCallback);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="负载均衡方式发送消息-工作模式"><a href="#负载均衡方式发送消息-工作模式" class="headerlink" title="负载均衡方式发送消息(工作模式)"></a>负载均衡方式发送消息(工作模式)</h4><h3 id="手动确认消息"><a href="#手动确认消息" class="headerlink" title="手动确认消息"></a>手动确认消息</h3><h4 id="生产者-1"><a href="#生产者-1" class="headerlink" title="生产者"></a>生产者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.64.140&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line">        // 在服务器上创建一个队列：helloworld,第二个参数是否是持久队列，创建过的队列不能变</span><br><span class="line">        c.queueDeclare(&quot;task_queue&quot;,true,false,false,null);</span><br><span class="line">        //向helloworld队列发送消息</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            System.out.print(&quot;输入消息：&quot;);</span><br><span class="line">            String s = new Scanner(System.in).nextLine();</span><br><span class="line">            //发送持久的消息</span><br><span class="line">            c.basicPublish(&quot;&quot;, &quot;task_queue&quot;, MessageProperties.PERSISTENT_BASIC, s.getBytes());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="消费者-1"><a href="#消费者-1" class="headerlink" title="消费者"></a>消费者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.64.140&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line">        // 在服务器上创建一个队列：helloworld</span><br><span class="line">        c.queueDeclare(&quot;task_queue&quot;,true,false,false,null);//</span><br><span class="line"></span><br><span class="line">        // 创建对调对象</span><br><span class="line">        DeliverCallback deliverCallback = (consumerTag, message) -&gt; &#123;</span><br><span class="line">            String s = new String(message.getBody());</span><br><span class="line">            System.out.println(&quot;收到： &quot;+s);</span><br><span class="line">            //遍历消息所有字符，每遇到一个 &#x27;.&#x27; 暂停1秒，模拟耗时任务</span><br><span class="line">            for (int i = 0; i &lt;s.length(); i++) &#123;</span><br><span class="line">                if (s.charAt(i) == &#x27;.&#x27;) &#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        Thread.sleep(1000);</span><br><span class="line">                    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            //发送回执</span><br><span class="line">            // c.basicAck(回执, 是否同时确认之前收到过的多条消息);</span><br><span class="line">            c.basicAck(message.getEnvelope().getDeliveryTag(), false);</span><br><span class="line">            System.out.println(&quot;-------------------------消息处理完成&quot;);</span><br><span class="line">        &#125;;</span><br><span class="line">        CancelCallback cancelCallback = consumerTag -&gt; &#123;&#125;;</span><br><span class="line"></span><br><span class="line">        // qos=1，每次收一条，处理完之前不收下一条，手动ack模式下才有效</span><br><span class="line">        c.basicQos(1);</span><br><span class="line"></span><br><span class="line">        // 接收消息</span><br><span class="line">        c.basicConsume(&quot;task_queue&quot;,false,deliverCallback,cancelCallback);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="群发模式（发布订阅）"><a href="#群发模式（发布订阅）" class="headerlink" title="群发模式（发布订阅）"></a>群发模式（发布订阅）</h3><h4 id="图解"><a href="#图解" class="headerlink" title="图解:"></a>图解:</h4><h4 id="消费者队列不共享"><a href="#消费者队列不共享" class="headerlink" title="消费者队列不共享"></a>消费者队列不共享</h4><p><img src="https://s2.loli.net/2022/02/05/xPZAsnr2JmWqpfX.png" alt="image-20220205130443682"></p>
+<h3 id="生产者-2"><a href="#生产者-2" class="headerlink" title="生产者"></a>生产者</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.64.140&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        // 创建 fanout 交换机： logs</span><br><span class="line">        // c.exchangeDeclare(&quot;logs&quot;, &quot;fanout&quot;);</span><br><span class="line">        c.exchangeDeclare(&quot;logs&quot;, BuiltinExchangeType.FANOUT); //默认非持久</span><br><span class="line"></span><br><span class="line">        // 向 logs 交换机发送消息</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            System.out.print(&quot;输入消息： &quot;);</span><br><span class="line">            String s = new Scanner(System.in).nextLine();</span><br><span class="line">            // 对 fanout 交换机，第二个参数无效</span><br><span class="line">            c.basicPublish(&quot;logs&quot;, &quot;&quot;, null, s.getBytes());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="消费者-2"><a href="#消费者-2" class="headerlink" title="消费者"></a>消费者</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.64.140&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        // 1.创建队列 2.创建交换机 3.绑定</span><br><span class="line">        String queue = UUID.randomUUID().toString();</span><br><span class="line">        c.queueDeclare(queue, false, true, true, null);</span><br><span class="line">        c.exchangeDeclare(&quot;logs&quot;, BuiltinExchangeType.FANOUT);</span><br><span class="line">        // 对fanout交换机，第三个参数无效</span><br><span class="line">        c.queueBind(queue, &quot;logs&quot;, &quot;&quot;);</span><br><span class="line"></span><br><span class="line">        // 正常从队列接收消息</span><br><span class="line">        DeliverCallback deliverCallback = (consumerTag, message) -&gt; &#123;</span><br><span class="line">            String s = new String(message.getBody());</span><br><span class="line">            System.out.println(&quot;收到： &quot;+s);</span><br><span class="line">        &#125;;</span><br><span class="line">        CancelCallback cancelCallback = consumerTag -&gt; &#123;&#125;;</span><br><span class="line">        c.basicConsume(queue, true, deliverCallback, cancelCallback);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由模式"><a href="#路由模式" class="headerlink" title="路由模式"></a>路由模式</h3><h4 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h4><p><img src="https://s2.loli.net/2022/02/05/7vgDZnk9QdMHfR1.png" alt="image-20220205134616533"></p>
+<h4 id="生产者-3"><a href="#生产者-3" class="headerlink" title="生产者"></a>生产者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.199.128&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        // 创建 Direct 交换机： direct_logs</span><br><span class="line">        c.exchangeDeclare(&quot;direct_logs&quot;, BuiltinExchangeType.DIRECT);</span><br><span class="line"></span><br><span class="line">        // 向交换机发送消息，并携带路由键关键词</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            System.out.print(&quot;输入消息：&quot;);</span><br><span class="line">            String s = new Scanner(System.in).nextLine();</span><br><span class="line">            System.out.print(&quot;输入路由键：&quot;);</span><br><span class="line">            String k = new Scanner(System.in).nextLine();</span><br><span class="line">            // 对默认交换机&quot;&quot;，会自动使用队列名作为路由键</span><br><span class="line">            c.basicPublish(&quot;direct_logs&quot;, k, null, s.getBytes());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="消费者-3"><a href="#消费者-3" class="headerlink" title="消费者"></a>消费者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.199.128&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        // 1.创建随机队列 2.创建交换机 3.使用绑定键关键词绑定</span><br><span class="line">        String queue = UUID.randomUUID().toString();</span><br><span class="line">        c.queueDeclare(queue, false, true, true, null);</span><br><span class="line">        c.exchangeDeclare(&quot;direct_logs&quot;, BuiltinExchangeType.DIRECT);</span><br><span class="line">        System.out.println(&quot;输入绑定键关键词，用空格隔开：&quot;);// aa bb  cc</span><br><span class="line">        String s = new Scanner(System.in).nextLine();</span><br><span class="line">        String[] a = s.split(&quot;\\s+&quot;); //   \s空白字符  +一到多个</span><br><span class="line">        for (String k : a) &#123;</span><br><span class="line">            c.queueBind(queue, &quot;direct_logs&quot;, k);</span><br><span class="line">        &#125;</span><br><span class="line">        // 正常接收消息</span><br><span class="line">        DeliverCallback deliverCallback = (consumerTag, message) -&gt; &#123;</span><br><span class="line">            String msg = new String(message.getBody());</span><br><span class="line">            String key = message.getEnvelope().getRoutingKey();</span><br><span class="line">            System.out.println(key+&quot; --- &quot;+msg);</span><br><span class="line">        &#125;;</span><br><span class="line">        CancelCallback cancelCallback = consumerTag -&gt; &#123;&#125;;</span><br><span class="line">        c.basicConsume(queue, true, deliverCallback, cancelCallback);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关键词匹配"><a href="#关键词匹配" class="headerlink" title="关键词匹配"></a>关键词匹配</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a.orange.b		*.orange.*</span><br><span class="line">lazy.aa.bb		lazy.#</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/02/05/H2CTK6tAYaSyuhm.png" alt="image-20220205141400520"></p>
+<h4 id="生产者-4"><a href="#生产者-4" class="headerlink" title="生产者"></a>生产者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.199.128&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        // 创建 Topic 交换机： topic_logs</span><br><span class="line">        c.exchangeDeclare(&quot;topic_logs&quot;, BuiltinExchangeType.TOPIC);</span><br><span class="line"></span><br><span class="line">        // 向交换机发送消息，并携带路由键关键词</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            System.out.print(&quot;输入消息：&quot;);</span><br><span class="line">            String s = new Scanner(System.in).nextLine();</span><br><span class="line">            System.out.print(&quot;输入路由键：&quot;);</span><br><span class="line">            String k = new Scanner(System.in).nextLine();</span><br><span class="line">            // 对默认交换机&quot;&quot;，会自动使用队列名作为路由键</span><br><span class="line">            c.basicPublish(&quot;topic_logs&quot;, k, null, s.getBytes());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="消费者-4"><a href="#消费者-4" class="headerlink" title="消费者"></a>消费者</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, TimeoutException &#123;</span><br><span class="line">        // 连接服务器</span><br><span class="line">        ConnectionFactory f = new ConnectionFactory();</span><br><span class="line">        f.setHost(&quot;192.168.199.128&quot;); // wht6.cn</span><br><span class="line">        f.setPort(5672); // 5672用来收发消息， 15672是管理控制台端口</span><br><span class="line">        f.setUsername(&quot;admin&quot;);</span><br><span class="line">        f.setPassword(&quot;admin&quot;);</span><br><span class="line">        Connection con = f.newConnection();</span><br><span class="line">        Channel c = con.createChannel(); // 通信通道</span><br><span class="line"></span><br><span class="line">        // 1.创建随机队列 2.创建交换机 3.使用绑定键关键词绑定</span><br><span class="line">        String queue = UUID.randomUUID().toString();</span><br><span class="line">        c.queueDeclare(queue, false, true, true, null);</span><br><span class="line">        c.exchangeDeclare(&quot;topic_logs&quot;, BuiltinExchangeType.TOPIC);</span><br><span class="line">        System.out.println(&quot;输入绑定键关键词，用空格隔开：&quot;);// aa bb  cc</span><br><span class="line">        String s = new Scanner(System.in).nextLine();</span><br><span class="line">        String[] a = s.split(&quot;\\s+&quot;); //   \s空白字符  +一到多个</span><br><span class="line">        for (String k : a) &#123;</span><br><span class="line">            c.queueBind(queue, &quot;topic_logs&quot;, k);</span><br><span class="line">        &#125;</span><br><span class="line">        // 正常接收消息</span><br><span class="line">        DeliverCallback deliverCallback = (consumerTag, message) -&gt; &#123;</span><br><span class="line">            String msg = new String(message.getBody());</span><br><span class="line">            String key = message.getEnvelope().getRoutingKey();</span><br><span class="line">            System.out.println(key+&quot; --- &quot;+msg);</span><br><span class="line">        &#125;;</span><br><span class="line">        CancelCallback cancelCallback = consumerTag -&gt; &#123;&#125;;</span><br><span class="line">        c.basicConsume(queue, true, deliverCallback, cancelCallback);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="BUS配置刷新"><a href="#BUS配置刷新" class="headerlink" title="BUS配置刷新"></a>BUS配置刷新</h2><h4 id="1-在2，3，4，9刷新BUS-Rabbitmq"><a href="#1-在2，3，4，9刷新BUS-Rabbitmq" class="headerlink" title="1.在2，3，4，9刷新BUS,Rabbitmq"></a>1.在2，3，4，9刷新BUS,Rabbitmq</h4><ul>
+<li>​    Rabbitmq</li>
+<li>​    bus</li>
+<li>​    binder-rabbit</li>
+<li>09 添加actuator依赖</li>
+</ul>
+<p>2.修改09的application.yml，添加Rabbitmq连接配置。</p>
+<p>3.修改config目录中的三个配置文件，添加Rabbitmq连接配置</p>
+<ul>
+<li>​    添加Rabbitmq连接配置</li>
+<li>​    暴露bus-refresh刷新路径</li>
+</ul>
+<p>4.提交推送到远程仓库</p>
+<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-amqp&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-bus&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-stream-binder-rabbit&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>09额外添加依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

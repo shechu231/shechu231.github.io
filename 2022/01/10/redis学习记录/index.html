@@ -85,6 +85,19 @@
 <p>Redis 相关参考网址如下所示：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Bootnb 相关：https://www.runoob.com/redis/redis-tutorial.html</span><br><span class="line">Redis 官网：https://redis.io/</span><br><span class="line">源码地址：https://github.com/redis/redis</span><br><span class="line">Redis 在线测试：http://try.redis.io/</span><br><span class="line">Redis 命令参考：http://doc.redisfans.com/</span><br></pre></td></tr></table></figure>
 
+<h2 id="Redis-是单线程的！"><a href="#Redis-是单线程的！" class="headerlink" title="Redis 是单线程的！"></a>Redis 是单线程的！</h2><p>明白Redis是很快的，官方表示，Redis是基于内存操作，CPU不是Redis性能瓶颈，Redis的瓶颈是根据</p>
+<p>机器的内存和网络带宽，既然可以使用单线程来实现，就使用单线程了！所有就使用了单线程了！</p>
+<p>Redis 是C 语言写的，官方提供的数据为 100000+ 的QPS，完全不比同样是使用 key-vale的</p>
+<p>Memecache差！</p>
+<p><strong>Redis</strong> <strong>为什么单线程还这么快？</strong></p>
+<p>1、误区1：高性能的服务器一定是多线程的？</p>
+<p>2、误区2：多线程（CPU上下文会切换！）一定比单线程效率高！</p>
+<p>先去CPU&gt;内存&gt;硬盘的速度要有所了解！</p>
+<p>核心：redis 是将所有的数据全部放在内存中的，所以说使用单线程去操作效率就是最高的，多线程</p>
+<p>（CPU上下文会切换：耗时的操作！！！），对于内存系统来说，如果没有上下文切换效率就是最高</p>
+<p>的！多次读写都是在一个CPU上的，在内存情况下，这个就是最佳的方案！</p>
+<h1 id="五大数据类型"><a href="#五大数据类型" class="headerlink" title="五大数据类型"></a>五大数据类型</h1><p>Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间</p>
+<p>件MQ。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets） 与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了 复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRU eviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。</p>
 <h1 id="Redis初始操作"><a href="#Redis初始操作" class="headerlink" title="Redis初始操作"></a>Redis初始操作</h1><h3 id="启动redis服务"><a href="#启动redis服务" class="headerlink" title="启动redis服务"></a>启动redis服务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start redis01 #底层也是通过redis-server启动，start单词后的redis01为容器名</span><br></pre></td></tr></table></figure>
 
 <p>docker 中查看redis 服务</p>
@@ -222,6 +235,10 @@
 
 <h2 id="sunion"><a href="#sunion" class="headerlink" title="sunion"></a>sunion</h2><p>实现集合的并集操作</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; sunion internet bigdata</span><br><span class="line">1) &quot;redis&quot;</span><br><span class="line">2) &quot;nginx&quot;</span><br><span class="line">3) &quot;rabbitmq&quot;</span><br><span class="line">4) &quot;amoeba&quot;</span><br><span class="line">5) &quot;hadopp&quot;</span><br><span class="line">6) &quot;spark&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Zset（有序集合）"><a href="#Zset（有序集合）" class="headerlink" title="Zset（有序集合）"></a>Zset（有序集合）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; zadd myset 1 one # 添加一个值</span><br><span class="line">127.0.0.1:6379&gt; zadd myset 2 two 3 three # 添加多个值</span><br><span class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE salary -inf +inf # 显示全部的用户 从小到大！</span><br><span class="line">127.0.0.1:6379&gt; ZREVRANGE salary 0 -1 # 从大到进行排序！</span><br></pre></td></tr></table></figure>
+
+
 
 <h2 id="SpringBoot工程中Redis与Aop技术的整合"><a href="#SpringBoot工程中Redis与Aop技术的整合" class="headerlink" title="SpringBoot工程中Redis与Aop技术的整合"></a>SpringBoot工程中Redis与Aop技术的整合</h2><p>基于AOP与Redis技术实现mysql,redis数据库中数据操作.</p>
 <h3 id="项目准备工作"><a href="#项目准备工作" class="headerlink" title="项目准备工作"></a>项目准备工作</h3><p>第一步:打开sca-template工程,添加访问MySql数据库的依赖(两个)</p>
@@ -424,9 +441,21 @@
 <p>第二步：编写单元测试类，代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package com.cy.redis;</span><br><span class="line">@SpringBootTest</span><br><span class="line">public class RedisClusterTests &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private RedisTemplate redisTemplate;</span><br><span class="line">    @Test</span><br><span class="line">    void testMasterReadWrite()&#123;</span><br><span class="line">        //1.获取数据操作对象</span><br><span class="line">        ValueOperations valueOperations = redisTemplate.opsForValue();</span><br><span class="line">        //2.读写数据</span><br><span class="line">        valueOperations.set(&quot;city&quot;,&quot;beijing&quot;);</span><br><span class="line">        Object city=valueOperations.get(&quot;city&quot;);</span><br><span class="line">        System.out.println(city);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
-
+<h3 id="缓存穿透（查不到）和雪崩"><a href="#缓存穿透（查不到）和雪崩" class="headerlink" title="缓存穿透（查不到）和雪崩"></a>缓存穿透（查不到）和雪崩</h3><p><img src="https://s2.loli.net/2022/01/18/Ib8ei7dPgKRLBzq.png" alt="image-20220118092046272"></p>
+<p>用户想要查询一个数据，发现redis内存数据没有，也就是缓存中没有，于是就向持久层数据库查询，发现也没有，于是本次查询失败，当用户很多的时候，缓存都没有命中，于是都去请i去了持久层数据库，这给持久层造成很大的压力，这时候就相当于出现了缓存穿透。</p>
+<h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p><img src="https://s2.loli.net/2022/01/18/aAVJzQN6wWcntox.png" alt="image-20220118092557779"></p>
+<p><img src="https://s2.loli.net/2022/01/18/dFp4YkwnAocO1lr.png" alt="image-20220118092632125"></p>
+<p>但是这种方法或存在两个问题:</p>
+<p>1.如果空值能够被缓存起来，这就意味着缓存需要更多的空间存储更多的键，因为这当中可能会有很多的空值的键。</p>
+<p>2.即使对空值设置了过期时间，函数会存在缓存层和存储层有一段时间窗口的不一致，这对于需要保持一致性的业务有影响。</p>
+<h3 id="缓存击穿-量太大"><a href="#缓存击穿-量太大" class="headerlink" title="缓存击穿(量太大)"></a>缓存击穿(量太大)</h3><p>微博服务器宕机</p>
+<p><img src="https://s2.loli.net/2022/01/18/3qhl1NAoQs4K8dz.png" alt="image-20220118093030682"></p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>数据永不过期</p>
+<p>加互斥锁：使用分布式锁，保证每个key同时只有一个线程去查询后端服务，其他线程等待。这种方式将高并发的压力转移到分布式锁，对分布式锁考验较大。</p>
+<h4 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h4><p>在某一段时间，缓存集中国企失效。redis宕机。</p>
+<p><img src="https://s2.loli.net/2022/01/18/PVykXIZxpb2BdiN.png" alt="image-20220118093659482"></p>
+<p><img src="https://s2.loli.net/2022/01/18/suL8FVIp2wlahd5.png" alt="image-20220118094030979"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4>
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">

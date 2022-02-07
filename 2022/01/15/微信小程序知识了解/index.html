@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>微信小程序知识了解 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。
+
+其中包括云函数，云数据库，云文件存储，数据分析功能。
+
+点击左上角的云开发，弹出界面。可使用免费配置。点击开通。
+进入界,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="微信小程序知识了解 - Hexo"/>
+    <meta name="twitter:description" content="云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。
+
+其中包括云函数，云数据库，云文件存储，数据分析功能。
+
+点击左上角的云开发，弹出界面。可使用免费配置。点击开通。
+进入界,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="微信小程序知识了解 - Hexo"/>
+    <meta property="og:description" content="云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。
+
+其中包括云函数，云数据库，云文件存储，数据分析功能。
+
+点击左上角的云开发，弹出界面。可使用免费配置。点击开通。
+进入界,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">微信小程序知识了解</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">微信小程序知识了解</h1>
+        <div class="stuff">
+            <span>一月 15, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。</p>
+<p><img src="https://s2.loli.net/2022/01/15/rjkYxMS1BVs9CRK.png" alt="image-20220115115144570"></p>
+<p>其中包括云函数，云数据库，云文件存储，数据分析功能。</p>
+<p><img src="https://s2.loli.net/2022/01/15/ejGdtohs7lkDBTP.png" alt="image-20220115115436079"></p>
+<p>点击左上角的云开发，弹出界面。可使用免费配置。点击开通。</p>
+<p>进入界面:</p>
+<p><img src="https://s2.loli.net/2022/01/15/eg5RY8fTnHDxNuK.png" alt="image-20220115115741621"></p>
+<h3 id="初始环境准备"><a href="#初始环境准备" class="headerlink" title="初始环境准备"></a>初始环境准备</h3><p>project.config.json文件夹下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;description&quot;: &quot;项目配置文件&quot;,</span><br><span class="line">  &quot;cloudfunctionRoot&quot;:&quot;cloud&quot;,</span><br><span class="line">  &quot;packOptions&quot;: &#123;</span><br><span class="line">    &quot;ignore&quot;: []</span><br><span class="line">  &#125;</span><br><span class="line">  ......</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建目录cloud，显示:</p>
+<p><img src="https://s2.loli.net/2022/01/15/wknhUq31THtugzB.png" alt="image-20220115120850399"></p>
+<h3 id="云开发数据库操作"><a href="#云开发数据库操作" class="headerlink" title="云开发数据库操作"></a>云开发数据库操作</h3><h4 id="添加数据库"><a href="#添加数据库" class="headerlink" title="添加数据库"></a>添加数据库</h4><p>app.js中:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">App(&#123;</span><br><span class="line">  onLaunch() &#123;</span><br><span class="line">    wx.cloud.init(&#123;</span><br><span class="line">      env: &#x27;env-6ggdazpq682cce7d&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  globalData: &#123;</span><br><span class="line">    userInfo: null</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>index.js中:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">const db = wx.cloud.database().collection(&quot;list&quot;)</span><br><span class="line">Page(&#123;</span><br><span class="line">  addData()&#123;</span><br><span class="line">    db.add(&#123;</span><br><span class="line">      data:&#123;</span><br><span class="line">        name:&quot;CSX&quot;,</span><br><span class="line">        age:20</span><br><span class="line">      &#125;,</span><br><span class="line">      success(res)&#123;</span><br><span class="line">        console.log(res);</span><br><span class="line">      &#125;,fail(res)&#123;</span><br><span class="line">        console.log(res);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查询数据</p>
+<p><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/query-array-object.html">微信云数据库</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//查询数据方法</span><br><span class="line">  getData()&#123;</span><br><span class="line">    db.get(&#123;</span><br><span class="line">      success(res)&#123;</span><br><span class="line">        console.log(&quot;查询数据&quot;,res);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">匹配数组</span><br><span class="line">假设在集合中有如下一个记录：</span><br><span class="line">&#123;</span><br><span class="line">  &quot;numbers&quot;: [10, 20, 30]</span><br><span class="line">&#125;</span><br><span class="line">可以传入一个完全相同的数组来筛选出这条记录：</span><br><span class="line">db.collection(&#x27;todos&#x27;).where(&#123;</span><br><span class="line">  numbers: [10, 20, 30]</span><br><span class="line">&#125;).get()</span><br></pre></td></tr></table></figure>
+
+<p>删除数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">delData()&#123;</span><br><span class="line">    console.log(this.data.id);</span><br><span class="line">    db.doc(this.data.id).remove(&#123;</span><br><span class="line">      success: function(res) &#123;</span><br><span class="line">        console.log(res.data)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>更新数据:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//更新数据</span><br><span class="line">  updateData()&#123;</span><br><span class="line">    db.doc(this.data.id).update(&#123;</span><br><span class="line">      data:&#123;</span><br><span class="line">        name:this.data.name,</span><br><span class="line">        age:this.data.age</span><br><span class="line">      &#125;,</span><br><span class="line">      success(res)&#123;</span><br><span class="line">          console.log(&quot;更新成功&quot;,res.data);</span><br><span class="line">      &#125;,</span><br><span class="line">      fail(res)&#123;</span><br><span class="line">        console.log(&quot;更新成功&quot;,res.data);</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="云开发环境"><a href="#云开发环境" class="headerlink" title="云开发环境:"></a>云开发环境:</h3><p>和pages同级目录下创建cloud。</p>
+<p>project.config.json配置文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;description&quot;: &quot;项目配置文件&quot;,</span><br><span class="line">  &quot;cloudfunctionRoot&quot;:&quot;/cloud&quot;,</span><br><span class="line">  &quot;packOptions&quot;: &#123;</span><br><span class="line">    &quot;ignore&quot;: []</span><br><span class="line">  &#125;</span><br><span class="line">  ....</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>初始化云开发环境</p>
+<p><img src="https://s2.loli.net/2022/01/15/sBqEYPOuIKrcT7R.png" alt="image-20220115181513146"></p>
+<p>操作步骤:</p>
+<p>cloud文件夹下新建node.js云函数</p>
+<p>上传并部署依赖</p>
+<h4 id="在要引用页面的js中添加："><a href="#在要引用页面的js中添加：" class="headerlink" title="在要引用页面的js中添加："></a>在要引用页面的js中添加：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Page(&#123;</span><br><span class="line">//云函数测试</span><br><span class="line">  qiuhe()&#123;</span><br><span class="line">    console.log(&quot;你好&quot;);</span><br><span class="line">    wx.cloud.callFunction(&#123;</span><br><span class="line">      name:&quot;add&quot;,#调用函数</span><br><span class="line">      data:&#123;  #传入参数</span><br><span class="line">        a:1,</span><br><span class="line">        b:3</span><br><span class="line">      &#125;,</span><br><span class="line">      success(res)&#123;</span><br><span class="line">        console.log(&quot;请求成功&quot;,res);</span><br><span class="line">      &#125;,</span><br><span class="line">      fail(res)&#123;</span><br><span class="line">        console.log(&quot;请求失败&quot;,res);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="云函数请求数据"><a href="#云函数请求数据" class="headerlink" title="云函数请求数据"></a>云函数请求数据</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
