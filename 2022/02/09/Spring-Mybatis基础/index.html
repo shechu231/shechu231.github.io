@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Spring+Mybatis基础 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="1.什么是Spring开源的轻量级的应用开发框架，它可以简化开发、解耦对象的依赖关系、集成其他框架，而且设计优雅。
+2.Spring有哪些核心功能？SpringIOC，SpringMVC，Sprin,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Spring+Mybatis基础 - Hexo"/>
+    <meta name="twitter:description" content="1.什么是Spring开源的轻量级的应用开发框架，它可以简化开发、解耦对象的依赖关系、集成其他框架，而且设计优雅。
+2.Spring有哪些核心功能？SpringIOC，SpringMVC，Sprin,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Spring+Mybatis基础 - Hexo"/>
+    <meta property="og:description" content="1.什么是Spring开源的轻量级的应用开发框架，它可以简化开发、解耦对象的依赖关系、集成其他框架，而且设计优雅。
+2.Spring有哪些核心功能？SpringIOC，SpringMVC，Sprin,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Spring+Mybatis基础</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Spring+Mybatis基础</h1>
+        <div class="stuff">
+            <span>二月 09, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h3 id="1-什么是Spring"><a href="#1-什么是Spring" class="headerlink" title="1.什么是Spring"></a>1.什么是Spring</h3><p>开源的轻量级的应用开发框架，它可以简化开发、解耦对象的依赖关系、集成其他框架，而且设计优雅。</p>
+<h3 id="2-Spring有哪些核心功能？"><a href="#2-Spring有哪些核心功能？" class="headerlink" title="2.Spring有哪些核心功能？"></a>2.Spring有哪些核心功能？</h3><p>SpringIOC，SpringMVC，SpringAOP</p>
+<h3 id="3-什么是SpringIOC？那有哪些依赖注入方式呢"><a href="#3-什么是SpringIOC？那有哪些依赖注入方式呢" class="headerlink" title="3.什么是SpringIOC？那有哪些依赖注入方式呢"></a>3.什么是SpringIOC？那有哪些依赖注入方式呢</h3><p>SpringIOC就是控制反转，我们将对象的依赖关系交给Spring容器来进行管理。</p>
+<p>容器通过DI依赖注入的方式来使用创建的Bean对象。</p>
+<p>构造器注入、Set方法注入、注解注入</p>
+<h3 id="4-注解注入有哪些方式？它们有什么区别"><a href="#4-注解注入有哪些方式？它们有什么区别" class="headerlink" title="4.注解注入有哪些方式？它们有什么区别"></a>4.注解注入有哪些方式？它们有什么区别</h3><p>注解注入有两种方式，@Autowired注解和@Resource注解。</p>
+<p>@Autowired注解是Spring框架提供的注解，可以通过构造器注入，也可以通过set方法注入，是基于类型注入的（byType）。</p>
+<p>@Resource注解是JDK提供的一个注解，只是Spring框架也能识别它，它只能通过set方法注入，是基于bean名称注入的（byName）。</p>
+<h3 id="5-BeanFactory和FactoryBean有什么区别"><a href="#5-BeanFactory和FactoryBean有什么区别" class="headerlink" title="5.BeanFactory和FactoryBean有什么区别"></a>5.BeanFactory和FactoryBean有什么区别</h3><p><img src="https://s2.loli.net/2022/02/09/cAhp6OgmutN3FbZ.png" alt="image-20220209095306247"></p>
+<p>BeanFactory是Spring当中的一个接口，Spring当中的容器都实现了这个接口，本质上我们可以认为他就是Spring容器接口。Spring的BeanFactory就是一个IoC容器，它属于Spring框架中的Core（核心）部分 ，Spring AOP、Spring MVC等都是基于Spring Core之上的。FatoryBean是工厂Bean，工厂 Bean 跟普通Bean不同, 其返回的对象不是指定类的实例, 而是该工厂 Bean 的 getObject() 方法所返回的对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">定义工厂bean需要实现FactoryBean接口，并且覆盖其如下方法：</span><br><span class="line">T getObject() throws Exception;</span><br><span class="line">Class&lt;?&gt; getObjectType();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@Component            //默认名称:     calendarFactory</span><br><span class="line">//@Component(&quot;calendar&quot;)  //指定bean名称  calendar</span><br><span class="line">public class CalendarFactory implements FactoryBean&lt;Calendar&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Calendar getObject() throws Exception &#123;</span><br><span class="line">        System.out.println(&quot;工厂模式调用,实例化方法&quot;);</span><br><span class="line">        return Calendar.getInstance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Class&lt;?&gt; getObjectType() &#123;</span><br><span class="line">        return Calendar.class;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">编辑测试类</span><br><span class="line">class Springdemo4ApplicationTests &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    void contextLoads() &#123;</span><br><span class="line">        ApplicationContext applicationContext =</span><br><span class="line">                new AnnotationConfigApplicationContext(SpringConfig.class);</span><br><span class="line">        //Calendar calendar = (Calendar) applicationContext.getBean(&quot;calendarFactory&quot;);</span><br><span class="line">        Calendar calendar = (Calendar) applicationContext.getBean(Calendar.class);</span><br><span class="line">        System.out.println(calendar.getTime());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="BeanFactory的XML基本配置"><a href="#BeanFactory的XML基本配置" class="headerlink" title="BeanFactory的XML基本配置"></a>BeanFactory的XML基本配置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;	</span><br><span class="line">	private int id;</span><br><span class="line">	private String name;</span><br><span class="line">	private Friends friends;	</span><br><span class="line">	</span><br><span class="line">	public User() &#123;&#125;</span><br><span class="line">	public int getId() &#123; return id; &#125;</span><br><span class="line">	public void setId(int id) &#123; this.id = id; &#125;</span><br><span class="line">	public String getName() &#123; return name; &#125;</span><br><span class="line">	public void setName(String name) &#123; this.name = name; &#125;</span><br><span class="line">	public Friends getFriends() &#123; return friends; &#125;</span><br><span class="line">	public void setFriends(Friends friends) &#123; this.friends = friends; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Friends &#123;</span><br><span class="line">	private List&lt;String&gt; names;</span><br><span class="line">	public Friends() &#123; &#125;</span><br><span class="line">	public List&lt;String&gt; getNames() &#123; return names; &#125;</span><br><span class="line">	public void setNames(List&lt;String&gt; names) &#123; this.names = names; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;  </span><br><span class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">    xmlns:p=&quot;http://www.springframework.org/schema/p&quot; </span><br><span class="line">    xmlns:context=&quot;http://www.springframework.org/schema/context&quot; </span><br><span class="line">    xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot; </span><br><span class="line">    xmlns:task=&quot;http://www.springframework.org/schema/task&quot;</span><br><span class="line">    xsi:schemaLocation=&quot;</span><br><span class="line">        http://www.springframework.org/schema/beans </span><br><span class="line">        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd </span><br><span class="line">        http://www.springframework.org/schema/context </span><br><span class="line">        http://www.springframework.org/schema/context/spring-context-4.2.xsd </span><br><span class="line">        http://www.springframework.org/schema/mvc </span><br><span class="line">        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd </span><br><span class="line">        http://www.springframework.org/schema/task </span><br><span class="line">        http://www.springframework.org/schema/task/spring-task-4.2.xsd&quot;&gt;</span><br><span class="line">	&lt;bean id=&quot;User&quot; class=&quot;com.test.User&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;friends&quot; ref=&quot;UserFriends&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;bean id=&quot;UserFriends&quot; class=&quot;com.test.Friends&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;names&quot;&gt;</span><br><span class="line">			&lt;list&gt;</span><br><span class="line">				&lt;value&gt;&quot;Li&quot;&lt;/value&gt;</span><br><span class="line">				&lt;value&gt;&quot;Liu&quot;&lt;/value&gt;</span><br><span class="line">			&lt;/list&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">	ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">	User user = ctx.getBean(&quot;User&quot;, User.class);</span><br><span class="line">	for(String friend : user.getFriends().getNames()) &#123;</span><br><span class="line">		System.out.println(friend);</span><br><span class="line">	&#125;</span><br><span class="line">	ctx.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h5><p>如果我们希望直接通过构造方法来给User对象和Friends对象互相依赖起来，我们可以这样配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt; &lt;!--省略文档声明--&gt;</span><br><span class="line">	&lt;bean id=&quot;User&quot; class=&quot;com.test.User&quot;&gt;</span><br><span class="line">		&lt;constructor-arg ref=&quot;UserFriends&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;bean id=&quot;UserFriends&quot; class=&quot;com.test.Friends&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;names&quot;&gt;</span><br><span class="line">			&lt;list&gt;</span><br><span class="line">				&lt;value&gt;&quot;Li&quot;&lt;/value&gt;</span><br><span class="line">				&lt;value&gt;&quot;Liu&quot;&lt;/value&gt;</span><br><span class="line">			&lt;/list&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br><span class="line"></span><br><span class="line">然后给User类添加一个构造方法即可：</span><br><span class="line">public User(Friends friends) &#123;</span><br><span class="line">	this.friends = friends;</span><br><span class="line">&#125;</span><br><span class="line">如果构造方法有多个并且需要传入的参数数量相同，那么可以通过type属性来区分：</span><br><span class="line">&lt;constructor-arg value=&quot;1&quot; type=&quot;int&quot; /&gt;</span><br><span class="line">&lt;constructor-arg value=&quot;1.0&quot; type=&quot;double&quot; /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="、、标签"><a href="#、、标签" class="headerlink" title="、、标签"></a><list>、<set>、<map>标签</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">map标签则需要指定键和值：</span><br><span class="line">&lt;map&gt;</span><br><span class="line">	&lt;entry key=&quot;key&quot;&gt;</span><br><span class="line">		&lt;value&gt;value&lt;/value&gt;</span><br><span class="line">	&lt;/entry&gt;</span><br><span class="line">&lt;/map&gt;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="bean的继承"><a href="#bean的继承" class="headerlink" title="bean的继承"></a>bean的继承</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;bean id=&quot;User0&quot; class=&quot;com.test.User&quot;&gt;</span><br><span class="line">    	&lt;property name=&quot;name&quot; value=&quot;Li&quot;/&gt;</span><br><span class="line">		&lt;property name=&quot;friends&quot; ref=&quot;UserFriends&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;bean id=&quot;User1&quot; class=&quot;com.test.User&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;name&quot; value=&quot;Liu&quot;/&gt;</span><br><span class="line">		&lt;property name=&quot;friends&quot; ref=&quot;UserFriends&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;bean id=&quot;UserFriends&quot; class=&quot;com.test.Friends&quot;&gt;</span><br><span class="line">		&lt;!--省略--&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br><span class="line">可以看到，User0和User1有一个共同的配置，就是都依赖于UserFriends。如果按照上面那样配置，就看起来有些冗余。</span><br><span class="line">所以，Spring引入了parent属性：</span><br><span class="line">&lt;bean id=&quot;User0&quot; class=&quot;com.test.User&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;name&quot; value=&quot;Li&quot;/&gt;</span><br><span class="line">	&lt;property name=&quot;friends&quot; ref=&quot;UserFriends&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">&lt;bean id=&quot;User1&quot; class=&quot;com.test.User&quot; parent=&quot;User0&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;name&quot; value=&quot;Liu&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">这样，User1就继承了User0定义的默认值。</span><br><span class="line">还有一种方法就是指定一个模板bean：</span><br><span class="line">&lt;bean id=&quot;User&quot; abstract=&quot;true&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;friends&quot; ref=&quot;UserFriends&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">    </span><br><span class="line">&lt;bean id=&quot;User0&quot; class=&quot;com.test.User&quot; parent=&quot;User&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;name&quot; value=&quot;Li&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">&lt;bean id=&quot;User1&quot; class=&quot;com.test.User&quot; parent=&quot;User&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;name&quot; value=&quot;Liu&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-Spring当中的BeanPostProcessor是什么"><a href="#6-Spring当中的BeanPostProcessor是什么" class="headerlink" title="6.Spring当中的BeanPostProcessor是什么"></a>6.Spring当中的BeanPostProcessor是什么</h3><p>Spring为我们提供了一个BeanPostProcessor接口，该接口可以在bean初始化时让我们可以干预做一些操作。我们需要自己用一个类，实现该接口，接口中会有两个方法，在bean初始化前做一些事情，在类初始化后做一些事情，加入具体的逻辑即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">定义bean后置处理器，需要实现BeanPostProcessor接口，spring在初始化每个bean前后, 将分别BeanPostProcessor接口的以下两个方法:</span><br><span class="line">default Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException &#123;</span><br><span class="line">   return bean;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">default Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException &#123;</span><br><span class="line">   return bean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-Spring中的Aware接口"><a href="#7-Spring中的Aware接口" class="headerlink" title="7.Spring中的Aware接口"></a>7.Spring中的Aware接口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在实际的开发中,我们却经常要用到Spring容器本身的功能或资源,Spring提供了一系列Aware接口来实现具体功能。只要我们的bean实现了具体的Aware接口，并实现其方法，Spring容器就会把具体的资源传给我们。</span><br><span class="line"></span><br><span class="line">扩充：我们常用的Aware接口有：</span><br><span class="line">BeanNameAware  获取容器中 Bean 的名称  </span><br><span class="line">BeanFactoryAware 获取当前 BeanFactory ，这样可以调用容器的服务  </span><br><span class="line">ApplicationContextAware 获取当前Spring容器</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-Spring是如何解决循环依赖的"><a href="#8-Spring是如何解决循环依赖的" class="headerlink" title="8.Spring是如何解决循环依赖的"></a>8.Spring是如何解决循环依赖的</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">singletonObjects：一级缓存，存放完全初始化好的Bean的集合，从这个集合中取出来的Bean可以立马返回</span><br><span class="line">earlySingletonObjects：二级缓存，存放创建好但没有初始化属性的Bean的集合，它用来解决循环依赖</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-Spring中的bean是线程安全的吗？那要怎么解决呢"><a href="#9-Spring中的bean是线程安全的吗？那要怎么解决呢" class="headerlink" title="9.Spring中的bean是线程安全的吗？那要怎么解决呢"></a>9.Spring中的bean是线程安全的吗？那要怎么解决呢</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当多个线程操作同一个对象的时候，对这个对象的非静态成员变量的写操作会存在线程安全问题。我们可以通过@Scope（&quot;prototype&quot;）注解来指定创建模式为多例。也可以通过ThreadLocal来解决这个问题（了解）。</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-SpringMVC中有几大组件？分别是哪些呢？它们如何交互工作的"><a href="#10-SpringMVC中有几大组件？分别是哪些呢？它们如何交互工作的" class="headerlink" title="10.SpringMVC中有几大组件？分别是哪些呢？它们如何交互工作的"></a>10.SpringMVC中有几大组件？分别是哪些呢？它们如何交互工作的</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SpringMVC有5大组件。</span><br><span class="line">分别是DispatcherServlet(前端控制器)、HandlerMapping(请求派发控制器)、Controller(请求处理控制器)、ModelAndView(数据和视图名)、ViewResolver(视图解析器)。</span><br><span class="line">1.客户端发送请求，直接请求到DispatcherServlet。</span><br><span class="line">2.DispatcherServlet根据请求信息调用HandlerMapping，解析请求转发到Controller中。</span><br><span class="line">3.处理完业务逻辑后，会返回一个ModelAndView对象。</span><br><span class="line">4.ViewResolver会根据逻辑View进行视图解析。</span><br><span class="line">5.DispatcherServlet返回给客户端进行视图渲染。</span><br></pre></td></tr></table></figure>
+
+<h4 id="11-什么是SpringAOP？那什么是切面编程"><a href="#11-什么是SpringAOP？那什么是切面编程" class="headerlink" title="11.什么是SpringAOP？那什么是切面编程"></a>11.什么是SpringAOP？那什么是切面编程</h4><p>AOP是面向切面的编程。切面编程是将原有业务中共通的处理逻辑抽离出来，进行独立封装，然后通过配置作用到原有传统的业务处理方法上。例如我们常常用来做事务处理，日志处理，异常处理，权限处理等。</p>
+<h4 id="12切面编程的三大要素是什么"><a href="#12切面编程的三大要素是什么" class="headerlink" title="12切面编程的三大要素是什么"></a>12切面编程的三大要素是什么</h4><p>切面：共通功能</p>
+<p>切入点：对哪些方法进行切入</p>
+<p>通知：在方法的什么位置切入</p>
+<p>扩充：springAOP有三种配置切面的方式</p>
+<p>通过xml+表达式进行配置</p>
+<p>通过Aspect注解+表达式进行配置</p>
+<p>通过Aspect注解+自定义注解配置</p>
+<h3 id="13-SpringAOP的底层原理是什么？Spring当中的动态代理有哪些实现方式？你能分别说说他们的机制吗"><a href="#13-SpringAOP的底层原理是什么？Spring当中的动态代理有哪些实现方式？你能分别说说他们的机制吗" class="headerlink" title="13.SpringAOP的底层原理是什么？Spring当中的动态代理有哪些实现方式？你能分别说说他们的机制吗"></a>13.SpringAOP的底层原理是什么？Spring当中的动态代理有哪些实现方式？你能分别说说他们的机制吗</h3><p>SpringAOP的实现原理是采用动态代理技术。Spring采用两种方法来实现动态代理，分别是JDK动态代理技术和CGLIB动态代理技术。JDK动态代理技术要求我们实现InvocationHandler接口，当我们的代理类调用方法时，会被其invoke方法拦截，进行方法的增强，但它必须基于接口来实现。CGLIB底层采用的是字节码技术来生成代理类，也是在我们调用代理类方法时，被拦截，进行方法的增强，但它可以不基于接口来实现，而采用继承的方式来实现。</p>
+<h4 id="14-什么是事务？事务有哪些特征"><a href="#14-什么是事务？事务有哪些特征" class="headerlink" title="14.什么是事务？事务有哪些特征"></a>14.什么是事务？事务有哪些特征</h4><p>事务通常用于数据库领域，事务是指对数据库进行读或写的一组操作序列，要么都执行，要么都不执行，不允许只执行一部分的情况；事务的操作结果只有两种，一种是提交成功，一种是提交不成功恢复到操作之前的状态。</p>
+<p>事务的特征包含ACID，即原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）、持久性（Durability）。</p>
+<p>扩充：Spring中基于注解的事务参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">可读可写控制：@Transactional(readOnly = true)</span><br><span class="line">true表示只读，表示数据库的连接是否是只读的，只能用于查询操作，不能用来增、删、改操作，默认是false，一般来说，只有纯查询方法，我们使用只读</span><br><span class="line"></span><br><span class="line">事务超时：@Transactional(timeout = -1)</span><br><span class="line">timeout：-1代表使用数据库默认的超时时间，如果填写例如5这样的数字，即为超时时间为5秒</span><br><span class="line"></span><br><span class="line">回滚控制：@Transactional(noRollbackFor = FileNotFoundException.class, rollbackFor = Exception.class)</span><br><span class="line">rollback-for : 如果没有配置，默认情况下是代码发生运行时异常或者Error错误，Spring事务会进行回滚，非运行时异常(检查式异常、编译时异常)Exception则不会回滚，</span><br><span class="line">可以通过rollback-for指定需要回滚的检查式异常，指定异常之后，被指定的异常和该异常的子类都会得到回滚，并且运行时异常和Error异常仍然会得到回滚</span><br><span class="line">rollback-for 和 no-rollback-for，当rollback-for配置为检查式异常，那么会覆盖掉 no-rollback-for 配置项目，也就是no-rollback-for配置就无效</span><br><span class="line">当rollback-for配置为运行时异常，那么不会覆盖掉 no-rollback-for 配置项目，也就是no-rollback-for配置是有效，与两个配置项的顺序无关</span><br></pre></td></tr></table></figure>
+
+<h3 id="15-Spring当中的事务隔离级别有几种？分别是什么呢"><a href="#15-Spring当中的事务隔离级别有几种？分别是什么呢" class="headerlink" title="15.Spring当中的事务隔离级别有几种？分别是什么呢"></a>15.Spring当中的事务隔离级别有几种？分别是什么呢</h3><p>Spring当中的事务隔离级别有5种。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">TransactionDefinition.ISOLATION_DEFAULT: </span><br><span class="line">默认级别，使用数据库默认的隔离级别，MySQL默认是可重复读，Oracle 默认是读已提交。</span><br><span class="line"></span><br><span class="line">TransactionDefinition.ISOLATION_READ_UNCOMMITTED：</span><br><span class="line">读未提交，一个事务能读取到另一个事务还未提交的数据，这个叫读未提交，这种事务隔离级别可能产生脏读，因为如果另一个事务将数据回滚，那么第一个事务读取的数据就是脏数据，数据库最终并没有这条数据，这种方式几乎不用，可能会导致脏读、幻读或不可重复读。</span><br><span class="line"></span><br><span class="line">TransactionDefinition.ISOLATION_READ_COMMITTED: </span><br><span class="line">读已提交，一个事务提交的数据在另一个事务中才能读取到，没有提交则读取不到，可以预防脏读；但是会带来另一个问题，那就是不可重复读，就是在同一个事务中，每次读取数据库，读取到的数据条数都不一致，因为有别的事务在提交事务。</span><br><span class="line"></span><br><span class="line">TransactionDefinition.ISOLATION_REPEATABLE_READ: </span><br><span class="line">可重复读，一个事务提交的数据，在另一个事务中依然也读取不到，也就是一个事务在开始时只能读取此刻的数据，后面数据库发生的变化，这个读取事务是无法感知的，解决了不可重复读问题，但也会带来一个问题，那就是幻读，读取到的数据与数据库真实的数据不一致，产生了幻像。</span><br><span class="line"></span><br><span class="line">TransactionDefinition.ISOLATION_SERIALIZABLE: </span><br><span class="line">串行化，一个事务在操作数据的时候会把该表锁住，其他事务只能等待，这种级别可以解决脏读、幻读、不可重复读。但是这种方式的效率极低，因为会锁住整个表，通常情况下也不会用到该级别。</span><br></pre></td></tr></table></figure>
+
+<h3 id="16-Spirng事务中的事务传播控制有几种"><a href="#16-Spirng事务中的事务传播控制有几种" class="headerlink" title="16.Spirng事务中的事务传播控制有几种"></a>16.Spirng事务中的事务传播控制有几种</h3><p>Spring支持7种事务传播。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Transactional(propagation = Propagation.REQUIRED)</span><br><span class="line">public class ServiceA &#123;           </span><br><span class="line">     public void methodA () &#123;  </span><br><span class="line">         serviceB.methodB ();  </span><br><span class="line">     &#125;  </span><br><span class="line">&#125;      </span><br><span class="line">public class ServiceB &#123;           </span><br><span class="line">     public void methodB () &#123;  </span><br><span class="line">     &#125;           </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="17-什么是SpringBoot的自动装配"><a href="#17-什么是SpringBoot的自动装配" class="headerlink" title="17.什么是SpringBoot的自动装配"></a>17.什么是SpringBoot的自动装配</h4><p>SpringBoot会读取classpath下的META-INF/spring.factories文件，其文件中我们可以添加配置好的类，SpringBoot会把这些类自动配置成bean加入的Spring容器中。</p>
+<h3 id="18-什么是Mybatis的一级缓存和二级缓存"><a href="#18-什么是Mybatis的一级缓存和二级缓存" class="headerlink" title="18.什么是Mybatis的一级缓存和二级缓存"></a>18.什么是Mybatis的一级缓存和二级缓存</h3><p>一级缓存是默认开启的，是SqlSession级别的缓存， 在操作数据库时需要构造sqlSession对象，不同的sqlSession之间的缓存数据区域是互相不影响的，不同的sqlSession中的缓存是互相不能读取。</p>
+<p>二级缓存需要手动开启，在xml中进行配置，是namespace（命名空间）级别的缓存基于，多个SqlSession可以共用二级缓存，二级缓存是跨SqlSession的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">一级缓存的失效情况：</span><br><span class="line">1.手动调用clearCache()清理Session缓存</span><br><span class="line">2.同一个SqlSession两次查询期间执行了任何一次增删改操作，并commit了</span><br><span class="line">3.同一个SqlSession但是查询条件不同</span><br><span class="line">4.不同的SqlSession对应不同的一级缓存</span><br><span class="line"></span><br><span class="line">二级缓存的开启：</span><br><span class="line">二级缓存默认关闭的，如果配置开启二级缓存，需要同时开启配置下面两项</span><br><span class="line">主配置文件Mybatis-config.xml</span><br><span class="line">&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;   </span><br><span class="line">需要开启二级缓存的Mapper.xml</span><br><span class="line">&lt;cache/&gt;</span><br><span class="line">注意：</span><br><span class="line">1.用二级缓存的POJO类要实现Serializable接口</span><br><span class="line">2.二级缓存在session提交或关闭后才生效</span><br><span class="line"></span><br><span class="line">二级缓存的属性配置：</span><br><span class="line">&lt;cache/&gt;的配置属性：</span><br><span class="line">blocking：默认为false，当指定为true时将采用进行blocking，阻塞的意思，会在查询缓存时锁住对应的Key，如果缓存命中了则会释放对应的锁，否则会在查询数据库以后再释放锁，这样可以阻止并发情况下多个线程同时查询数据。</span><br><span class="line">eviction： 驱逐的意思，也就是元素驱逐算法，默认是LRU，其默认只保存1024个Key，超出时按照最近最少使用算法进行驱逐，除了LRU以外；</span><br><span class="line">系统还提供了FIFO（先进先出）；</span><br><span class="line">SOFT（采用软引用存储Value，便于垃圾回收）</span><br><span class="line">WEAK（采用弱引用存储Value，便于垃圾回收） 三种策略；</span><br><span class="line">flushInterval：清空缓存的时间间隔，单位是毫秒；</span><br><span class="line">readOnly：是否只读，默认为false。</span><br><span class="line">size：用来指定缓存中最多保存的Key的数量，默认只存储最多1024个Key</span><br><span class="line"></span><br><span class="line">二级缓存的相关设置：</span><br><span class="line">1、select标签的useCache属性：配置这个select是否使用二级缓存，一级缓存一直是使用的；默认为true</span><br><span class="line">2、增删改标签的flushCache属性：增删改默认flushCache=true。sql执行以后，会同时清空一级和二级缓存。查询默认flushCache=false</span><br><span class="line">3、sqlSession.clearCache()：只是用来清除一级缓存</span><br><span class="line">4、一级缓存Session/二级缓存Namespaces，在进行了 增/删/改 操作后，默认该作用域下所有select 中的缓存将被clear</span><br><span class="line">注意：缓存都是存放于内存当中的，如果你的服务并发较高，使用二级缓存可能会降低服务器性能，一般我们不会使用二级缓存，常用redis来替换他</span><br></pre></td></tr></table></figure>
+
+<h3 id="19-在Mybatis中用-取值和-取值有什么区别？那什么是SQL注入"><a href="#19-在Mybatis中用-取值和-取值有什么区别？那什么是SQL注入" class="headerlink" title="19.在Mybatis中用#{}取值和${}取值有什么区别？那什么是SQL注入"></a>19.在Mybatis中用#{}取值和${}取值有什么区别？那什么是SQL注入</h3><p>#{}是做预编译取值，${}是做字符串拼接取值，${}可能会产生SQL注入问题。</p>
+<p>SQL注入是指的，数据库被拖库，导致重要信息泄露，本质是把用户的数据当做有效代码来执行SQL语句。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">扩充：</span><br><span class="line">如何在mybatis中防范SQL注入</span><br><span class="line">案例1</span><br><span class="line">select * from course where title like &#x27;%#&#123;title&#125;%&#x27;</span><br><span class="line">由于这样写程序会报错，开发人员会将SQL改为:</span><br><span class="line">select * from course where title like &#x27;%$&#123;title&#125;%&#x27;</span><br><span class="line">此时程序不再报错，但会产生了SQL语句拼接问题，如果Java代码未对用户输入的内容做处理可能产生SQL注入漏洞</span><br><span class="line">可将SQL语句设计如下：</span><br><span class="line">select * from course where tile like concat(&#x27;%&#x27;, #&#123;title&#125;, &#x27;%&#x27;)</span><br><span class="line"></span><br><span class="line">案例2</span><br><span class="line">select * from news where id in (#&#123;id&#125;) 1,2,3,4</span><br><span class="line">由于这样写程序会报错，开发人员将SQL查询语句修改如下：</span><br><span class="line">select * from news where id in ($&#123;id&#125;)  </span><br><span class="line">此时便引入了SQL语句拼接的问题，如果研发人员未对用户输入的内容做过滤，容易产生SQL注入漏洞。</span><br><span class="line">可使用MyBatis自带循环标签解决SQL语句动态拼接的问题：</span><br><span class="line">select * from news where id in</span><br><span class="line">&lt;foreach collection=&quot;ids&quot; item=&quot;item&quot; open=&quot;(&quot;separator=&quot;,&quot; close=&quot;)&quot;&gt;</span><br><span class="line">#&#123;item&#125; </span><br><span class="line">&lt;/foreach&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
