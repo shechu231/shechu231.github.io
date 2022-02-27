@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Docker安装设置 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="离线安装Docker系统(课上重点）第一步：下载docker离线包
+https://download.docker.com/linux/static/stable/x86_64/docker-20.,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Docker安装设置 - Hexo"/>
+    <meta name="twitter:description" content="离线安装Docker系统(课上重点）第一步：下载docker离线包
+https://download.docker.com/linux/static/stable/x86_64/docker-20.,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Docker安装设置 - Hexo"/>
+    <meta property="og:description" content="离线安装Docker系统(课上重点）第一步：下载docker离线包
+https://download.docker.com/linux/static/stable/x86_64/docker-20.,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Docker安装设置</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Docker安装设置</h1>
+        <div class="stuff">
+            <span>二月 23, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h2 id="离线安装Docker系统-课上重点）"><a href="#离线安装Docker系统-课上重点）" class="headerlink" title="离线安装Docker系统(课上重点）"></a>离线安装Docker系统(课上重点）</h2><h3 id="第一步：下载docker离线包"><a href="#第一步：下载docker离线包" class="headerlink" title="第一步：下载docker离线包"></a>第一步：下载docker离线包</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz">https://download.docker.com/linux/static/stable/x86_64/docker-20.10.6.tgz</a></p>
+</blockquote>
+<p>说明，也可以从<a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/%E7%BD%91%E5%9D%80%E4%B8%8B%E8%BD%BD%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%AC">https://download.docker.com/linux/static/stable/网址下载指定版本</a></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/Jrohy/docker-install/">https://github.com/Jrohy/docker-install/</a></p>
+</blockquote>
+<p><img src="https://s2.loli.net/2022/02/23/Oy87ghT9o4kWjzI.png" alt="image-20220223104857703"></p>
+<blockquote>
+<p>第三步：将下载好的资源放在一个目录，例如：</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2022/02/23/DFiLwXbKZBTer56.png" alt="image-20220223104922341"></p>
+<blockquote>
+<p>第四步:在linux环境下，创建/root/setup/docker目录，然后拷贝下载好的资源到此目录（可通过MobaXterm工具直接上传到linux目录）,例如</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2022/02/23/fg4mulHbJWBA6xi.png" alt="image-20220223104955242"></p>
+<blockquote>
+<p>第五步：执行安装操作</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 进入/root/setup/docker 文件夹</span><br><span class="line">cd /root/setup/docker</span><br><span class="line"></span><br><span class="line"># 为 install.sh添加执行权限</span><br><span class="line">chmod +x install.sh</span><br><span class="line"></span><br><span class="line"># 安装</span><br><span class="line">./install.sh -f docker-20.10.6.tgz</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>第六步：安装成功以后，检查安装状态</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info</span><br></pre></td></tr></table></figure>
+
+<h2 id="在线安装Docker"><a href="#在线安装Docker" class="headerlink" title="在线安装Docker"></a>在线安装Docker</h2><p>设置 yum 仓库地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager \</span><br><span class="line">     --add-repo \</span><br><span class="line">     http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<p>更新 yum 缓存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum makecache fast #yum 是包管理器</span><br></pre></td></tr></table></figure>
+
+<p>安装新版 docker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装MySql数据库"><a href="#安装MySql数据库" class="headerlink" title="安装MySql数据库"></a>安装MySql数据库</h1><p>第一步：在hub.<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=docker&spm=1001.2101.3001.7020">docker</a>.com上搜索mysql镜像</p>
+<p><img src="https://s2.loli.net/2022/02/23/L5QSCYm7Deu2Wab.png" alt="image-20220223105543400"></p>
+<p>第二步：拉取指定版本的mysql，也可以指定拉取版本，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:8.0.23</span><br></pre></td></tr></table></figure>
+
+<p>第三步：检查mysql镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p>第四步：启动运行mysql镜像 (docker run 用于启动一个容器)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -p 3306:3306 --name mysql \</span><br><span class="line">-v /usr/local/docker/mysql/mysql-files:/var/lib/mysql-files \</span><br><span class="line">-v /usr/local/docker/mysql/conf:/etc/mysql \</span><br><span class="line">-v /usr/local/docker/mysql/logs:/var/log/mysql \</span><br><span class="line">-v /usr/local/docker/mysql/data:/var/lib/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=root \</span><br><span class="line">-d mysql:8.0.23</span><br></pre></td></tr></table></figure>
+
+<p>假如安装过程中失败了，则可通过docker ps -a 查看以前的容器，假如已存在，则通过docker rm 镜像id 删除再重新安装即可。</p>
+<h2 id="登陆mysql服务"><a href="#登陆mysql服务" class="headerlink" title="登陆mysql服务"></a>登陆mysql服务</h2><p>第一步：进入容器 (退出容器用exit)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it mysql bash</span><br></pre></td></tr></table></figure>
+
+<p>第二步：登陆(默认密码root)，一定要先进入mysql容器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -proot</span><br></pre></td></tr></table></figure>
+
+<h2 id="停止和启动mysql服务"><a href="#停止和启动mysql服务" class="headerlink" title="停止和启动mysql服务"></a>停止和启动mysql服务</h2><p>停止mysql服务（可选）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop mysql</span><br></pre></td></tr></table></figure>
+
+<p>启动mysql服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start mysql</span><br></pre></td></tr></table></figure>
+
+<p>假如希望查看mysql启动时的日志，可以执行 docker container logs mysql 这个指令。</p>
+<p>设置mysql开机自启动（可选）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker update mysql --restart=always</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装Redis数据库"><a href="#安装Redis数据库" class="headerlink" title="安装Redis数据库"></a>安装Redis数据库</h1><h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>第一步：下载镜像文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis</span><br></pre></td></tr></table></figure>
+
+<p>第二步：准备配置文件</p>
+<p>创建redis配置文件目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/local/docker/redis01/conf</span><br></pre></td></tr></table></figure>
+
+<p>在配置文件录下创建redis.conf配置文件(这个文件一定要创建，否在我们进行目录挂载时默认生成的是一个目录)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch /usr/local/docker/redis01/conf/redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>第三步：创建redis实例并启动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -p 6379:6379 --name redis01 \</span><br><span class="line">-v /usr/local/docker/redis01/data:/data \</span><br><span class="line">-v /usr/local/docker/redis01/conf/redis.conf:/etc/redis/redis.conf \</span><br><span class="line">-d redis redis-server /etc/redis/redis.conf </span><br></pre></td></tr></table></figure>
+
+<p>第四步：查看正在运行的进程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问redis服务器"><a href="#访问redis服务器" class="headerlink" title="访问redis服务器"></a>访问redis服务器</h2><p>第一步：控制台直接连接redis测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it redis01 bash</span><br></pre></td></tr></table></figure>
+
+<p>第二步：检测redis 版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server  -v</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -v</span><br></pre></td></tr></table></figure>
+
+<p>第三步：登录redis(默认不需要密码)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure>
+
+<p>或者直接将上面的两个步骤合为一个步骤执行也可以，指令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it redis01 redis-cli</span><br></pre></td></tr></table></figure>
+
+<h2 id="停止和启动redis服务"><a href="#停止和启动redis服务" class="headerlink" title="停止和启动redis服务"></a>停止和启动redis服务</h2><blockquote>
+<p>停止redis服务？</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop redis01</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>启动redis服务？</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start redis01</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>重启 redis 服务？</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart redis01</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装Nginx代理"><a href="#安装Nginx代理" class="headerlink" title="安装Nginx代理"></a>安装<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Nginx&spm=1001.2101.3001.7020">Nginx</a>代理</h1><h2 id="安装步骤-1"><a href="#安装步骤-1" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>第一步：拉取nginx镜像 （从这里hub.docker.com去查找）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
+
+<p>第二步：查看images镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p>第三步:创建数据卷(这个对象会在宿主机直接创建一个目录)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create nginx-vol</span><br></pre></td></tr></table></figure>
+
+<p>说明:查看数据卷对应的宿主机目录,可以通过如下指令:</p>
+<p>第四步：启动nginx服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name nginx  -p 80:80 -v nginx-vol:/etc/nginx -d nginx</span><br></pre></td></tr></table></figure>
+
+<p>其中:/etc/nginx 为nginx容器启动时,nginx镜像文件默认的解压目录</p>
+<p>说明:假如以后想修改nginx配置,可以直接去nginx-vol数据卷对应的目录去修改.</p>
+<h2 id="访问nginx服务"><a href="#访问nginx服务" class="headerlink" title="访问nginx服务"></a>访问nginx服务</h2><p>进行访问检测，如图所示：</p>
+<p><img src="https://s2.loli.net/2022/02/23/GHV96QJIsfjkyhl.png" alt="image-20220223110042196"></p>
+<h2 id="停止和nginx服务"><a href="#停止和nginx服务" class="headerlink" title="停止和nginx服务"></a>停止和nginx服务</h2><blockquote>
+<p>停止nginx服务</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop nginx</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>启动nginx服务</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start nginx</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>重启nginx服务</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart nginx</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装Nacos组件"><a href="#安装Nacos组件" class="headerlink" title="安装Nacos组件"></a>安装<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Nacos&spm=1001.2101.3001.7020">Nacos</a>组件</h1><h2 id="安装步骤-2"><a href="#安装步骤-2" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>第一步：拉取nacos（hub.docker.com）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nacos/nacos-server:1.4.1</span><br></pre></td></tr></table></figure>
+
+<p>第二步： mysql中执行nacos的sql脚本文件</p>
+<p>1)将此文件nacos-mysql.sql(这个文件可从code服务器下载)拷贝到mysql容器的宿主机对应的挂载目录(可通过docker inspect mysql查看你mysql的挂载目录)</p>
+<p>2)在linux环境下启动并登录mysql</p>
+<p>进入mysql容器(前提是mysql已启动)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it mysql bash</span><br></pre></td></tr></table></figure>
+
+<p>登录mysql</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+
+<p>3)通过source指令运行容器目录下的sql文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span>  /etc/mysql/nacos-mysql.sql  <span class="comment">#这里的/etc/mysql为容器中的一个目录(要选择你自己挂载的目录)</span></span><br></pre></td></tr></table></figure>
+
+<p>例如:</p>
+<p>第三步：创建并启动nacos容器(拷贝下面内容时,账号和密码要用自己宿主机ip,自己数据库的账号密码)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker run  \</span><br><span class="line">-e TZ=&quot;Asia/Shanghai&quot; \</span><br><span class="line">-e MODE=standalone \</span><br><span class="line">-e SPRING_DATASOURCE_PLATFORM=mysql \</span><br><span class="line">-e MYSQL_DATABASE_NUM=1 \</span><br><span class="line">-e MYSQL_SERVICE_HOST=192.168.126.129 \</span><br><span class="line">-e MYSQL_SERVICE_PORT=3306 \</span><br><span class="line">-e MYSQL_SERVICE_USER=root \</span><br><span class="line">-e MYSQL_SERVICE_PASSWORD=root \</span><br><span class="line">-e MYSQL_SERVICE_DB_NAME=nacos_config \</span><br><span class="line">-p 8848:8848 \</span><br><span class="line">--name nacos \</span><br><span class="line">--restart=always \</span><br><span class="line">-d nacos/nacos-server:1.4.1</span><br></pre></td></tr></table></figure>
+
+<p>参数说明</p>
+<ul>
+<li>单节点模式<br>MODE=standalone</li>
+<li>数据库地址<br>MYSQL_SERVICE_HOST</li>
+<li>数据库用户名<br>MYSQL_SERVICE_USER</li>
+<li>数据库密码<br>MYSQL_SERVICE_PASSWORD</li>
+<li>需连接的数据库名称<br>MYSQL_SERVICE_DB_NAME</li>
+<li>端口映射<br>-p 8848:8848</li>
+<li>任意时候重启容器，开机就能自动启动容器（需设置docker为开机自启）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--restart=always</span><br></pre></td></tr></table></figure>
+
+<p>第四步：检查nacos服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>假如启动失败，检查启动日志，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container logs nacos</span><br></pre></td></tr></table></figure>
+
+<p>其中，nacos的启动日志在/home/nacos/logs/start.out文件中。</p>
+<h2 id="访问nacos服务"><a href="#访问nacos服务" class="headerlink" title="访问nacos服务"></a>访问nacos服务</h2><p>启动nacos，然后在windows中输入<a href="http://ip:port/nacos方式进行访问测试">http://ip:port/nacos方式进行访问测试</a></p>
+<p><img src="https://s2.loli.net/2022/02/23/jVeDicOoQR36tUs.png" alt="image-20220223110346950"></p>
+<p>说明,nacos登录时,默认用户名和密码都是nacos.</p>
+<h2 id="Nacos-与-MySQL-通讯分析"><a href="#Nacos-与-MySQL-通讯分析" class="headerlink" title="Nacos 与 MySQL 通讯分析"></a>Nacos 与 MySQL 通讯分析</h2><p><img src="https://s2.loli.net/2022/02/23/avjJVKiqDoMfYg9.png" alt="image-20220223110402874"></p>
+<h2 id="停止和启动nacos服务"><a href="#停止和启动nacos服务" class="headerlink" title="停止和启动nacos服务"></a>停止和启动nacos服务</h2><blockquote>
+<p>停止nacos服务</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop nacos</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>启动nacos服务</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start nacos</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>重启nacos服务</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart nacos</span><br></pre></td></tr></table></figure>
+
+<h1 id="Docker服务基本操作"><a href="#Docker服务基本操作" class="headerlink" title="Docker服务基本操作"></a><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Docker&spm=1001.2101.3001.7020">Docker</a>服务基本操作</h1><h2 id="查看Docker状态"><a href="#查看Docker状态" class="headerlink" title="查看Docker状态"></a>查看Docker状态</h2><p>查看docker是否启动了,是否是运行状态.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/02/23/Hm3GuqTC7drV962.png" alt="image-20220223110508398"></p>
+<h2 id="停止docker服务"><a href="#停止docker服务" class="headerlink" title="停止docker服务"></a>停止docker服务</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动docker服务"><a href="#启动docker服务" class="headerlink" title="启动docker服务"></a>启动docker服务</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置Docker开机自启"><a href="#设置Docker开机自启" class="headerlink" title="设置Docker开机自启"></a>设置Docker开机自启</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="禁用Docker开机自启"><a href="#禁用Docker开机自启" class="headerlink" title="禁用Docker开机自启"></a>禁用Docker开机自启</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="重新启动Docker服务"><a href="#重新启动Docker服务" class="headerlink" title="重新启动Docker服务"></a>重新启动Docker服务</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看Docker信息"><a href="#查看Docker信息" class="headerlink" title="查看Docker信息"></a>查看Docker信息</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info</span><br></pre></td></tr></table></figure>
+
+<p>查看docker info中具体key的信息,例如:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info | grep <span class="string">&#x27;Docker Root Dir:&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker镜像加速"><a href="#Docker镜像加速" class="headerlink" title="Docker镜像加速"></a>Docker镜像加速</h2><p>由于国内网络问题，需要配置加速器来加速。修改配置文件 /etc/docker/daemon.json</p>
+<p>下面命令直接生成文件 daemon.json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; /etc/docker/daemon.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [</span><br><span class="line">    &quot;https://docker.mirrors.ustc.edu.cn&quot;,</span><br><span class="line">    &quot;http://hub-mirror.c.163.com&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;max-concurrent-downloads&quot;: 10,</span><br><span class="line">  &quot;log-driver&quot;: &quot;json-file&quot;,</span><br><span class="line">  &quot;log-level&quot;: &quot;warn&quot;,</span><br><span class="line">  &quot;log-opts&quot;: &#123;</span><br><span class="line">    &quot;max-size&quot;: &quot;10m&quot;,</span><br><span class="line">    &quot;max-file&quot;: &quot;3&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">  &quot;data-root&quot;: &quot;/var/lib/docker&quot;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>说明：在执行如上指令时，保证你的登录用户为root管理员用户,并且设置好以后重启docker服务.</p>
+<h1 id="Docker数据管理实践"><a href="#Docker数据管理实践" class="headerlink" title="Docker数据管理实践"></a><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Docker&spm=1001.2101.3001.7020">Docker</a>数据管理实践</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在容器中管理数据主要有两种方式：</p>
+<ul>
+<li>数据卷（Volumes）</li>
+<li>挂载主机目录 (Bind mounts)</li>
+</ul>
+<h2 id="数据卷"><a href="#数据卷" class="headerlink" title="数据卷"></a>数据卷</h2><p>数据卷是一个可供一个或多个容器使用的特殊目录，可以在容器之间共享和重用，默认会一直存在，即使容器被删除。</p>
+<h2 id="数据卷操作"><a href="#数据卷操作" class="headerlink" title="数据卷操作"></a>数据卷操作</h2><p>第一步：创建数据卷，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create container-vol</span><br></pre></td></tr></table></figure>
+
+<p>第二步：查看所有数据卷，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume ls</span><br></pre></td></tr></table></figure>
+
+<p>查看指定 数据卷 的信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume inspect container-vol</span><br></pre></td></tr></table></figure>
+
+<p>查询的结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">        &quot;Labels&quot;: &#123;&#125;,</span><br><span class="line">        &quot;Mountpoint&quot;: &quot;/var/lib/docker/volumes/container-vol/_data&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;container-vol&quot;,</span><br><span class="line">        &quot;Options&quot;: &#123;&#125;,</span><br><span class="line">        &quot;Scope&quot;: &quot;local&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第三步：启动挂载数据卷的容器，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --mount source=container-vol,target=/root centos:7 bash</span><br></pre></td></tr></table></figure>
+
+<p>或者采用如下简写方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -v container-vol:/root centos:7 bash</span><br></pre></td></tr></table></figure>
+
+<p>-v <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=container&spm=1001.2101.3001.7020">container</a>-vol:/root 把数据卷 container-vol 挂载到容器的 /root 目录</p>
+<p>第四步：删除数据卷(如果数据卷被容器使用则无法删除)，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume rm container-vol</span><br></pre></td></tr></table></figure>
+
+<p>清理无主数据卷</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume prune</span><br></pre></td></tr></table></figure>
+
+<h2 id="挂载主机目录"><a href="#挂载主机目录" class="headerlink" title="挂载主机目录"></a>挂载主机目录</h2><p>我们还可以在启动容器时，以目录直接挂载的方式进行数据操作，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -v /usr/app:/opt/app centos:7 bash</span><br></pre></td></tr></table></figure>
+
+<p>其中：<br>1)/usr/app：为宿主机目录<br>2)/opt/app: 为启动容器的一个目录<br>3)-v 用于指定挂载目录，如果本地目录(宿主机目录)不存在， Docker 会自动为你按照挂载目录进行目录的创建。</p>
+<p>例如:</p>
+<p><img src="https://s2.loli.net/2022/02/23/bVu7AXePkBQv3zc.png" alt="image-20220223110917877"></p>
+<p>查看挂载目录信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect 91a #91a 为容器id</span><br></pre></td></tr></table></figure>
+
+<p>显示结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">&quot;Mounts&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">        &quot;Source&quot;: &quot;/usr/app&quot;,</span><br><span class="line">        &quot;Destination&quot;: &quot;/opt/app&quot;,</span><br><span class="line">        &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">        &quot;RW&quot;: true,</span><br><span class="line">        &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">    &#125;</span><br><span class="line">],</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,663 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>安装Hadoop - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="集群环境准备准备虚拟机克隆三个虚拟机hadoop01、hadoop02、hadoop03均为NAT模式，其中hadoop01内存设置为1G（16G内存以上建议设置为2G），hadoop02和hado,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="安装Hadoop - Hexo"/>
+    <meta name="twitter:description" content="集群环境准备准备虚拟机克隆三个虚拟机hadoop01、hadoop02、hadoop03均为NAT模式，其中hadoop01内存设置为1G（16G内存以上建议设置为2G），hadoop02和hado,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="安装Hadoop - Hexo"/>
+    <meta property="og:description" content="集群环境准备准备虚拟机克隆三个虚拟机hadoop01、hadoop02、hadoop03均为NAT模式，其中hadoop01内存设置为1G（16G内存以上建议设置为2G），hadoop02和hado,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">安装Hadoop</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">安装Hadoop</h1>
+        <div class="stuff">
+            <span>二月 23, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="集群环境准备"><a href="#集群环境准备" class="headerlink" title="集群环境准备"></a>集群环境准备</h1><h2 id="准备虚拟机"><a href="#准备虚拟机" class="headerlink" title="准备虚拟机"></a>准备虚拟机</h2><p>克隆三个虚拟机hadoop01、hadoop02、hadoop03均为NAT模式，其中hadoop01内存设置为1G（16G内存以上建议设置为2G），hadoop02和hadoop03为512M。</p>
+<p><img src="https://s2.loli.net/2022/02/23/nILraS6VJpW4h8U.png" alt="image-20220223141638805"></p>
+<h3 id="修改系统邮件提示"><a href="#修改系统邮件提示" class="headerlink" title="修改系统邮件提示"></a>修改系统邮件提示</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;unset MAILCHECK&quot;</span>&gt;&gt; /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭NetworkManager，防止网络出错"><a href="#关闭NetworkManager，防止网络出错" class="headerlink" title="关闭NetworkManager，防止网络出错"></a>关闭NetworkManager，防止网络出错</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl disable NetworkManager</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改为静态IP"><a href="#修改为静态IP" class="headerlink" title="修改为静态IP"></a>修改为静态IP</h2><p>修改IP地址，将：</p>
+<p>第一台hadoop01的虚拟机ip地址改为：192.168.64.101</p>
+<p>第二台hadoop02的虚拟机ip地址改为：192.168.64.102</p>
+<p>第三台hadoop03的虚拟机ip地址改为：192.168.64.103</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/sysconfig/network-scripts   #进入网络配置目录</span><br><span class="line">dir ifcfg*                         #找到网卡配置文件</span><br><span class="line">ifcfg-ens33                         #找到版本最新的文件并修改</span><br><span class="line">vim ifcfg-ens33</span><br><span class="line">或者</span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置文件内容"><a href="#配置文件内容" class="headerlink" title="配置文件内容"></a>配置文件内容</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">TYPE=Ethernet</span><br><span class="line"> </span><br><span class="line">BOOTPROTO=static                              #改成static，针对NAT</span><br><span class="line"> </span><br><span class="line">NAME=eno16777736</span><br><span class="line"> </span><br><span class="line">UUID=4cc9c89b-cf9e-4847-b9ea-ac713baf4cc8</span><br><span class="line"> </span><br><span class="line">DEVICE=eno16777736</span><br><span class="line"> </span><br><span class="line">DNS1=114.114.114.114     #和网关相同</span><br><span class="line"> </span><br><span class="line">ONBOOT=yes               #开机启动此网卡</span><br><span class="line"> </span><br><span class="line">IPADDR=192.168.64.101    #固定IP地址</span><br><span class="line"> </span><br><span class="line">NETMASK=255.255.255.0    #子网掩码</span><br><span class="line"> </span><br><span class="line">GATEWAY=192.168.64.2     #网关和NAT自动配置的相同，不同则无法登录</span><br></pre></td></tr></table></figure>
+
+<h3 id="重启网络"><a href="#重启网络" class="headerlink" title="重启网络"></a>重启网络</h3><p>以下两种方式任选其一</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service network restart   #重启网络</span><br><span class="line"> </span><br><span class="line">systemctl restart network.service   #重启网络centos7</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看IP"><a href="#查看IP" class="headerlink" title="查看IP"></a>查看IP</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr                  #查看IP地址 ip add</span><br></pre></td></tr></table></figure>
+
+<h2 id="mobaxTerm的使用"><a href="#mobaxTerm的使用" class="headerlink" title="mobaxTerm的使用"></a>mobaxTerm的使用</h2><p><img src="https://s2.loli.net/2022/02/23/GQ8nO1JrefNaXZI.png" alt="image-20220223141841844"></p>
+<p>登录成功后，弹出对话框点yes 保存密码。</p>
+<p>补充：mobaxTerm远程连接慢的问题</p>
+<p>在使用shell连接虚拟机时连接等待时间太长，ssh的服务端在连接时会自动检测dns环境是否一致导致的，修改为不检测即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、打开sshd服务的配置文件</span><br><span class="line">vim /etc/ssh/sshd_config</span><br><span class="line">把UseDNS yes改为UseDNS no（如果没有，自行编写在文件末尾加入）</span><br><span class="line">2、重启sshd服务</span><br><span class="line">systemctl restart sshd.service 或者 /etc/init.d/sshd restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service        #关闭防火墙服务</span><br><span class="line">systemctl disable firewalld.service     #禁止防火墙开启启动</span><br></pre></td></tr></table></figure>
+
+<p>检查防火墙状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 ~]# firewall-cmd --state		#检查防火墙状态</span><br><span class="line">false							#返回值，未运行</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/hostname</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改hosts文件"><a href="#修改hosts文件" class="headerlink" title="修改hosts文件"></a>修改hosts文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p>在配置文件中增加ip地址映射</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.64.101 hadoop01</span><br><span class="line">192.168.64.102 hadoop02</span><br><span class="line">192.168.64.103 hadoop03</span><br></pre></td></tr></table></figure>
+
+<h2 id="三台机器重启"><a href="#三台机器重启" class="headerlink" title="三台机器重启"></a>三台机器重启</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置免密登录"><a href="#设置免密登录" class="headerlink" title="设置免密登录"></a>设置免密登录</h2><h3 id="三台机器生成公钥与私钥"><a href="#三台机器生成公钥与私钥" class="headerlink" title="三台机器生成公钥与私钥"></a>三台机器生成公钥与私钥</h3><h3 id="拷贝公钥到同一台机器"><a href="#拷贝公钥到同一台机器" class="headerlink" title="拷贝公钥到同一台机器"></a>拷贝公钥到同一台机器</h3><p>三台机器执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id hadoop01</span><br></pre></td></tr></table></figure>
+
+<h3 id="复制第一台机器的认证到其他机器"><a href="#复制第一台机器的认证到其他机器" class="headerlink" title="复制第一台机器的认证到其他机器"></a>复制第一台机器的认证到其他机器</h3><p>将第一台机器的公钥拷贝到其他机器上</p>
+<p>在第一台机器上面执行以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp /root/.ssh/authorized_keys hadoop02:/root/.ssh</span><br><span class="line">scp /root/.ssh/authorized_keys hadoop03:/root/.ssh</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>在hadoop01上进行远程登录测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh hadoop02</span><br></pre></td></tr></table></figure>
+
+<p>不需要输入密码直接进入说明成功，exit退出</p>
+<h2 id="三台机器时钟同步"><a href="#三台机器时钟同步" class="headerlink" title="三台机器时钟同步"></a>三台机器时钟同步</h2><p>通过网络进行时钟同步</p>
+<p>通过网络连接外网进行时钟同步,必须保证虚拟机连上外网</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate us.pool.ntp.org</span><br></pre></td></tr></table></figure>
+
+<p>三台机器定时任务</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">*    *    *    *    *</span><br><span class="line">-    -    -    -    -</span><br><span class="line">|    |    |    |    |</span><br><span class="line">|    |    |    |    +----- 星期中星期几 (0 - 6) (星期天 为0)</span><br><span class="line">|    |    |    +---------- 月份 (1 - 12) </span><br><span class="line">|    |    +--------------- 一个月中的第几天 (1 - 31)</span><br><span class="line">|    +-------------------- 小时 (0 - 23)</span><br><span class="line">+------------------------- 分钟 (0 - 59)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crontab  -e   </span><br><span class="line"></span><br><span class="line">*/1 * * * * /usr/sbin/ntpdate us.pool.ntp.org;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crontab [-u username]　　　　//省略用户表表示操作当前用户的crontab</span><br><span class="line">    -e      (编辑工作表)</span><br><span class="line">    -l      (列出工作表里的命令)</span><br><span class="line">    -r      (删除工作作)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="三台机器安装jdk"><a href="#三台机器安装jdk" class="headerlink" title="三台机器安装jdk"></a>三台机器安装jdk</h2><p>查看自带的openjdk</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep java</span><br></pre></td></tr></table></figure>
+
+<p>如果有，请卸载系统自带的openjdk，方式如下（注：目前系统已经卸载）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e java-1.6.0-openjdk-1.6.0.41-1.13.13.1.el6_8.x86_64 tzdata-java-2016j-1.el6.noarch java-1.7.0-openjdk-1.7.0.131-2.6.9.0.el6_8.x86_64 --nodeps</span><br></pre></td></tr></table></figure>
+
+<p>三台机器创建目录</p>
+<p>所有软件的安装路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /opt/servers</span><br></pre></td></tr></table></figure>
+
+<p>所有软件压缩包的存放路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /opt/softwares</span><br></pre></td></tr></table></figure>
+
+<p>上传jdk到/export/softwares路径下去，并解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf jdk-8u65-linux-x64.tar.gz -C ../servers/</span><br></pre></td></tr></table></figure>
+
+<p>配置环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">export JAVA_HOME=/opt/servers/jdk1.8.0_65</span><br><span class="line">export PATH=:$JAVA_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>修改完成之后记得 source /etc/profile生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>发送文件到hadoop02和hadoop03</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp -r /opt/servers/jdk1.8.0_65/ hadoop02:/opt/servers/</span><br><span class="line">scp -r /opt/servers/jdk1.8.0_65/ hadoop03:/opt/servers/</span><br></pre></td></tr></table></figure>
+
+<p>注意：发送完成后要配置环境变量并生效。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp /etc/profile hadoop02:/etc/</span><br><span class="line">scp /etc/profile hadoop03:/etc/</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<p>出现JDK版本号即为成功。</p>
+<h2 id="修改windows中的hosts文件"><a href="#修改windows中的hosts文件" class="headerlink" title="修改windows中的hosts文件"></a>修改windows中的hosts文件</h2><p>在windows中的hosts文件里添加如下映射</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.64.101 hadoop01</span><br><span class="line">192.168.64.102 hadoop02</span><br><span class="line">192.168.64.103 hadoop03</span><br></pre></td></tr></table></figure>
+
+<h2 id="hadoop的核心组件"><a href="#hadoop的核心组件" class="headerlink" title="hadoop的核心组件"></a>hadoop的核心组件</h2><p>HDFS：分布式存储组件</p>
+<p>MapReduce：分布式计算组件</p>
+<p>Yarn：资源调度管理器</p>
+<h2 id="hadoop2-x架构模型"><a href="#hadoop2-x架构模型" class="headerlink" title="hadoop2.x架构模型"></a>hadoop2.x架构模型</h2><p><img src="https://s2.loli.net/2022/02/24/PcWuklZC45S27me.png" alt="image-20220224091121111"></p>
+<p><strong>文件系统核心模块</strong>：</p>
+<p><strong>NameNode</strong>：集群当中的主节点，主要用于管理集群当中的各种元数据</p>
+<p><strong>secondaryNameNode</strong>：主要能用于hadoop当中元数据信息的辅助管理</p>
+<p><strong>DataNode</strong>：集群当中的从节点，主要用于存储集群当中的各种数据</p>
+<p><strong>数据计算核心模块：</strong></p>
+<p><strong>ResourceManager</strong>：接收用户的计算请求任务，并负责集群的资源分配</p>
+<p><strong>NodeManager</strong>：负责执行主节点APPmaster分配的任务</p>
+<h3 id="伪分布式部署"><a href="#伪分布式部署" class="headerlink" title="伪分布式部署"></a>伪分布式部署</h3><p>需要环境：</p>
+<p>JDK，JAVA_HOME，配置hosts，关闭防火墙，配置免密登录等。</p>
+<p>注意：我们只将其安装在hadoop01节点上。</p>
+<h4 id="进入目录"><a href="#进入目录" class="headerlink" title="进入目录"></a>进入目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/softwares</span><br></pre></td></tr></table></figure>
+
+<h4 id="上传安装包并解压"><a href="#上传安装包并解压" class="headerlink" title="上传安装包并解压"></a>上传安装包并解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf hadoop-2.7.7.tar.gz -C ../servers/</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>位置：/opt/servers/hadoop-2.7.7/etc/hadoop</p>
+<h5 id="修改hadoop-env-sh"><a href="#修改hadoop-env-sh" class="headerlink" title="修改hadoop-env.sh"></a>修改hadoop-env.sh</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/hadoop-env.sh</span><br></pre></td></tr></table></figure>
+
+<p>修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/servers/jdk1.8.0_65</span><br><span class="line">export HADOOP_CONF_DIR=/opt/servers/hadoop-2.7.7/etc/hadoop</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-core-site-xml"><a href="#修改-core-site-xml" class="headerlink" title="修改 core-site.xml"></a>修改 core-site.xml</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/core-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>增加namenode配置、文件存储位置配置：粘贴代码部分到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--用来指定hdfs的老大，namenode的地址--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;hdfs://hadoop01:8020&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt; </span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--用来指定hadoop运行时产生文件的存放目录--&gt;  </span><br><span class="line"> </span><br><span class="line">&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;/opt/servers/hadoop-2.7.7/tmp&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-hdfs-site-xml"><a href="#修改-hdfs-site-xml" class="headerlink" title="修改 hdfs-site.xml"></a>修改 hdfs-site.xml</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/hdfs-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>配置包括自身在内的备份副本数量到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--指定hdfs保存数据副本的数量，包括自己，默认为3--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--伪分布式模式，此值必须为1--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;1&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--设置hdfs操作权限，false表示任何用户都可以在hdfs上操作文件--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;dfs.permissions&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;false&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-mapred-site-xml"><a href="#修改-mapred-site-xml" class="headerlink" title="修改 mapred-site.xml"></a>修改 mapred-site.xml</h5><p>说明：在/opt/servers/hadoop-2.7.7/etc/hadoop的目录下，只有一个mapred-site.xml.template文件，复制一个。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp mapred-site.xml.template mapred-site.xml</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/mapred-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>配置mapreduce运行在yarn上：粘贴高亮部分到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt; </span><br><span class="line"> </span><br><span class="line">&lt;!--指定mapreduce运行在yarn上--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-yarn-site-xml"><a href="#修改-yarn-site-xml" class="headerlink" title="修改 yarn-site.xml"></a>修改 yarn-site.xml</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/yarn-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>配置：粘贴高亮部分到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--指定yarn的老大resourcemanager的地址--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;hadoop01&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--NodeManager获取数据的方式--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改slaves"><a href="#修改slaves" class="headerlink" title="修改slaves"></a>修改slaves</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/slaves</span><br></pre></td></tr></table></figure>
+
+<p>修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop01</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置hadoop的环境变量"><a href="#配置hadoop的环境变量" class="headerlink" title="配置hadoop的环境变量"></a>配置hadoop的环境变量</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/opt/servers/hadoop-2.7.7</span><br><span class="line">export PATH=:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>配置完成之后生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>环境变量配置完成，测试环境变量是否生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $HADOOP_HOME</span><br></pre></td></tr></table></figure>
+
+<h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><h5 id="1-初始化"><a href="#1-初始化" class="headerlink" title="1.初始化"></a>1.初始化</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-启动"><a href="#2-启动" class="headerlink" title="2.启动"></a>2.启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-all.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-停止"><a href="#3-停止" class="headerlink" title="3.停止"></a>3.停止</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop-all.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-测试"><a href="#4-测试" class="headerlink" title="4.测试"></a>4.测试</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-停止服务"><a href="#5-停止服务" class="headerlink" title="5.停止服务"></a>5.停止服务</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop-all.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-访问浏览器"><a href="#6-访问浏览器" class="headerlink" title="6.访问浏览器"></a>6.访问浏览器</h5><p>windows的浏览器中访问hadoop01:50070</p>
+<p>安装成功！</p>
+<h5 id="7-如果没有安装成功"><a href="#7-如果没有安装成功" class="headerlink" title="7.如果没有安装成功"></a>7.如果没有安装成功</h5><p>如果没有成功（进程数不够）</p>
+<p>1.stop-all.sh 停掉hadoop所有进程</p>
+<p>2.删掉hadoop2.7.7下的tmp文件</p>
+<p>3.hdfs namenode -format 重新初始化（出现successfully证明成功），如果配置文件报错，安装报错信息修改相应位置后重新执行第二步。</p>
+<p>4.start-all.sh 启动hadoop</p>
+<h3 id="完全分布式部署"><a href="#完全分布式部署" class="headerlink" title="完全分布式部署"></a>完全分布式部署</h3><p>安装环境服务部署规划</p>
+<p>服务器IP    192.168.64.101    192.168.64.102    192.168.64.103</p>
+<table>
+<thead>
+<tr>
+<th>服务器IP</th>
+<th>192.168.64.101</th>
+<th>192.168.64.102</th>
+<th>192.168.64.103</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>NameNode</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>Secondary NameNode</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>DataNode</td>
+<td>DataNode</td>
+<td>DataNode</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>NodeManager</td>
+<td>NodeManager</td>
+<td>NodeManager</td>
+</tr>
+<tr>
+<td>MapReduce</td>
+<td>JobHistoryServer</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>先在第一台机器hadoop01进行部署</p>
+<p>注意：如果已安装伪分布模式，先删除格式化后生成的数据文件，其他请略过。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /opt/servers/hadoop-2.7.7/tmp</span><br></pre></td></tr></table></figure>
+
+<h4 id="进入目录-1"><a href="#进入目录-1" class="headerlink" title="进入目录"></a>进入目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/softwares</span><br></pre></td></tr></table></figure>
+
+<h4 id="上传安装包并解压-1"><a href="#上传安装包并解压-1" class="headerlink" title="上传安装包并解压"></a>上传安装包并解压</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvzf hadoop-2.7.7.tar.gz -C ../servers/</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改配置文件-1"><a href="#修改配置文件-1" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p>位置：/opt/servers/hadoop-2.7.7/etc/hadoop</p>
+<h5 id="修改hadoop-env-sh-1"><a href="#修改hadoop-env-sh-1" class="headerlink" title="修改hadoop-env.sh"></a>修改hadoop-env.sh</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/hadoop-env.sh</span><br></pre></td></tr></table></figure>
+
+<p>修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/servers/jdk1.8.0_65</span><br><span class="line">export HADOOP_CONF_DIR=/opt/servers/hadoop-2.7.7/etc/hadoop</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-core-site-xml-1"><a href="#修改-core-site-xml-1" class="headerlink" title="修改 core-site.xml"></a>修改 core-site.xml</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/core-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>增加namenode配置、文件存储位置配置：粘贴代码部分到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--用来指定hdfs的老大，namenode的地址--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;hdfs://hadoop01:8020&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt; </span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--用来指定hadoop运行时产生文件的存放目录--&gt;  </span><br><span class="line"> </span><br><span class="line">&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;/opt/servers/hadoop-2.7.7/tmp&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-hdfs-site-xml-1"><a href="#修改-hdfs-site-xml-1" class="headerlink" title="修改 hdfs-site.xml"></a>修改 hdfs-site.xml</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/hdfs-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>配置包括自身在内的备份副本数量到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--指定hdfs保存数据副本的数量，包括自己，默认为3--&gt;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;2&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--设置hdfs操作权限，false表示任何用户都可以在hdfs上操作文件--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;dfs.permissions&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;false&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-mapred-site-xml-1"><a href="#修改-mapred-site-xml-1" class="headerlink" title="修改 mapred-site.xml"></a>修改 mapred-site.xml</h5><p>说明：在/opt/servers/hadoop-2.7.7/etc/hadoop的目录下，只有一个mapred-site.xml.template文件，复制一个。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp mapred-site.xml.template mapred-site.xml</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/mapred-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>配置mapreduce运行在yarn上：粘贴高亮部分到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt; </span><br><span class="line"> </span><br><span class="line">&lt;!--指定mapreduce运行在yarn上--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改-yarn-site-xml-1"><a href="#修改-yarn-site-xml-1" class="headerlink" title="修改 yarn-site.xml"></a>修改 yarn-site.xml</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/yarn-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>配置：粘贴高亮部分到标签内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--指定yarn的老大resourcemanager的地址--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;hadoop01&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;!--NodeManager获取数据的方式--&gt;</span><br><span class="line"> </span><br><span class="line">&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="修改slaves-1"><a href="#修改slaves-1" class="headerlink" title="修改slaves"></a>修改slaves</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/servers/hadoop-2.7.7/etc/hadoop/slaves</span><br></pre></td></tr></table></figure>
+
+<p>修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop01</span><br><span class="line">hadoop02</span><br><span class="line">hadoop03</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置hadoop的环境变量-1"><a href="#配置hadoop的环境变量-1" class="headerlink" title="配置hadoop的环境变量"></a>配置hadoop的环境变量</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">export HADOOP_HOME=/opt/servers/hadoop-2.7.7</span><br><span class="line">export PATH=:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>配置完成之后生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>环境变量配置完成，测试环境变量是否生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $HADOOP_HOME</span><br></pre></td></tr></table></figure>
+
+<h5 id="分发文件到hadoop02、hadoop03服务器"><a href="#分发文件到hadoop02、hadoop03服务器" class="headerlink" title="分发文件到hadoop02、hadoop03服务器"></a>分发文件到hadoop02、hadoop03服务器</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/servers/</span><br><span class="line">scp -r hadoop-2.7.7/ hadoop02:$PWD</span><br><span class="line">scp -r hadoop-2.7.7/ hadoop03:$PWD</span><br></pre></td></tr></table></figure>
+
+<h5 id="hadoop02、hadoop03服务器配置hadoop的环境变量"><a href="#hadoop02、hadoop03服务器配置hadoop的环境变量" class="headerlink" title="hadoop02、hadoop03服务器配置hadoop的环境变量"></a>hadoop02、hadoop03服务器配置hadoop的环境变量</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/opt/servers/hadoop-2.7.7</span><br><span class="line">export PATH=:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>配置完成之后生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>环境变量配置完成，测试环境变量是否生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $HADOOP_HOME</span><br></pre></td></tr></table></figure>
+
+<h4 id="启动-1"><a href="#启动-1" class="headerlink" title="启动"></a>启动</h4><h5 id="1-初始化-1"><a href="#1-初始化-1" class="headerlink" title="1.初始化"></a>1.初始化</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-启动-1"><a href="#2-启动-1" class="headerlink" title="2.启动"></a>2.启动</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-all.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-停止-1"><a href="#3-停止-1" class="headerlink" title="3.停止"></a>3.停止</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop-all.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-测试-1"><a href="#4-测试-1" class="headerlink" title="4.测试"></a>4.测试</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-停止服务-1"><a href="#5-停止服务-1" class="headerlink" title="5.停止服务"></a>5.停止服务</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop-all.sh</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-访问浏览器-1"><a href="#6-访问浏览器-1" class="headerlink" title="6.访问浏览器"></a>6.访问浏览器</h5><p>windows的浏览器中访问</p>
+<p>hdfs集群访问地址</p>
+<p><a target="_blank" rel="noopener" href="http://hadoop01:50070/">http://hadoop01:50070/</a></p>
+<p>yarn集群访问地址</p>
+<p><a target="_blank" rel="noopener" href="http://hadoop01:8088/">http://hadoop01:8088/</a></p>
+<p>安装成功！</p>
+<h5 id="补充：可以按照组件启动服务"><a href="#补充：可以按照组件启动服务" class="headerlink" title="补充：可以按照组件启动服务"></a>补充：可以按照组件启动服务</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<p>也可以单独启动一个服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#在主节点上使用以下命令启动 HDFS NameNode：</span><br><span class="line">hadoop-daemon.sh start namenode </span><br><span class="line">#在每个从节点上使用以下命令启动 HDFS DataNode： </span><br><span class="line">hadoop-daemon.sh start datanode </span><br><span class="line">#在主节点上使用以下命令启动 YARN ResourceManager： </span><br><span class="line">yarn-daemon.sh  start resourcemanager </span><br><span class="line">#在每个从节点上使用以下命令启动 YARN nodemanager： </span><br><span class="line">yarn-daemon.sh start nodemanager </span><br></pre></td></tr></table></figure>
+
+<h1 id="hadoop集群初体验"><a href="#hadoop集群初体验" class="headerlink" title="hadoop集群初体验"></a>hadoop集群初体验</h1><h2 id="HDFS-使用初体验"><a href="#HDFS-使用初体验" class="headerlink" title="HDFS 使用初体验"></a>HDFS 使用初体验</h2><p>从Linux 本地上传一个文本文件到 hdfs 的/test/input 目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir -p /test/input </span><br><span class="line"></span><br><span class="line">hadoop fs -put /root/install.log  /test/input 	</span><br></pre></td></tr></table></figure>
+
+<h2 id="mapreduce程序初体验"><a href="#mapreduce程序初体验" class="headerlink" title="mapreduce程序初体验"></a>mapreduce程序初体验</h2><p>在 Hadoop 安装包的</p>
+<p>hadoop2.7.7/share/hadoop/mapreduce 下有官方自带的mapreduce 程序。我们可以使用如下的命令进行运行测试。</p>
+<p>示例程序jar:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop-mapreduce-examples-2.7.7.jar</span><br></pre></td></tr></table></figure>
+
+<p>计算圆周率:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar /opt/servers/hadoop-2.7.7/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.7.jar pi 2 5</span><br></pre></td></tr></table></figure>
+
+<p>关于圆周率的估算，感兴趣的可以查询资料 Monte Carlo 方法来计算 Pi 值。</p>
+<h3 id="Hadoop文件操作"><a href="#Hadoop文件操作" class="headerlink" title="Hadoop文件操作:"></a>Hadoop文件操作:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir -p /test/input#文件夹</span><br><span class="line">hadoop常见指令：</span><br><span class="line"></span><br><span class="line">hdfs dfs -copyFromLocal /local/data /hdfs/data：将本地文件上传到 hdfs</span><br><span class="line">上（原路径只能是一个文件）</span><br><span class="line">hdfs dfs -put /tmp/ /hdfs/ ：和 copyFromLocal 区别是，put 原路径可以是文件夹等</span><br><span class="line">hadoop fs -ls / ：查看根目录文件</span><br><span class="line">hadoop fs -ls /tmp/data：查看/tmp/data目录</span><br><span class="line">hadoop fs -cat /tmp/a.txt ：查看 a.txt，与 -text 一样</span><br><span class="line">hadoop fs -mkdir dir：创建目录dir</span><br><span class="line">hadoop fs -rmr dir：删除目录dir</span><br><span class="line"></span><br><span class="line">/opt/servers/hadoop-2.7.7/tmp/dfs/data/current/BP-69414054-192.168.199.101-1645667165994/current/finalized/subdir0/subdir0</span><br><span class="line"></span><br><span class="line">ls -l --block-size=k</span><br></pre></td></tr></table></figure>
+
+<h1 id="分布式文件系统HDFS"><a href="#分布式文件系统HDFS" class="headerlink" title="分布式文件系统HDFS"></a>分布式文件系统HDFS</h1><h2 id="HDFS的来源"><a href="#HDFS的来源" class="headerlink" title="HDFS的来源"></a>HDFS的来源</h2><p><img src="https://s2.loli.net/2022/02/24/aiRCLD48IT19mPo.png" alt="image-20220224105158528"></p>
+<h3 id="vim编码问题"><a href="#vim编码问题" class="headerlink" title="vim编码问题"></a>vim编码问题</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.vimrc</span><br><span class="line">set fileencodings=utf-8,gb2312,gbk,gb18030,big5</span><br><span class="line">set fenc=utf-8</span><br><span class="line">set enc=utf-8</span><br></pre></td></tr></table></figure>
+
+<h2 id="NameNode与Datanode的总结概述"><a href="#NameNode与Datanode的总结概述" class="headerlink" title="NameNode与Datanode的总结概述"></a>NameNode与Datanode的总结概述</h2><p><img src="https://s2.loli.net/2022/02/24/z5CpKxWDQwij72F.png" alt="image-20220224114017791"></p>
+<p><img src="https://s2.loli.net/2022/02/24/VOEft6UpDeRHaSg.png" alt="image-20220224114239792"></p>
+<p>DNFS不宜放小文件，这样占空间比较多。元数据较多。</p>
+<h2 id="元文件FSImage与edits"><a href="#元文件FSImage与edits" class="headerlink" title="元文件FSImage与edits"></a>元文件FSImage与edits</h2><p>FSimage是一个镜像文件，是一个完整的元数据文件</p>
+<p>edits：日志文件，是每隔一个小时生成</p>
+<p><strong>一般开始时对namenode的操作都放在edits中，为什么不放在fsimage中呢？</strong><br>因为fsimage是namenode的完整的镜像，内容很大，如果每次都加载到内存的话生成树状拓扑结构，这是非常耗内存和CPU。fsimage内容包含了namenode管理下的所有datanode中文件及文件block及block所在的datanode的元数据信息。随着edits内容增大，就需要在一定时间点和fsimage合并。</p>
+<p><img src="https://s2.loli.net/2022/02/24/GeZtxCInhD4JLjs.png" alt="image-20220224142317754"></p>
+<p><strong>2.x的hadoop元数据合并条件</strong></p>
+<p>dfs.namenode.checkpoint.period: 默认是一个小时（3600s)</p>
+<p>dfs.namenode.checkpoint.txns：默认为1000000条edits记录</p>
+<p><strong>FSimage文件当中的文件信息查看：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd  /opt/servers/hadoop-2.7.7/tmp/dfs/name/current</span><br><span class="line">hdfs oiv -i fsimage_0000000000000000864 -p XML -o hello.xml</span><br></pre></td></tr></table></figure>
+
+<p><strong>edits当中的文件信息查看：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd  /opt/servers/hadoop-2.7.7/tmp/dfs/nn/edits</span><br><span class="line">hdfs oev -i  edits_0000000000000000865-0000000000000000866 -o myedit.xml -p XML</span><br></pre></td></tr></table></figure>
+
+<h2 id="HDFS的文件写入过程"><a href="#HDFS的文件写入过程" class="headerlink" title="HDFS的文件写入过程"></a>HDFS的文件写入过程</h2><p><img src="https://s2.loli.net/2022/02/24/YTvk82yOM3pWbEL.png" alt="image-20220224143902592"></p>
+<p>详细步骤解析：</p>
+<p>1、 client发起文件上传请求，通过RPC与NameNode建立通讯，NameNode检查目标文件是否已存在，父目录是否存在，返回是否可以上传；</p>
+<p>2、 client请求第一个block该传输到哪些DataNode服务器上；</p>
+<p>3、 NameNode根据配置文件中指定的备份数量及机架感知原理进行文件分配，返回可用的DataNode的地址如：A，B，C；</p>
+<p>注：Hadoop在设计时考虑到数据的安全与高效，数据文件默认在HDFS上存放三份，存储策略为本地一份，同机架内其它某一节点上一份，不同机架的某一节点上一份。</p>
+<p>4、 client请求3台DataNode中的一台A上传数据（本质上是一个RPC调用，建立pipeline），A收到请求会继续调用B，然后B调用C，将整个pipeline建立完成，后逐级返回client；</p>
+<p>5、 client开始往A上传第一个block（先从磁盘读取数据放到一个本地内存缓存），以packet为单位（默认64K），A收到一个packet就会传给B，B传给C；A每传一个packet会放入一个应答队列等待应答。</p>
+<p>6、 数据被分割成一个个packet数据包在pipeline上依次传输，在pipeline反方向上，逐个发送ack（命令正确应答），最终由pipeline中第一个DataNode节点A将pipelineack发送给client;</p>
+<p>7、 当一个block传输完成之后，client再次请求NameNode上传第二个block到服务器。</p>
+<h2 id="HDFS的文件读取过程"><a href="#HDFS的文件读取过程" class="headerlink" title="HDFS的文件读取过程"></a>HDFS的文件读取过程</h2><p><img src="https://s2.loli.net/2022/02/24/HjyRCrW2afnUcSq.png" alt="image-20220224143737904"></p>
+<p>详细步骤解析</p>
+<p>1、 Client向NameNode发起RPC请求，来确定请求文件block所在的位置；</p>
+<p>2、 NameNode会视情况返回文件的部分或者全部block列表，对于每个block，NameNode 都会返回含有该 block 副本的 DataNode 地址；这些返回的 DN 地址，会按照集群拓扑结构得出 DataNode 与客户端的距离，然后进行排序，排序两个规则：网络拓扑结构中距离 Client 近的排靠前；心跳机制中超时汇报的 DN 状态为 STALE，这样的排靠后；</p>
+<p>3、 Client 选取排序靠前的 DataNode 来读取 block，如果客户端本身就是DataNode,那么将从本地直接获取数据(短路读取特性)；</p>
+<p>4、 底层上本质是建立 Socket Stream（FSDataInputStream），重复的调用父类 DataInputStream 的 read 方法，直到这个块上的数据读取完毕；</p>
+<p>5、 当读完列表的 block 后，若文件读取还没有结束，客户端会继续向NameNode 获取下一批的 block 列表；</p>
+<p>6、 读取完一个 block 都会进行 checksum 验证，如果读取 DataNode 时出现错误，客户端会通知 NameNode，然后再从下一个拥有该 block 副本的DataNode 继续读。</p>
+<p>7、 read 方法是并行的读取 block 信息，不是一块一块的读取；NameNode 只是返回Client请求包含块的DataNode地址，并不是返回请求块的数据；</p>
+<p>8、 最终读取来所有的 block 会合并成一个完整的最终文件。</p>
+<h2 id="HDFS基本Shell操作"><a href="#HDFS基本Shell操作" class="headerlink" title="HDFS基本Shell操作"></a>HDFS基本Shell操作</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs#查看命令</span><br></pre></td></tr></table></figure>
+
+<p>创建文件夹（支持多级创建）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir -p /xxx</span><br></pre></td></tr></table></figure>
+
+<p>查看目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -ls /xxx</span><br></pre></td></tr></table></figure>
+
+<p>递归查看多级目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -lsr /xxx</span><br></pre></td></tr></table></figure>
+
+<p>上传文件到HDFS：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -put xxx.txt /xxx</span><br></pre></td></tr></table></figure>
+
+<p>下载文件到本地当前目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -get /xxx/xxx/xxx.txt  /xxx</span><br></pre></td></tr></table></figure>
+
+<p>删除文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -rm /xxx/xxx/xxx.txt</span><br></pre></td></tr></table></figure>
+
+<p>删除文件夹(文件夹必须为空)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -rmdir /xxx/xxx</span><br></pre></td></tr></table></figure>
+
+<p>强制删除文件夹或文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -rm -r /xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="HDFS的api操作"><a href="#HDFS的api操作" class="headerlink" title="HDFS的api操作"></a>HDFS的api操作</h2><p>安装准备:</p>
+<p>解决winutils.exe的问题</p>
+<p>配置环境变量</p>
+<p>HADOOP_HOME=”位置”</p>
+<p>PATH = %HADOOP_HOME%\bin</p>
+<p>把hadoop.dll放到c:\windows\system32</p>
+<h3 id="创建maven工程并导入jar包"><a href="#创建maven工程并导入jar包" class="headerlink" title="创建maven工程并导入jar包"></a>创建maven工程并导入jar包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;hadoop-common&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.7.7&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;hadoop-hdfs&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.7.7&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;hadoop-client&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;2.7.7&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用文件系统方式访问数据"><a href="#使用文件系统方式访问数据" class="headerlink" title="使用文件系统方式访问数据"></a>使用文件系统方式访问数据</h3><p>在 java 中操作 HDFS，主要涉及以下 Class：</p>
+<p>Configuration：该类的对象封转了客户端或者服务器的配置;</p>
+<p>FileSystem：该类的对象是一个文件系统对象，可以用该对象的一些方法来对文件进行操作，通过 FileSystem 的静态方法 get 获得该对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FileSystem fs = FileSystem.get(conf)</span><br></pre></td></tr></table></figure>
+
+<p>get 方法从 conf 中的一个参数 fs.defaultFS 的配置值判断具体是什么类型的文件系统。如果我们的代码中没有指定 fs.defaultFS，并且工程 classpath下也没有给定相应的配置，conf中的默认值就来自于hadoop的jar包中的core-default.xml ， 默 认 值 为 ： file:/// ， 则 获 取 的 将 不 是 一 个DistributedFileSystem 的实例，而是一个本地文件系统的客户端对象<br>获取FileSystem的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Configuration configuration=new Configuration();</span><br><span class="line">configuration.set(&quot;fs.defaultFS&quot;,&quot;hdfs://192.168.64.101:8020&quot;);</span><br><span class="line">FileSystem fileSystem=FileSystem.get(configuration);</span><br><span class="line">System.out.println(fileSystem.toString());</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void mkdirs() throws  Exception&#123;</span><br><span class="line">    FileSystem fileSystem = FileSystem.get(new URI(&quot;hdfs://192.168.64.101:8020&quot;), new Configuration());</span><br><span class="line">    boolean mkdirs = fileSystem.mkdirs(new Path(&quot;/hello/mydir/test&quot;));</span><br><span class="line">    fileSystem.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class HDFSDemo &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws IOException &#123;</span><br><span class="line"></span><br><span class="line">       /* Configuration conf = new Configuration();</span><br><span class="line">        //指定hdfs的访问地址</span><br><span class="line">        conf.set(&quot;fs.defaultFS&quot;,&quot;hdfs://hadoop01:8020&quot;);</span><br><span class="line"></span><br><span class="line">        FileSystem fileSystem = FileSystem.get(conf);</span><br><span class="line">        System.out.println(fileSystem.toString());*/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        /*//上传目录</span><br><span class="line">        Configuration conf = new Configuration();</span><br><span class="line">        //指定hdfs的访问地址</span><br><span class="line">        conf.set(&quot;fs.defaultFS&quot;,&quot;hdfs://hadoop01:8020&quot;);</span><br><span class="line">        //获取文件系统对象</span><br><span class="line">        FileSystem fs = FileSystem.get(conf);</span><br><span class="line">        //创建目录</span><br><span class="line">        fs.mkdirs(new Path(&quot;/test/input&quot;));</span><br><span class="line">        //关闭资源</span><br><span class="line">        fs.close();*/</span><br><span class="line"></span><br><span class="line">        /*//上传文件</span><br><span class="line">        Configuration conf = new Configuration();</span><br><span class="line">        //指定hdfs的访问地址</span><br><span class="line">        conf.set(&quot;fs.defaultFS&quot;,&quot;hdfs://hadoop01:8020&quot;);</span><br><span class="line">        conf.set(&quot;dfs.replication&quot;,&quot;2&quot;);</span><br><span class="line">        //获取文件系统对象</span><br><span class="line">        FileSystem fs = FileSystem.get(conf);</span><br><span class="line">        //创建目录</span><br><span class="line">//        fs.copyFromLocalFile(new Path(&quot;file:///f:\\aaa.txt&quot;),new Path(&quot;/test/input&quot;));</span><br><span class="line">        fs.copyFromLocalFile(new Path(&quot;file:///f:\\aaa.txt&quot;),new Path(&quot;/test/input/bbb.txt&quot;));</span><br><span class="line">        //关闭资源</span><br><span class="line">        fs.close();*/</span><br><span class="line"></span><br><span class="line">        /*//下载文件</span><br><span class="line">        Configuration conf = new Configuration();</span><br><span class="line">        //指定hdfs的访问地址</span><br><span class="line">        conf.set(&quot;fs.defaultFS&quot;,&quot;hdfs://hadoop01:8020&quot;);</span><br><span class="line">        conf.set(&quot;dfs.replication&quot;,&quot;2&quot;);</span><br><span class="line">        //获取文件系统对象</span><br><span class="line">        FileSystem fs = FileSystem.get(conf);</span><br><span class="line">        //创建目录</span><br><span class="line">//        fs.copyFromLocalFile(new Path(&quot;file:///f:\\aaa.txt&quot;),new Path(&quot;/test/input&quot;));</span><br><span class="line">        fs.copyToLocalFile(new Path(&quot;/test/input/bbb.txt&quot;),new Path(&quot;file:///f:\\\\bbb.txt&quot;));</span><br><span class="line">        //关闭资源</span><br><span class="line">        fs.close();*/</span><br><span class="line">        //下载文件</span><br><span class="line">        Configuration conf = new Configuration();</span><br><span class="line">        //指定hdfs的访问地址</span><br><span class="line">        conf.set(&quot;fs.defaultFS&quot;,&quot;hdfs://hadoop01:8020&quot;);</span><br><span class="line">        conf.set(&quot;dfs.replication&quot;,&quot;2&quot;);</span><br><span class="line">        //获取文件系统对象</span><br><span class="line">        FileSystem fs = FileSystem.get(conf);</span><br><span class="line">        //创建目录</span><br><span class="line">//        fs.copyFromLocalFile(new Path(&quot;file:///f:\\aaa.txt&quot;),new Path(&quot;/test/input&quot;));</span><br><span class="line">        fs.copyToLocalFile(new Path(&quot;/test/input/bbb.txt&quot;),new Path(&quot;file:///f:\\bbb.txt&quot;));</span><br><span class="line">        //关闭资源</span><br><span class="line">        fs.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="创建文件夹-1"><a href="#创建文件夹-1" class="headerlink" title="创建文件夹"></a>创建文件夹</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getFileToLocal()throws  Exception&#123;</span><br><span class="line">   Configuration configuration=new Configuration();</span><br><span class="line">		configuration.set(&quot;fs.defaultFS&quot;,&quot;hdfs://192.168.64.101:8020&quot;);</span><br><span class="line">	FileSystem fileSystem=FileSystem.get(configuration);</span><br><span class="line">    FSDataInputStream open = fileSystem.open(new Path(&quot;/test/input/install.log&quot;));</span><br><span class="line">    FileOutputStream fileOutputStream = new FileOutputStream(new File(&quot;c:\\install.log&quot;));</span><br><span class="line">    IOUtils.copy(open,fileOutputStream );</span><br><span class="line">    IOUtils.closeQuietly(open);</span><br><span class="line">    IOUtils.closeQuietly(fileOutputStream);</span><br><span class="line">    fileSystem.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getFileToLocal()throws  Exception&#123;</span><br><span class="line">   Configuration configuration=new Configuration();</span><br><span class="line">		configuration.set(&quot;fs.defaultFS&quot;,&quot;hdfs://192.168.64.101:8020&quot;);</span><br><span class="line">	FileSystem fileSystem=FileSystem.get(configuration);</span><br><span class="line">    FSDataInputStream open = fileSystem.open(new Path(&quot;/test/input/install.log&quot;));</span><br><span class="line">    FileOutputStream fileOutputStream = new FileOutputStream(new File(&quot;c:\\install.log&quot;));</span><br><span class="line">    IOUtils.copy(open,fileOutputStream );</span><br><span class="line">    IOUtils.closeQuietly(open);</span><br><span class="line">    IOUtils.closeQuietly(fileOutputStream);</span><br><span class="line">    fileSystem.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">上传文件</span><br><span class="line">@Test</span><br><span class="line">public void putData() throws  Exception&#123;</span><br><span class="line">  	Configuration configuration=new Configuration();</span><br><span class="line">		configuration.set(&quot;fs.defaultFS&quot;,&quot;hdfs://192.168.64.101:8020&quot;);</span><br><span class="line">	FileSystem fileSystem=FileSystem.get(configuration);</span><br><span class="line">    fileSystem.copyFromLocalFile(new Path(&quot;file:///c:\\install.log&quot;),new Path(&quot;/hello/mydir/test&quot;));</span><br><span class="line">    fileSystem.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="MapReduce介绍"><a href="#MapReduce介绍" class="headerlink" title="MapReduce介绍"></a>MapReduce介绍</h1><h2 id="理解MapReduce思想"><a href="#理解MapReduce思想" class="headerlink" title="理解MapReduce思想"></a>理解MapReduce思想</h2><p> MapReduce思想在生活中处处可见。或多或少都曾接触过这种思想。MapReduce的思想核心是“<strong>分而治之</strong>”，适用于大量复杂的任务处理场景（大规模数据处理场景）。即使是发布过论文实现分布式计算的谷歌也只是实现了这种思想，而不是自己原创。</p>
+<p>Map负责“分”，即把复杂的任务分解为若干个“简单的任务”来并行处理。可以进行拆分的前提是这些小任务可以并行计算，彼此间几乎没有依赖关系。</p>
+<p>Reduce(规约)负责“合”，即对map阶段的结果进行全局汇总。</p>
+<p><img src="https://s2.loli.net/2022/02/25/6RN7vMpimCQYa2x.png" alt="image-20220225145609927"></p>
+<h3 id="数据处理结构图"><a href="#数据处理结构图" class="headerlink" title="数据处理结构图"></a>数据处理结构图</h3><p><img src="https://s2.loli.net/2022/02/26/3UqNRxfeOHBjYVC.png" alt="image-20220226095357744"></p>
+<h2 id="WordCount实例"><a href="#WordCount实例" class="headerlink" title="WordCount实例"></a>WordCount实例</h2><h3 id="准备数据并上传"><a href="#准备数据并上传" class="headerlink" title="准备数据并上传"></a>准备数据并上传</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/servers</span><br><span class="line">vim wordcount.txt</span><br><span class="line"></span><br><span class="line">hello world hadoop</span><br><span class="line">hive sqoop flume hello</span><br><span class="line">kitty tom jerry world</span><br><span class="line">hadoop</span><br><span class="line"></span><br><span class="line">hdfs dfs -mkdir -p /wordcount/input</span><br><span class="line">hdfs dfs -put wordcount.txt /wordcount/input</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><h4 id="编写mapper"><a href="#编写mapper" class="headerlink" title="编写mapper"></a>编写mapper</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * LongWritable:k1,行的偏移量</span><br><span class="line"> * Text:v1,行的值</span><br><span class="line"> * Test:k2，出去的key，就是词</span><br><span class="line"> * IntWritable:v2,出去的value值，出现的一次</span><br><span class="line"> */</span><br><span class="line">public class WordMapper extends Mapper&lt;LongWritable, Text,Text, IntWritable&gt; &#123;</span><br><span class="line">    /**</span><br><span class="line">     * 每来一行数据调用一次方法</span><br><span class="line">     * @param key：当前行的偏移量</span><br><span class="line">     * @param value:当前行的值</span><br><span class="line">     * @param context:上下文</span><br><span class="line">     * @throws IOException</span><br><span class="line">     * @throws InterruptedException</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException &#123;</span><br><span class="line">        //hello hadoop -&gt;hello,1  hadoop,1</span><br><span class="line">//        获取当前行数据</span><br><span class="line">        String line = value.toString();</span><br><span class="line">//        将当前行数据拆分成一个一个词</span><br><span class="line">        String[] words = line.split(&quot; &quot;);</span><br><span class="line">        for (String word:words)&#123;</span><br><span class="line">            //将词出现1次方式输出</span><br><span class="line">            context.write(new Text(word),new IntWritable(1));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写Reducer"><a href="#编写Reducer" class="headerlink" title="编写Reducer"></a>编写Reducer</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * hello,1  hello,1    -&gt; hello,6</span><br><span class="line"> * Text:K2,词</span><br><span class="line"> * IntWritable：v2，出现的1次</span><br><span class="line"> * Text：k3，词</span><br><span class="line"> * IntWritable：v3，出现的总次数</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class WordReducer extends Reducer&lt;Text, IntWritable, Text,IntWritable&gt; &#123;</span><br><span class="line">    /**</span><br><span class="line">     * hello,(1,1,1,1,1,1)  =&gt;  hello,6</span><br><span class="line">     *</span><br><span class="line">     * @param key:词，聚合的元素    hello</span><br><span class="line">     * @param values：聚合的v2数据 (1,1,1,1,1,1)</span><br><span class="line">     * @param context：上下文</span><br><span class="line">     * @throws IOException</span><br><span class="line">     * @throws InterruptedException</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    protected void reduce(Text key, Iterable&lt;IntWritable&gt; values, Context context) throws IOException, InterruptedException &#123;</span><br><span class="line">        //定义变量接收累加值</span><br><span class="line">        Long count = 0L;</span><br><span class="line">        //循环遍历每一个值，然后进行累加</span><br><span class="line">        for (IntWritable value:values)&#123;</span><br><span class="line">            count += value.get();</span><br><span class="line">        &#125;</span><br><span class="line">        //hello,6</span><br><span class="line">        context.write(key,new IntWritable(count.intValue()));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="编写运行main函数"><a href="#编写运行main函数" class="headerlink" title="编写运行main函数"></a>编写运行main函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class JobMain &#123;</span><br><span class="line">    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException &#123;</span><br><span class="line"></span><br><span class="line">        //构建一个运行作业的job对象</span><br><span class="line">        Configuration conf = new Configuration();</span><br><span class="line">        Job job = Job.getInstance(conf, JobMain.class.getSimpleName());</span><br><span class="line"></span><br><span class="line">        //如果放到服务器上打包运行，一定要加上</span><br><span class="line">        job.setJarByClass(JobMain.class);</span><br><span class="line"></span><br><span class="line">        //1.指定数据读取的方式</span><br><span class="line">        job.setInputFormatClass(TextInputFormat.class);</span><br><span class="line">        TextInputFormat.addInputPath(job,</span><br><span class="line">                new Path(&quot;hdfs://hadoop01:8020/test/input/wordcount.txt&quot;));</span><br><span class="line"></span><br><span class="line">        //2.设定map</span><br><span class="line">        job.setMapperClass(WordMapper.class);</span><br><span class="line">        //指明map的输出类型  hello 1</span><br><span class="line">        job.setMapOutputKeyClass(Text.class);</span><br><span class="line">        job.setMapOutputValueClass(IntWritable.class);</span><br><span class="line"></span><br><span class="line">        //7.设定reduce</span><br><span class="line">        job.setReducerClass(WordReducer.class);</span><br><span class="line">        //执行reduce的输出k3，v3类型   hello，6</span><br><span class="line">        job.setOutputKeyClass(Text.class);</span><br><span class="line">        job.setOutputValueClass(IntWritable.class);</span><br><span class="line"></span><br><span class="line">        //8.结果的写出保存</span><br><span class="line">        job.setOutputFormatClass(TextOutputFormat.class);</span><br><span class="line">        TextOutputFormat.setOutputPath(job,</span><br><span class="line">                new Path(&quot;hdfs://hadoop01:8020/test/output/001&quot;));</span><br><span class="line"></span><br><span class="line">        job.waitForCompletion(true);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Hive简介"><a href="#Hive简介" class="headerlink" title="Hive简介"></a>Hive简介</h1><h2 id="什么是Hive"><a href="#什么是Hive" class="headerlink" title="什么是Hive"></a>什么是Hive</h2><p>Hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供类SQL查询功能（HQL）。</p>
+<p>其本质是将SQL转换为MapReduce的任务进行运算，底层由HDFS来提供数据的存储，说白了hive可以理解为一个将SQL转换为MapReduce的任务的工具，甚至更进一步可以说hive就是一个MapReduce的客户端。</p>
+<h2 id="Hive架构图"><a href="#Hive架构图" class="headerlink" title="Hive架构图"></a>Hive架构图</h2><p><img src="https://s2.loli.net/2022/02/25/SchbaBENgQftGDo.png" alt="image-20220225163722320"></p>
+<h1 id="HIVE的安装部署"><a href="#HIVE的安装部署" class="headerlink" title="HIVE的安装部署"></a>HIVE的安装部署</h1><h2 id="derby版hive直接使用"><a href="#derby版hive直接使用" class="headerlink" title="derby版hive直接使用"></a>derby版hive直接使用</h2><p>前提：Hive安装非常简单，解压之后即可直接运行，不需要太多配置，前提是要配置JAVA_HOME和HADOOP_HOME。并且Hadoop要全量启动（五个进程）</p>
+<h3 id="解压hive"><a href="#解压hive" class="headerlink" title="解压hive"></a>解压hive</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/softwares</span><br><span class="line">tar -xvzf apache-hive-2.3.6-bin.tar.gz -C ../servers/</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改目录名称"><a href="#修改目录名称" class="headerlink" title="修改目录名称"></a>修改目录名称</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ../servers/</span><br><span class="line">mv apache-hive-2.3.6-bin hive-2.3.6</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化元数据库"><a href="#初始化元数据库" class="headerlink" title="初始化元数据库"></a>初始化元数据库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd hive-2.3.6</span><br><span class="line">bin/schematool -dbType derby -initSchema</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动-2"><a href="#启动-2" class="headerlink" title="启动"></a>启动</h3><p>在hive-2.3.6目录下执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/hive</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database jtdb;</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use jtdb;</span><br><span class="line">create table tb_user(id int,name string);</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into table tb_user values(1,&quot;zhangfei&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>Hive在必要的时候会将HQL编译为MR来执行。</p>
+<h3 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h3><p>Hive启动不了<br>检查JAVA_HOME和HADOOP_HOME是否配置成功。如果没有问题并报错：Cannot find hadoop installation: $HADOOP_HOME or….</p>
+<p>解决办法：</p>
+<p>指定HADOOP_HOME路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/servers/hive-2.3.6/conf</span><br><span class="line">cp hive-env.sh.template hive-env.sh</span><br><span class="line">vim hive-env.sh</span><br></pre></td></tr></table></figure>
+
+<p>增加HADOOP_HOME</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_HOME=/opt/servers/hadoop-2.7.7</span><br></pre></td></tr></table></figure>
+
+<h3 id="Hive启动报错Safe-mode"><a href="#Hive启动报错Safe-mode" class="headerlink" title="Hive启动报错Safe mode"></a>Hive启动报错Safe mode</h3><p>Hadoop在启动时有个安全模式，其在启动时有些工作要做，元数据的处理，DataNode的等待等过程。需要一段时间，遇到时需要等一段时间，耐心稍微等一会。过会自动就会好。</p>
+<p>如果长时间还报错，还在安全模式。可以手工设置退出安全模式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop dfsadmin -safemode leave</span><br></pre></td></tr></table></figure>
+
+<p>参数value的说明如下：</p>
+<ol>
+<li>enter - 进入安全模式</li>
+<li>leave - 强制NameNode离开安全模式</li>
+<li>get - 返回安全模式是否开启的信息</li>
+<li>wait - 等待，一直到安全模式结束</li>
+</ol>
+<h2 id="基于mysql管理元数据版hive"><a href="#基于mysql管理元数据版hive" class="headerlink" title="基于mysql管理元数据版hive"></a>基于mysql管理元数据版hive</h2><h3 id="解压hive-1"><a href="#解压hive-1" class="headerlink" title="解压hive"></a>解压hive</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/softwares</span><br><span class="line">tar -xvzf apache-hive-2.3.6-bin.tar.gz -C ../servers/</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改目录名称-1"><a href="#修改目录名称-1" class="headerlink" title="修改目录名称"></a>修改目录名称</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ../servers/</span><br><span class="line">mv apache-hive-2.3.6-bin hive-2.3.6</span><br></pre></td></tr></table></figure>
+
+<h3 id="检测服务器mysql数据库"><a href="#检测服务器mysql数据库" class="headerlink" title="检测服务器mysql数据库"></a>检测服务器mysql数据库</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql</span><br><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置mysql允许外网访问"><a href="#配置mysql允许外网访问" class="headerlink" title="配置mysql允许外网访问"></a>配置mysql允许外网访问</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grant all privileges on *.* to &#x27;root&#x27;@&#x27;%&#x27; identified by &#x27;root&#x27; with grant option; </span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<h3 id="退出mysql"><a href="#退出mysql" class="headerlink" title="退出mysql"></a>退出mysql</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改配置文件hive-site-xml"><a href="#修改配置文件hive-site-xml" class="headerlink" title="修改配置文件hive-site.xml"></a>修改配置文件hive-site.xml</h3><p>创建hive-site.xml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch hive-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;</span><br><span class="line"> </span><br><span class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line"> </span><br><span class="line">&lt;configuration&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;property&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;hive.default.fileformat&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;value&gt;TextFile&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;!--端口改为你自己的端口，这里是连接数据库中hive数据库--&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;value&gt;jdbc:mysql://hadoop01:3306/hive?createDatabaseIfNotExist=true&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;description&gt;JDBC connect string for a JDBC metastore&lt;/description&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;description&gt;Driver class name for a JDBC metastore&lt;/description&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;!--连接MySQL的用户名--&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;value&gt;root&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;description&gt;username to use against metastore database&lt;/description&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;property&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;!--连接MySQL的密码--&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;value&gt;root&lt;/value&gt;</span><br><span class="line"> </span><br><span class="line">  &lt;description&gt;password to use against metastore database&lt;/description&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/property&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传mysql驱动"><a href="#上传mysql驱动" class="headerlink" title="上传mysql驱动"></a>上传mysql驱动</h3><p>将资料中mysql-connector-java-5.1.38-bin.jar上传到hive的lib目录中。</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/schematool -dbType mysql -initSchema</span><br></pre></td></tr></table></figure>
+
+
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

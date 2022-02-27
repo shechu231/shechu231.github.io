@@ -10,12 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。
-
-其中包括云函数，云数据库，云文件存储，数据分析功能。
-
-点击左上角的云开发，弹出界面。可使用免费配置。点击开通。
-进入界,"> 
+    <meta name="description" content="基本语法使用:wx:for的使用12345wx:for=&amp;quot;&amp;#123;&amp;#123;list&amp;#125;&amp;#125;&amp;quot;用来循环数组，而list即为数组名wx:for-item=&amp;q,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     
@@ -24,12 +19,7 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="微信小程序知识了解 - Hexo"/>
-    <meta name="twitter:description" content="云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。
-
-其中包括云函数，云数据库，云文件存储，数据分析功能。
-
-点击左上角的云开发，弹出界面。可使用免费配置。点击开通。
-进入界,"/>
+    <meta name="twitter:description" content="基本语法使用:wx:for的使用12345wx:for=&amp;quot;&amp;#123;&amp;#123;list&amp;#125;&amp;#125;&amp;quot;用来循环数组，而list即为数组名wx:for-item=&amp;q,"/>
     
     
     
@@ -37,12 +27,7 @@
     <meta property="og:site_name" content="Hexo"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="微信小程序知识了解 - Hexo"/>
-    <meta property="og:description" content="云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。
-
-其中包括云函数，云数据库，云文件存储，数据分析功能。
-
-点击左上角的云开发，弹出界面。可使用免费配置。点击开通。
-进入界,"/>
+    <meta property="og:description" content="基本语法使用:wx:for的使用12345wx:for=&amp;quot;&amp;#123;&amp;#123;list&amp;#125;&amp;#125;&amp;quot;用来循环数组，而list即为数组名wx:for-item=&amp;q,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -78,7 +63,18 @@
 
         </div>
         <div class="content markdown">
-            <p>云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。</p>
+            <h2 id="基本语法使用"><a href="#基本语法使用" class="headerlink" title="基本语法使用:"></a>基本语法使用:</h2><h5 id="wx-for的使用"><a href="#wx-for的使用" class="headerlink" title="wx:for的使用"></a>wx:for的使用</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wx:for=&quot;&#123;&#123;list&#125;&#125;&quot;用来循环数组，而list即为数组名wx:for-item=&quot;items&quot; 即用来定义一个循环过程中每个元素的变量的</span><br><span class="line">如果是一维数组,按照如下方式循环出来：</span><br><span class="line">&lt;view wx:for=&quot;&#123;&#123;list&#125;&#125;&quot;&gt;</span><br><span class="line">&#123;&#123;index&#125;&#125; &#123;&#123;item.name&#125;&#125;</span><br><span class="line">&lt;/view&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="如果是二维甚至多维数组，按照如下方式循环："><a href="#如果是二维甚至多维数组，按照如下方式循环：" class="headerlink" title="如果是二维甚至多维数组，按照如下方式循环："></a>如果是二维甚至多维数组，按照如下方式循环：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;view wx:for=&quot;&#123;&#123;parentList&#125;&#125;&quot;&gt;</span><br><span class="line">&#123;&#123;item.id&#125;&#125;</span><br><span class="line">&lt;view wx:for=&quot;&#123;&#123;item.childList&#125;&#125;&quot; wx:for-item=&quot;items&quot;&gt;</span><br><span class="line">&#123;&#123;items.name&#125;&#125;&#123;&#123;item.account&#125;&#125;</span><br><span class="line">&lt;/view&gt;</span><br><span class="line">&lt;/view&gt;</span><br><span class="line">for (var i = 0 ; i &lt; list.length; i++) &#123;</span><br><span class="line">var xxx = list[i];</span><br><span class="line">&#125;</span><br><span class="line">等同于</span><br><span class="line">&lt;view wx:for=&quot;&#123;&#123;list&#125;&#125;&quot; wx:for-item=&quot;xxx&quot;&gt;&lt;/view&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="谨记：wx-for是循环数组，wx-for-item即给列表赋别名"><a href="#谨记：wx-for是循环数组，wx-for-item即给列表赋别名" class="headerlink" title="谨记：wx:for是循环数组，wx:for-item即给列表赋别名"></a>谨记：wx:for是循环数组，wx:for-item即给列表赋别名</h5><p>可以使用wx:for-item指定数组当前元素的变量名<br>可以使用wx:for-index指定数组当前下标的变量名，事例如下：<br>wxml文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;view wx:for=&quot;&#123;&#123;items&#125;&#125;&quot; wx:for-item=&quot;name&quot; wx:for-index=&quot;id&quot;&gt;</span><br><span class="line">&#123;&#123;id&#125;&#125;: &#123;&#123;name.one&#125;&#125;</span><br><span class="line">&lt;/view&gt;</span><br></pre></td></tr></table></figure>
+
+<p>下面是一个九九乘法表事例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;view wx:for=&quot;&#123;&#123;[1,2,3,4,5,6,7,8,9]&#125;&#125;&quot; wx:for-item=&quot;i&quot;&gt;</span><br><span class="line">&lt;view</span><br><span class="line"> wx:for=&quot;&#123;&#123;[1,2,3,4,5,6,7,8,9]&#125;&#125;&quot; wx:for-item=&quot;j&quot;&gt;</span><br><span class="line">&lt;view</span><br><span class="line"> wx:if=&quot;&#123;&#123;i &lt;= j&#125;&#125;&quot;&gt;</span><br><span class="line">&#123;&#123;i&#125;&#125;*&#123;&#123;j&#125;&#125; = &#123;&#123;i * j&#125;&#125;</span><br><span class="line">&lt;/view&gt;</span><br><span class="line">&lt;/view&gt;</span><br><span class="line">&lt;/view&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/02/27/3V7vOnj5Tkiyr8w.png" alt="image-20220227142824094"></p>
+<p>云开发经常用于个人项目。使用的原因是因为免费的配置可以使用。发布网页首选。</p>
 <p><img src="https://s2.loli.net/2022/01/15/rjkYxMS1BVs9CRK.png" alt="image-20220115115144570"></p>
 <p>其中包括云函数，云数据库，云文件存储，数据分析功能。</p>
 <p><img src="https://s2.loli.net/2022/01/15/ejGdtohs7lkDBTP.png" alt="image-20220115115436079"></p>
