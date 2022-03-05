@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>flume日志收集 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Apache Flume运行机制Flume系统中核心的角色是agent，agent本身是一个Java进程，一般运行在日志收集节点。
+Agent：代理，flume集群中，每个节点都是一个agent，包,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="flume日志收集 - Hexo"/>
+    <meta name="twitter:description" content="Apache Flume运行机制Flume系统中核心的角色是agent，agent本身是一个Java进程，一般运行在日志收集节点。
+Agent：代理，flume集群中，每个节点都是一个agent，包,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="flume日志收集 - Hexo"/>
+    <meta property="og:description" content="Apache Flume运行机制Flume系统中核心的角色是agent，agent本身是一个Java进程，一般运行在日志收集节点。
+Agent：代理，flume集群中，每个节点都是一个agent，包,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">flume日志收集</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">flume日志收集</h1>
+        <div class="stuff">
+            <span>二月 28, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="Apache-Flume"><a href="#Apache-Flume" class="headerlink" title="Apache Flume"></a>Apache Flume</h1><h2 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h2><p>Flume系统中核心的角色是<strong>agent</strong>，agent本身是一个Java进程，一般运行在日志收集节点。</p>
+<p><strong>Agent</strong>：代理，flume集群中，每个节点都是一个agent，包含了flume单节点：接受、封装、承载、传输event到目的地的过程。这个过程中包含三部分（source、channel、sink）。</p>
+<p>每一个agent相当于一个数据传递员，内部有三个组件：</p>
+<p><strong>Source</strong>：采集源，用于跟数据源对接，以获取数据；</p>
+<p><strong>Sink</strong>：下沉地，采集数据的传送目的，用于往下一级agent传递数据或者往 最终存储系统传递数据；</p>
+<p><strong>Channel</strong>：agent内部的数据传输通道，用于从source将数据传递到sink；</p>
+<h3 id="简单结构"><a href="#简单结构" class="headerlink" title="简单结构"></a>简单结构</h3><p>单个agent采集数据</p>
+<p><img src="https://s2.loli.net/2022/02/28/ibskxN4BtafZ5eF.png" alt="image-20220228153822969"></p>
+<h3 id="复杂结构"><a href="#复杂结构" class="headerlink" title="复杂结构"></a>复杂结构</h3><p>多级agent之间串联</p>
+<p><img src="https://s2.loli.net/2022/02/28/P1qeFn9QDopwL7h.png" alt="image-20220228153920554"></p>
+<h2 id="Flume安装部署"><a href="#Flume安装部署" class="headerlink" title="Flume安装部署"></a>Flume安装部署</h2><p>上传安装包到数据源所在节点上</p>
+<p>然后解压 tar -zxvf apache-flume-1.9.0-bin.tar.gz</p>
+<p>然后进入flume的目录，修改conf下的flume-env.sh，在里面配置JAVA_HOME</p>
+<h2 id="flume初体验"><a href="#flume初体验" class="headerlink" title="flume初体验"></a>flume初体验</h2><p>进入conf目录下，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim http_logger.properties</span><br></pre></td></tr></table></figure>
+
+<p>配置文件详解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># example.conf: A single-node Flume configuration</span><br><span class="line"></span><br><span class="line"># Name the components on this agent</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line">a1.sources.r1.type  =  http   #指定source的类型http</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0  #指定source的来源。一般为本机，被动接收</span><br><span class="line">a1.sources.r1.port  =  22222    #指定端口</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<p>在/opt/servers/flume-1.9.0/目录下执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -c conf -f conf/http_logger.properties -n a1 -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>注：</p>
+<p>-c conf 指定flume自身的配置文件所在目录</p>
+<p>-f conf/netcat-logger.con 指定我们所描述的采集方案</p>
+<p>-n a1 指定我们这个agent的名字</p>
+<p>flume启动后占用当前窗口，复制一个新的窗口在任意目录下执行以下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -d &#x27;[&#123;&quot;headers&quot;:&#123;&quot;tester&quot;:&quot;tony&quot;&#125;,&quot;body&quot;:&quot;hello http flume&quot;&#125;]&#x27; http://hadoop01:22222</span><br></pre></td></tr></table></figure>
+
+<h1 id="练习案例"><a href="#练习案例" class="headerlink" title="练习案例"></a>练习案例</h1><h2 id="Source练习"><a href="#Source练习" class="headerlink" title="Source练习"></a>Source练习</h2><p><a target="_blank" rel="noopener" href="https://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html">https://flume.apache.org/releases/content/1.9.0/FlumeUserGuide.html</a></p>
+<h3 id="avro"><a href="#avro" class="headerlink" title="avro"></a>avro</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim avro_logger.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  avro</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.sinks.k1.type  =  logger</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<p>在/opt/data/flumedata下创建文件log.txt并编辑添加数据</p>
+<p>在flume安装目录下的conf目录下执行命令启动agent</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -c conf -f conf/avro_logger.conf -n a1 -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>模拟发送avro在flume的bin目录下执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng avro-client -c conf -H hadoop01 -p 22222 -F /opt/data/flumedata/log.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Spooldir"><a href="#Spooldir" class="headerlink" title="Spooldir"></a>Spooldir</h3><p>spooldir：source源，用于监控文件目录</p>
+<p>注意：</p>
+<p>1）对于文件中要源源不断写入的这情况，不适合使用spooldir。</p>
+<p>2）对于已经监控的文件，如果有相同文件名再次放入到监控目录中，此时服务会报错，并不再进行监控。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  spooldir </span><br><span class="line">a1.sources.r1.spoolDir = /opt/data/spooldir</span><br><span class="line"> </span><br><span class="line">a1.sinks.k1.type  =  logger</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>在/home/data目录下创建文件夹spooldir</p>
+</li>
+<li><p>启动</p>
+</li>
+<li><p>在spooldir中vim文件并添加内容并保存。发现flume日志中打印编辑内容。</p>
+<h3 id="采集目录到HDFS"><a href="#采集目录到HDFS" class="headerlink" title="采集目录到HDFS"></a>采集目录到HDFS</h3></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Name the components on this agent</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line">##注意：不能往监控目中重复丢同名文件</span><br><span class="line">a1.sources.r1.type = spooldir</span><br><span class="line">a1.sources.r1.spoolDir = /opt/data/spooldir</span><br><span class="line">#a1.sources.r1.fileHeader = true</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line">a1.sinks.k1.hdfs.path = /flume/events/%y-%m-%d/%H%M/</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line">a1.sinks.k1.hdfs.rollInterval = 3</span><br><span class="line">a1.sinks.k1.hdfs.rollSize = 20</span><br><span class="line">a1.sinks.k1.hdfs.rollCount = 5</span><br><span class="line">a1.sinks.k1.hdfs.batchSize = 1</span><br><span class="line">#获取时间</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line">#生成的文件类型，默认是Sequencefile，可用DataStream，则为普通文本</span><br><span class="line">a1.sinks.k1.hdfs.fileType = DataStream</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数解析："><a href="#参数解析：" class="headerlink" title="参数解析："></a>参数解析：</h3><p>· rollInterval</p>
+<p>默认值：30</p>
+<p>hdfs sink间隔多长将临时文件滚动成最终目标文件，单位：秒；</p>
+<p>如果设置成0，则表示不根据时间来滚动文件；</p>
+<p>注：滚动（roll）指的是，hdfs sink将临时文件重命名成最终目标文件，并新打开一个临时文件来写入数据；</p>
+<h4 id="·-rollSize"><a href="#·-rollSize" class="headerlink" title="· rollSize"></a>· rollSize</h4><p>默认值：1024</p>
+<p>当临时文件达到该大小（单位：bytes）时，滚动成目标文件；</p>
+<p>如果设置成0，则表示不根据临时文件大小来滚动文件；</p>
+<h4 id="·-rollCount"><a href="#·-rollCount" class="headerlink" title="· rollCount"></a>· rollCount</h4><p>默认值：10</p>
+<p>当events数据达到该数量时候，将临时文件滚动成目标文件；</p>
+<p>如果设置成0，则表示不根据events数据来滚动文件；</p>
+<h4 id="·-round"><a href="#·-round" class="headerlink" title="· round"></a>· round</h4><p>默认值：false</p>
+<p>对文件目录进行滚动。</p>
+<p>是否启用时间上的“舍弃”，这里的“舍弃”，类似于“四舍五入”。</p>
+<h4 id="·-roundValue"><a href="#·-roundValue" class="headerlink" title="· roundValue"></a>· roundValue</h4><p>默认值：1</p>
+<p>时间上进行“舍弃”的值；</p>
+<h4 id="·-roundUnit"><a href="#·-roundUnit" class="headerlink" title="· roundUnit"></a>· roundUnit</h4><p>默认值：seconds</p>
+<p>时间上进行“舍弃”的单位，包含：second,minute,hour</p>
+<table>
+<thead>
+<tr>
+<th align="left">Alias</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">%{host}</td>
+<td align="left">Substitute value of event header named “host”. Arbitrary header names are supported.</td>
+</tr>
+<tr>
+<td align="left">%t</td>
+<td align="left">Unix time in milliseconds</td>
+</tr>
+<tr>
+<td align="left">%a</td>
+<td align="left">locale’s short weekday name (Mon, Tue, …)</td>
+</tr>
+<tr>
+<td align="left">%A</td>
+<td align="left">locale’s full weekday name (Monday, Tuesday, …)</td>
+</tr>
+<tr>
+<td align="left">%b</td>
+<td align="left">locale’s short month name (Jan, Feb, …)</td>
+</tr>
+<tr>
+<td align="left">%B</td>
+<td align="left">locale’s long month name (January, February, …)</td>
+</tr>
+<tr>
+<td align="left">%c</td>
+<td align="left">locale’s date and time (Thu Mar 3 23:05:25 2005)</td>
+</tr>
+<tr>
+<td align="left">%d</td>
+<td align="left">day of month (01)</td>
+</tr>
+<tr>
+<td align="left">%e</td>
+<td align="left">day of month without padding (1)</td>
+</tr>
+<tr>
+<td align="left">%D</td>
+<td align="left">date; same as %m/%d/%y</td>
+</tr>
+<tr>
+<td align="left">%H</td>
+<td align="left">hour (00..23)</td>
+</tr>
+<tr>
+<td align="left">%I</td>
+<td align="left">hour (01..12)</td>
+</tr>
+<tr>
+<td align="left">%j</td>
+<td align="left">day of year (001..366)</td>
+</tr>
+<tr>
+<td align="left">%k</td>
+<td align="left">hour ( 0..23)</td>
+</tr>
+<tr>
+<td align="left">%m</td>
+<td align="left">month (01..12)</td>
+</tr>
+<tr>
+<td align="left">%n</td>
+<td align="left">month without padding (1..12)</td>
+</tr>
+<tr>
+<td align="left">%M</td>
+<td align="left">minute (00..59)</td>
+</tr>
+<tr>
+<td align="left">%p</td>
+<td align="left">locale’s equivalent of am or pm</td>
+</tr>
+<tr>
+<td align="left">%s</td>
+<td align="left">seconds since 1970-01-01 00:00:00 UTC</td>
+</tr>
+<tr>
+<td align="left">%S</td>
+<td align="left">second (00..59)</td>
+</tr>
+<tr>
+<td align="left">%y</td>
+<td align="left">last two digits of year (00..99)</td>
+</tr>
+<tr>
+<td align="left">%Y</td>
+<td align="left">year (2010)</td>
+</tr>
+<tr>
+<td align="left">%z</td>
+<td align="left">+hhmm numeric timezone (for example, -0400)</td>
+</tr>
+<tr>
+<td align="left">%[localhost]</td>
+<td align="left">Substitute the hostname of the host where the agent is running</td>
+</tr>
+<tr>
+<td align="left">%[IP]</td>
+<td align="left">Substitute the IP address of the host where the agent is running</td>
+</tr>
+<tr>
+<td align="left">%[FQDN]</td>
+<td align="left">Substitute the canonical hostname of the host where the agent is running</td>
+</tr>
+</tbody></table>
+<h3 id="采集文件到HDFS"><a href="#采集文件到HDFS" class="headerlink" title="采集文件到HDFS"></a>采集文件到HDFS</h3><p>exec只能指定一个文件进行监控，监控的是源源不断写入的文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># Name the components on this agent</span><br><span class="line">#a1.sources = r1 r2 r3</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /opt/data/exec/test.log</span><br><span class="line"></span><br><span class="line">#a1.sources.r2.type = exec</span><br><span class="line">#a1.sources.r2.command = tail -F /opt/data/exec/test2.log</span><br><span class="line"></span><br><span class="line">#a1.sources.r3.type = exec</span><br><span class="line">#a1.sources.r3.command = tail -F /opt/data/exec/test3.log</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line">a1.sinks.k1.hdfs.path = /flume/exec/%y-%m-%d/%H%M/</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line">a1.sinks.k1.hdfs.rollInterval = 3</span><br><span class="line">a1.sinks.k1.hdfs.rollSize = 20</span><br><span class="line">a1.sinks.k1.hdfs.rollCount = 5</span><br><span class="line">a1.sinks.k1.hdfs.batchSize = 1</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line">#生成的文件类型，默认是Sequencefile，可用DataStream，则为普通文本</span><br><span class="line">a1.sinks.k1.hdfs.fileType = DataStream</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">#a1.sources.r2.channels = c1</span><br><span class="line">#a1.sources.r3.channels = c1</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<h5 id="开发shell脚本定时追加文件内容"><a href="#开发shell脚本定时追加文件内容" class="headerlink" title="开发shell脚本定时追加文件内容"></a>开发shell脚本定时追加文件内容</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /opt/servers/shells/</span><br><span class="line">cd  /opt/servers/shells/</span><br><span class="line">vim exec.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">while true</span><br><span class="line"></span><br><span class="line">do</span><br><span class="line"> date &gt;&gt; /opt/data/exec/test.log;</span><br><span class="line">  sleep 0.5;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p>启动脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh /opt/servers/shells/exec.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="TailDir的使用"><a href="#TailDir的使用" class="headerlink" title="TailDir的使用"></a>TailDir的使用</h3><p>同时监控多个文件的持续写入</p>
+<p>固定文件：1.txt 2.txt</p>
+<p>持续写入文件：test.log 3.txt</p>
+<p>source:taildir</p>
+<p>sink:hdfs</p>
+<p>channel:memory</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.type = TAILDIR</span><br><span class="line">a1.sources.r1.positionFile = /opt/data/taildir/taildir_position.json</span><br><span class="line">a1.sources.r1.filegroups = f1 f2</span><br><span class="line">a1.sources.r1.filegroups.f1 = /opt/data/taildir/a/.*txt.*</span><br><span class="line">a1.sources.r1.filegroups.f2 = /opt/data/taildir/b/test.log</span><br><span class="line">a1.sources.r1.maxBatchCount = 1000</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line">a1.sources.r1.headers.f1.aaa = bbb</span><br><span class="line">a1.sources.r1.headers.f2.headerKey1 = value2</span><br><span class="line">a1.sources.r1.headers.f2.headerKey2 = value2-2</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 10000</span><br><span class="line">a1.channels.c1.transactionCapacity = 10000</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sources.r1.channels = c1</span><br></pre></td></tr></table></figure>
+
+<h1 id="集群部署"><a href="#集群部署" class="headerlink" title="集群部署"></a>集群部署</h1><p>Hadoop01：JDK、Hadoop、Flume</p>
+<p>Hadoop02：JDK、Flume</p>
+<p>Hadoop03：JDK、Flume</p>
+<p>只需要将hadoop01安装好的Flume文件夹发送到02 03两个节点相应的位置即可。</p>
+<h2 id="案例练习"><a href="#案例练习" class="headerlink" title="案例练习"></a>案例练习</h2><h3 id="多级"><a href="#多级" class="headerlink" title="多级"></a>多级</h3><p>Hadoop01</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  http</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.sinks.k1.type  =  avro</span><br><span class="line">a1.sinks.k1.hostname  =  hadoop02</span><br><span class="line">a1.sinks.k1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<p>hadoop02</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1 </span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  avro</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type  =  avro</span><br><span class="line">a1.sinks.k1.hostname  =  hadoop03</span><br><span class="line">a1.sinks.k1.port  =  22222</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory </span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"></span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<p>hadoop03</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.type  =  avro</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type  =  logger</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<p>按照顺序从hadoop03启动节点</p>
+<h3 id="扇入-fan-in"><a href="#扇入-fan-in" class="headerlink" title="扇入(fan-in)"></a>扇入(fan-in)</h3><p>Hadoop01</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">a1.sources.r1.type  =  http</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line">  </span><br><span class="line">a1.sinks.k1.type  =  avro</span><br><span class="line">a1.sinks.k1.hostname  =  hadoop03</span><br><span class="line">a1.sinks.k1.port  =  22222</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"></span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<p>Hadoop02</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  http</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.sinks.k1.type  =  avro</span><br><span class="line">a1.sinks.k1.hostname  =  hadoop03</span><br><span class="line">a1.sinks.k1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<p>Hadoop03</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1 </span><br><span class="line">a1.sinks  =  k1 </span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  avro</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.sinks.k1.type  =  logger</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<h3 id="扇出-fanout"><a href="#扇出-fanout" class="headerlink" title="扇出(fanout)"></a>扇出(fanout)</h3><p>Hadoop01</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1 k2</span><br><span class="line">a1.channels  =  c1 c2</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  http</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type  =  avro</span><br><span class="line">a1.sinks.k1.hostname  =  hadoop02</span><br><span class="line">a1.sinks.k1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.sinks.k2.type  =  avro</span><br><span class="line">a1.sinks.k2.hostname  =  hadoop03</span><br><span class="line">a1.sinks.k2.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.channels.c2.type  =  memory</span><br><span class="line">a1.channels.c2.capacity  =  1000</span><br><span class="line">a1.channels.c2.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1 c2</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br><span class="line">a1.sinks.k2.channel  =  c2</span><br></pre></td></tr></table></figure>
+
+<p>Hadoop02</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  avro</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.sinks.k1.type  =  logger</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"></span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<p>Hadoop03</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.type  =  avro</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"> </span><br><span class="line">a1.sinks.k1.type  =  logger</span><br><span class="line"> </span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"> </span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<h1 id="离线数据分析"><a href="#离线数据分析" class="headerlink" title="离线数据分析"></a>离线数据分析</h1><h1 id="Hive离线分析"><a href="#Hive离线分析" class="headerlink" title="Hive离线分析"></a>Hive离线分析</h1><h2 id="回顾业务流程"><a href="#回顾业务流程" class="headerlink" title="回顾业务流程"></a>回顾业务流程</h2><p><img src="https://s2.loli.net/2022/03/02/MDmQA8WsljweP3u.png" alt="image-20220302150910132"></p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><h2 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h2><h3 id="1-启动Hadoop"><a href="#1-启动Hadoop" class="headerlink" title="1.启动Hadoop"></a>1.启动Hadoop</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-all.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改flume配置文件"><a href="#修改flume配置文件" class="headerlink" title="修改flume配置文件"></a>修改flume配置文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">a1.sources  =  r1</span><br><span class="line">a1.sinks  =  k1</span><br><span class="line">a1.channels  =  c1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.type  =  avro</span><br><span class="line">a1.sources.r1.bind  =  0.0.0.0</span><br><span class="line">a1.sources.r1.port  =  22222</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop01:8020/flux/reportTime=%Y-%m-%d</span><br><span class="line">a1.sinks.k1.hdfs.fileType=DataStream</span><br><span class="line">a1.sinks.k1.serializer = text</span><br><span class="line">a1.sinks.k1.serializer.appendNewline = false</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type  =  memory</span><br><span class="line">a1.channels.c1.capacity  =  1000</span><br><span class="line">a1.channels.c1.transactionCapacity  =  100</span><br><span class="line"></span><br><span class="line">a1.sources.r1.channels  =  c1</span><br><span class="line">a1.sinks.k1.channel  =  c1</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动flume"><a href="#启动flume" class="headerlink" title="启动flume"></a>启动flume</h3><p>进入flume的根目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/flume-ng agent -c conf/ -f conf/jtlog_hdfs.conf -n a1 -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

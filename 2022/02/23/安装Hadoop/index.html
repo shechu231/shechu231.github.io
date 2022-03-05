@@ -549,6 +549,293 @@
 <h3 id="上传mysql驱动"><a href="#上传mysql驱动" class="headerlink" title="上传mysql驱动"></a>上传mysql驱动</h3><p>将资料中mysql-connector-java-5.1.38-bin.jar上传到hive的lib目录中。</p>
 <h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/schematool -dbType mysql -initSchema</span><br></pre></td></tr></table></figure>
 
+<p>显示schemaTool completed，表示执行成功。</p>
+<p>重复上述创建表的操作。</p>
+<p>注意：先删除之前在hdfs上的目录。</p>
+<p>DBS：数据库信息</p>
+<p><img src="https://s2.loli.net/2022/02/28/BcJ8nEsiVdatgZO.png" alt="image-20220228092518111"></p>
+<p>TBLS：表信息</p>
+<p><img src="https://s2.loli.net/2022/02/28/sMHTZC2gAO3qb5z.png" alt="image-20220228092538142"></p>
+<p>SDS：表详细信息</p>
+<p><img src="https://s2.loli.net/2022/02/28/feU28oKhCvTjVlN.png" alt="image-20220228092602450"></p>
+<p>COLUMNS_V2：列信息</p>
+<p><img src="https://s2.loli.net/2022/02/28/CqnOfyjaXJWzGTh.png" alt="image-20220228092633074"></p>
+<h2 id="创建数据库与创建数据库表"><a href="#创建数据库与创建数据库表" class="headerlink" title="创建数据库与创建数据库表"></a>创建数据库与创建数据库表</h2><h3 id="管理表（内部表）"><a href="#管理表（内部表）" class="headerlink" title="管理表（内部表）"></a>管理表（内部表）</h3><h4 id="创建数据库操作"><a href="#创建数据库操作" class="headerlink" title="创建数据库操作"></a>创建数据库操作</h4><h5 id="创建数据库-1"><a href="#创建数据库-1" class="headerlink" title="创建数据库"></a>创建数据库</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create database if not exists myhive;</span><br><span class="line">use  myhive;</span><br></pre></td></tr></table></figure>
+
+<p>说明：hive的表存放位置模式是由hive-site.xml当中的一个属性指定的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;</span><br><span class="line">&lt;value&gt;/user/hive/warehouse&lt;/value&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建数据库并指定hdfs存储位置"><a href="#创建数据库并指定hdfs存储位置" class="headerlink" title="创建数据库并指定hdfs存储位置"></a>创建数据库并指定hdfs存储位置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database myhive2 location &#x27;/myhive2&#x27;;   </span><br></pre></td></tr></table></figure>
+
+<h5 id="修改数据库"><a href="#修改数据库" class="headerlink" title="修改数据库"></a>修改数据库</h5><p>可以使用alter database 命令来修改数据库的一些属性。但是数据库的元数据信息是不可更改的，包括数据库的名称以及数据库所在的位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter  database  myhive2  set  dbproperties(&#x27;createtime&#x27;=&#x27;20210611&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看数据库详细信息"><a href="#查看数据库详细信息" class="headerlink" title="查看数据库详细信息"></a>查看数据库详细信息</h5><p>查看数据库基本信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc  database  myhive2;</span><br></pre></td></tr></table></figure>
+
+<p>查看数据库更多详细信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc database extended  myhive2; </span><br></pre></td></tr></table></figure>
+
+<h5 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h5><p>删除一个空数据库，如果数据库下面有数据表，那么就会报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop  database  myhive2;</span><br></pre></td></tr></table></figure>
+
+<p>强制删除数据库，包含数据库下面的表一起删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop  database  myhive  cascade;   //不要执行了</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建数据库表操作"><a href="#创建数据库表操作" class="headerlink" title="创建数据库表操作"></a>创建数据库表操作</h4><h5 id="创建数据库表"><a href="#创建数据库表" class="headerlink" title="创建数据库表"></a>创建数据库表</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">use myhive;</span><br><span class="line">create table stu(id int,name string);</span><br><span class="line">insert into stu values (1,&quot;zhangsan&quot;);</span><br><span class="line">select * from stu;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Hive建表时候的字段类型"><a href="#Hive建表时候的字段类型" class="headerlink" title="Hive建表时候的字段类型"></a>Hive建表时候的字段类型</h5><table>
+<thead>
+<tr>
+<th><strong>分类</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>字面量示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原始类型</td>
+<td>BOOLEAN</td>
+<td>true/false</td>
+<td>TRUE</td>
+</tr>
+<tr>
+<td></td>
+<td>TINYINT</td>
+<td>1字节的有符号整数 -128~127</td>
+<td>1Y</td>
+</tr>
+<tr>
+<td></td>
+<td>SMALLINT</td>
+<td>2个字节的有符号整数，-32768~32767</td>
+<td>1S</td>
+</tr>
+<tr>
+<td></td>
+<td>INT</td>
+<td>4个字节的带符号整数</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>BIGINT</td>
+<td>8字节带符号整数</td>
+<td>1L</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>4字节单精度浮点数1.0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>DOUBLE</td>
+<td>8字节双精度浮点数</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td></td>
+<td>DEICIMAL</td>
+<td>任意精度的带符号小数</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td></td>
+<td>STRING</td>
+<td>字符串，变长</td>
+<td>“a”,’b’</td>
+</tr>
+<tr>
+<td></td>
+<td>VARCHAR</td>
+<td>变长字符串</td>
+<td>“a”,’b’</td>
+</tr>
+<tr>
+<td></td>
+<td>CHAR</td>
+<td>固定长度字符串</td>
+<td>“a”,’b’</td>
+</tr>
+<tr>
+<td></td>
+<td>BINARY</td>
+<td>字节数组</td>
+<td>无法表示</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>时间戳，毫秒值精度</td>
+<td>122327493795</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>DATE</td>
+<td>日期</td>
+<td>‘2016-03-29’</td>
+</tr>
+<tr>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types#LanguageManualTypes-Intervals">INTERVAL</a></td>
+<td>时间频率间隔</td>
+<td></td>
+</tr>
+<tr>
+<td>复杂类型</td>
+<td>ARRAY</td>
+<td>有序的的同类型的集合</td>
+<td>array(1,2)</td>
+</tr>
+<tr>
+<td>MAP</td>
+<td>key-value,key必须为原始类型，value可以任意类型</td>
+<td>map(‘a’,1,’b’,2)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>STRUCT</td>
+<td>字段集合,类型可以不同</td>
+<td>struct(‘1’,1,1.0), named_stract(‘col1’,’1’,’col2’,1,’clo3’,1.0)</td>
+</tr>
+<tr>
+<td>UNION</td>
+<td>在有限取值范围内的一个值</td>
+<td>create_union(1,’a’,63)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h5 id="创建表并指定字段之间的分隔符"><a href="#创建表并指定字段之间的分隔符" class="headerlink" title="创建表并指定字段之间的分隔符"></a>创建表并指定字段之间的分隔符</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create  table if not exists stu2(id int ,name string) row format delimited fields terminated by &#x27;\t&#x27;  stored as textfile location &#x27;/user/stu2&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="外部表："><a href="#外部表：" class="headerlink" title="外部表："></a>外部表：</h3><h4 id="外部表说明："><a href="#外部表说明：" class="headerlink" title="外部表说明："></a>外部表说明：</h4><p>外部表因为是指定其他的hdfs路径的数据加载到表当中来，所以hive表会认为自己不完全独占这份数据，所以删除hive表的时候，数据仍然存放在hdfs当中，不会删掉。</p>
+<p>内部表：当删除表的时候，表结构和表数据全部都会删除掉。</p>
+<p>外部表：当删除表的时候，认为表的数据会被其他人使用，自己没有独享数据的权利，所以只会删除掉表的结构（元数据），不会删除表的数据。</p>
+<h6 id="操作案例"><a href="#操作案例" class="headerlink" title="操作案例"></a>操作案例</h6><p>分别创建老师与学生表外部表，并向表中加载数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create external table teacher (t_id string,t_name string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>创建学生表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create external table student (s_id string,s_name string,s_birth string , s_sex string ) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>从本地文件系统向表中加载数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#x27;/opt/data/hivedatas/student.csv&#x27; into table student;</span><br></pre></td></tr></table></figure>
+
+<p>加载数据并覆盖已有数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#x27;/opt/data/hivedatas/student.csv&#x27; overwrite  into table student;</span><br></pre></td></tr></table></figure>
+
+<p>从hdfs文件系统向表中加载数据（需要提前将数据上传到hdfs文件系统，其实就是一个移动文件的操作）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/servers/hivedatas</span><br><span class="line">hdfs dfs -mkdir -p /hivedatas</span><br><span class="line">hdfs dfs -put teacher.csv /hivedatas/</span><br><span class="line">load data inpath &#x27;/hivedatas/teacher.csv&#x27; into table teacher;</span><br></pre></td></tr></table></figure>
+
+<p>如果删掉student表，hdfs的数据仍然存在，并且重新创建表之后，表中就直接存在数据了,因为我们的student表使用的是外部表，drop table之后，表当中的数据依然保留在hdfs上面了。</p>
+<h3 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h3><h5 id="创建分区表语法"><a href="#创建分区表语法" class="headerlink" title="创建分区表语法"></a>创建分区表语法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table score(s_id string,c_id string, s_score int) partitioned by (month string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="创建一个表带多个分区"><a href="#创建一个表带多个分区" class="headerlink" title="创建一个表带多个分区"></a>创建一个表带多个分区</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table score2 (s_id string,c_id string, s_score int) partitioned by (year string,month string,day string) row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="加载数据到分区表中"><a href="#加载数据到分区表中" class="headerlink" title="加载数据到分区表中"></a>加载数据到分区表中</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#x27;/opt/data/hivedatas/score.csv&#x27; into table score partition (month=&#x27;201806&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="加载数据到一个多分区的表中去"><a href="#加载数据到一个多分区的表中去" class="headerlink" title="加载数据到一个多分区的表中去"></a>加载数据到一个多分区的表中去</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#x27;/opt/data/hivedatas/score.csv&#x27; into table score2 partition(year=&#x27;2018&#x27;,month=&#x27;06&#x27;,day=&#x27;01&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看分区"><a href="#查看分区" class="headerlink" title="查看分区"></a>查看分区</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show  partitions  score;</span><br></pre></td></tr></table></figure>
+
+<h5 id="添加一个分区"><a href="#添加一个分区" class="headerlink" title="添加一个分区"></a>添加一个分区</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table score add partition(month=&#x27;201805&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="同时添加多个分区"><a href="#同时添加多个分区" class="headerlink" title="同时添加多个分区"></a>同时添加多个分区</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table score add partition(month=&#x27;201804&#x27;) partition(month = &#x27;201803&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>注意：添加分区之后就可以在hdfs文件系统当中看到表下面多了一个文件夹</p>
+<h5 id="删除分区"><a href="#删除分区" class="headerlink" title="删除分区"></a>删除分区</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table score drop partition(month = &#x27;201806&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="分桶表"><a href="#分桶表" class="headerlink" title="分桶表"></a>分桶表</h3><p>将数据按照指定的字段进行分成多个桶中去，说白了就是将数据按照字段进行划分，可以将数据按照字段划分到多个文件当中去</p>
+<p>开启hive的桶表功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.enforce.bucketing=true;</span><br></pre></td></tr></table></figure>
+
+<p>设置reduce的个数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set mapreduce.job.reduces=3;</span><br></pre></td></tr></table></figure>
+
+<p>创建通表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table course (c_id string,c_name string,t_id string) clustered by(c_id) into 3 buckets row format delimited fields terminated by &#x27;\t&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>桶表的数据加载，由于桶表的数据加载通过hdfs dfs -put文件或者通过load data均不好使，只能通过insert overwrite</p>
+<p>创建普通表，并通过insert overwrite的方式将普通表的数据通过查询的方式加载到桶表当中去</p>
+<h5 id="创建普通表："><a href="#创建普通表：" class="headerlink" title="创建普通表："></a>创建普通表：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table course_common (c_id string,c_name string,t_id string) row format delimited fields terminated by &#x27;\t&#x27;; </span><br></pre></td></tr></table></figure>
+
+<h5 id="普通表中加载数据"><a href="#普通表中加载数据" class="headerlink" title="普通表中加载数据"></a>普通表中加载数据</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#x27;/opt/servers/hivedatas/course.csv&#x27; into table course_common;</span><br></pre></td></tr></table></figure>
+
+<p>通过insert overwrite给桶表中加载数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table course select * from course_common cluster by(c_id);</span><br></pre></td></tr></table></figure>
+
+<p>按百分比取样：整表数据的百分之三十</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from course tablesample(30 percent);</span><br></pre></td></tr></table></figure>
+
+<h2 id="hive查询方法"><a href="#hive查询方法" class="headerlink" title="hive查询方法"></a>hive查询方法</h2><h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><h4 id="全表查询"><a href="#全表查询" class="headerlink" title="全表查询"></a>全表查询</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from score;</span><br></pre></td></tr></table></figure>
+
+<h5 id="选择特定列查询"><a href="#选择特定列查询" class="headerlink" title="选择特定列查询"></a>选择特定列查询</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s_id ,c_id from score;</span><br></pre></td></tr></table></figure>
+
+<h5 id="列别名"><a href="#列别名" class="headerlink" title="列别名"></a>列别名</h5><p>1）重命名一个列。</p>
+<p>2）便于计算。</p>
+<p>3）紧跟列名，也可以在列名和别名之间加入关键字‘AS’</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s_id as myid ,c_id from score;</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><p>求总行数（count）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(1) from score;</span><br></pre></td></tr></table></figure>
+
+<p>求分数的最大值（max）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select max(s_score) from score;</span><br></pre></td></tr></table></figure>
+
+<p>求分数的最小值（min）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select min(s_score) from score;</span><br></pre></td></tr></table></figure>
+
+<p>求分数的总和（sum）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sum(s_score) from score;</span><br></pre></td></tr></table></figure>
+
+<p>求分数的平均值（avg）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select avg(s_score) from score;</span><br></pre></td></tr></table></figure>
+
+<h3 id="LIMIT语句"><a href="#LIMIT语句" class="headerlink" title="LIMIT语句"></a>LIMIT语句</h3><p>典型的查询会返回多行数据。LIMIT子句用于限制返回的行数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from score limit 3;</span><br></pre></td></tr></table></figure>
+
+<h3 id="WHERE语句"><a href="#WHERE语句" class="headerlink" title="WHERE语句"></a>WHERE语句</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from score where s_score &gt; 60;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><h4 id="GROUP-BY语句"><a href="#GROUP-BY语句" class="headerlink" title="GROUP BY语句"></a>GROUP BY语句</h4><p>GROUP BY语句通常会和聚合函数一起使用，按照一个或者多个列队结果进行分组，然后对每个组执行聚合操作。</p>
+<p>案例实操：</p>
+<p>计算每个学生的平均分数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s_id ,avg(s_score) from score group by s_id;</span><br></pre></td></tr></table></figure>
+
+<p>计算每个学生最高成绩</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s_id ,max(s_score) from score group by s_id;</span><br></pre></td></tr></table></figure>
+
+<h4 id="HAVING语句"><a href="#HAVING语句" class="headerlink" title="HAVING语句"></a>HAVING语句</h4><p>1）having与where不同点</p>
+<p>（1）where针对表中的列发挥作用，查询数据；having针对查询结果中的列发挥作用，筛选数据。</p>
+<p>（2）where后面不能写分组函数，而having后面可以使用分组函数。</p>
+<p>（3）having只用于group by分组统计语句。</p>
+<p>2）案例实操：</p>
+<p> 求每个学生的平均分数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s_id ,avg(s_score) from score group by s_id;</span><br></pre></td></tr></table></figure>
+
+<p> 求每个学生平均分数大于85的人</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s_id ,avg(s_score) avgscore from score group by s_id having avgscore &gt; 85;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

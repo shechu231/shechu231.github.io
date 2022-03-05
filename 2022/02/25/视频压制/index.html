@@ -94,16 +94,97 @@
 <p>x264编码器： 软编码，目前来讲市面上最好的H264编码器了。软编码会比硬编码效果好不少</p>
 <p>Profile main: main profile默认的色彩空间是标准的 yuv420p。8位的位深度，yuv420。无需再设置。（注：yuv420p、NV12、yuy2等格式的差别基本也是我面试音视频工程师（图像处理方向）的必考题之一）</p>
 <h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><p>基础编码参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i 12.30下午视频补.mp4 -c:v libx264 -profile:v main -c:a aac -b:v 320k 1.mp4</span><br></pre></td></tr></table></figure>
+
 <p>ffmpeg -i videoplayback.mp4 -c:v libx264 -b:v 6000k -profile:v main -s 1920x1080 -c:a aac -b:a 320k 1.mp4</p>
 <p>-i videoplayback.mp4： 视频文件</p>
 <p>-c:v libx264 ：选用x264编码器</p>
 <p>-b:v 6000k： 码率</p>
 <p>-s 1920x1080： 分辨率 </p>
-<h3 id="特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低"><a href="#特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低" class="headerlink" title="特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低"></a>特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低</h3><h1 id="用编码时间换清晰度的参数"><a href="#用编码时间换清晰度的参数" class="headerlink" title="用编码时间换清晰度的参数"></a>用编码时间换清晰度的参数</h1><p>ffmpeg -i videoplayback.mp4 -preset:v slower -c:v libx264 -b:v 6000k -profile:v main -s 1920x1080 -c:a aac -b:a 320k 1.mp4</p>
+<h3 id="特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低"><a href="#特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低" class="headerlink" title="特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低"></a>特别注意：如果原片低于改分辨率一定要缺省（不写）因为拉伸画面不会有超分辨的效果。而且随着分辨率增加，相同码率情况下，清晰度一定偏低</h3><h1 id="用编码时间换清晰度的参数"><a href="#用编码时间换清晰度的参数" class="headerlink" title="用编码时间换清晰度的参数"></a>用编码时间换清晰度的参数</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i 12.30下午视频.mp4 -c:v libx264 -profile:v main -c:a aac -b:v 220k -x264opts crf=30 1.mp4</span><br></pre></td></tr></table></figure>
+
+<p>ffmpeg -i videoplayback.mp4 -preset:v slower -c:v libx264 -b:v 6000k -profile:v main -s 1920x1080 -c:a aac -b:a 320k 1.mp4</p>
 <p>-preset:v slower : 较慢编码 （编码速度越慢编出来的越清晰。不过我觉得很多人大概等不起）</p>
 <p>可选值： ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow and placebo </p>
 <h4 id="进一步精细调整编码损失"><a href="#进一步精细调整编码损失" class="headerlink" title="进一步精细调整编码损失"></a>进一步精细调整编码损失</h4><p>ffmpeg -i videoplayback.mp4 -preset:v slower -c:v libx264 -b:v 6000k -profile:v main -s 1920x1080 -c:a aac -b:a 320k -x264opts crf=18 1.mp4 </p>
 <p>-x264opts crf=18: 值越大损失越严重 取值区间 0-51（悠着点写）</p>
+<h3 id="另一种方式"><a href="#另一种方式" class="headerlink" title="另一种方式"></a>另一种方式</h3><h4 id="获取音频文件"><a href="#获取音频文件" class="headerlink" title="获取音频文件"></a>获取音频文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;D:\MarukoToolbox\tools\ffmpeg.exe&quot; -i &quot;D:\达内视频\12.30下午视频.mp4&quot; -vn -sn -v 0 -c:a pcm_s16le -f wav pipe:  | &quot;D:\MarukoToolbox\tools\neroAacEnc.exe&quot; -ignorelength -lc -br 128000 -if - -of &quot;D:\MarukoToolbox\temp\12.30下午视频_atemp.mp4&quot; </span><br></pre></td></tr></table></figure>
+
+<h4 id="获取视频文件"><a href="#获取视频文件" class="headerlink" title="获取视频文件"></a>获取视频文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;D:\MarukoToolbox\tools\x264_32-8bit.exe&quot; --crf 30 --preset 8  -I 150 -r 4 -b 3 --me umh -i 1 --scenecut 60 -f 1:1 --qcomp 0.5 --psy-rd 0.3:0 --aq-mode 2 --aq-strength 0.8 -o &quot;D:\MarukoToolbox\temp\12.30下午视频_vtemp.mp4&quot; &quot;D:\达内视频\12.30下午视频.mp4&quot; </span><br></pre></td></tr></table></figure>
+
+<h4 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;D:\MarukoToolbox\tools\mp4box.exe&quot; -add &quot;D:\MarukoToolbox\temp\12.30下午视频_vtemp.mp4#trackID=1:name=&quot; -add &quot;D:\MarukoToolbox\temp\12.30下午视频_atemp.mp4#trackID=1:name=&quot; -new &quot;D:\达内视频\12.30下午视频_x264.mp4&quot; </span><br><span class="line">IsoMedia import 12.30下午视频_vtemp.mp4 - track ID 1 - Video (size 1280 x 720)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ffmpeg的简单用法"><a href="#ffmpeg的简单用法" class="headerlink" title="ffmpeg的简单用法"></a>ffmpeg的简单用法</h2><h3 id="转码"><a href="#转码" class="headerlink" title="转码"></a>转码</h3><p>最简单命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i out.ogv -vcodec h264 out.mp4</span><br><span class="line">ffmpeg -i out.ogv -vcodec mpeg4 out.mp4</span><br><span class="line">ffmpeg -i out.ogv -vcodec libxvid out.mp4</span><br><span class="line">ffmpeg -i out.mp4 -vcodec wmv1 out.wmv</span><br><span class="line">ffmpeg -i out.mp4 -vcodec wmv2 out.wmv</span><br></pre></td></tr></table></figure>
+
+<p>-i 后面是输入文件名。-vcodec 后面是编码格式，h264 最佳，但 Windows 系统默认不安装。如果是要插入 ppt 的视频，选择 wmv1 或 wmv2 基本上万无一失。</p>
+<p>附加选项：-r 指定帧率，-s 指定分辨率，-b 指定比特率；于此同时可以对声道进行转码，-acodec 指定音频编码，-ab 指定音频比特率，-ac 指定声道数，例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i out.ogv -s 640x480 -b 500k -vcodec h264 -r 29.97 -acodec libfaac -ab 48k -ac 2 out.mp4</span><br></pre></td></tr></table></figure>
+
+<h3 id="剪切"><a href="#剪切" class="headerlink" title="剪切"></a>剪切</h3><p>用 -ss 和 -t 选项， 从第 30 秒开始，向后截取 10 秒的视频，并保存：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.wmv -ss 00:00:30.0 -c copy -t 00:00:10.0 output.wmv</span><br><span class="line">ffmpeg -i input.wmv -ss 30 -c copy -t 10 output.wmv</span><br></pre></td></tr></table></figure>
+
+<p>达成相同效果，也可以用 -ss 和 -to 选项， 从第 30 秒截取到第 40 秒：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.wmv -ss 30 -c copy -to 40 output.wmv</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是，ffmpeg 为了加速，会使用关键帧技术， 所以有时剪切出来的结果在起止时间上未必准确。 通常来说，把 -ss 选项放在 -i 之前，会使用关键帧技术； 把 -ss 选项放在 -i 之后，则不使用关键帧技术。 如果要使用关键帧技术又要保留时间戳，可以加上 -copyts 选项：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -ss 00:01:00 -i video.mp4 -to 00:02:00 -c copy -copyts cut.mp4</span><br></pre></td></tr></table></figure>
+
+<h3 id="合并-1"><a href="#合并-1" class="headerlink" title="合并"></a>合并</h3><p>把两个视频文件合并成一个。</p>
+<p>简单地使用 concat demuxer，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cat mylist.txt</span><br><span class="line">file &#x27;/path/to/file1&#x27;</span><br><span class="line">file &#x27;/path/to/file2&#x27;</span><br><span class="line">file &#x27;/path/to/file3&#x27;</span><br><span class="line"></span><br><span class="line">$ ffmpeg -f concat -i mylist.txt -c copy output</span><br></pre></td></tr></table></figure>
+
+<p>更多时候，由于输入文件的多样性，需要转成中间格式再合成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input1.avi -qscale:v 1 intermediate1.mpg</span><br><span class="line">ffmpeg -i input2.avi -qscale:v 1 intermediate2.mpg</span><br><span class="line">cat intermediate1.mpg intermediate2.mpg &gt; intermediate_all.mpg</span><br><span class="line">ffmpeg -i intermediate_all.mpg -qscale:v 2 output.avi</span><br></pre></td></tr></table></figure>
+
+<h3 id="调整播放速度"><a href="#调整播放速度" class="headerlink" title="调整播放速度"></a>调整播放速度</h3><p>加速四倍：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i TheOrigin.mp4 -vf  <span class="string">&quot;setpts=0.25*PTS&quot;</span> UpTheOrigin.mp4</span><br></pre></td></tr></table></figure>
+
+<p>四倍慢速：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i TheOrigin.mp4 -vf <span class="string">&quot;setpts=4*PTS&quot;</span> DownTheOrigin.mp4</span><br></pre></td></tr></table></figure>
+
+<h3 id="帧率设置"><a href="#帧率设置" class="headerlink" title="帧率设置"></a>帧率设置</h3><p>使用-r选项<br>语法是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input -r fps output</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -<span class="selector-tag">i</span> <span class="selector-tag">input</span><span class="selector-class">.avi</span> -r <span class="number">30</span> output<span class="selector-class">.mp4</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用fps-filter"><a href="#使用fps-filter" class="headerlink" title="使用fps filter"></a>使用fps filter</h3><p>另一个设置帧率是用fps filter，特别是在filterchains使用时非常有用。<br> 例如：修改输入文件的帧率到25</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -v clip.mpg -vf fps=fps=25 clip.webm</span><br></pre></td></tr></table></figure>
+
+<h3 id="比特率设置"><a href="#比特率设置" class="headerlink" title="比特率设置"></a>比特率设置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i file.avi -b 1.5M file.mp4</span><br><span class="line">ffmpeg -i input.avi -b:v 1500K output.mp4</span><br></pre></td></tr></table></figure>
+
+<h3 id="CBR设置"><a href="#CBR设置" class="headerlink" title="CBR设置"></a>CBR设置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i in.avi -b 0.5M -minrate 0.5M -maxrate 0.5M -bufsize 1M output.mkv</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置输出文件的最大size"><a href="#设置输出文件的最大size" class="headerlink" title="设置输出文件的最大size"></a>设置输出文件的最大size</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用-fs选项。</span><br><span class="line">例如设置输出文件的最大的size为10M</span><br><span class="line"></span><br><span class="line">ffmpeg -i input.avi -fs 10MB output.mp4</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件大小计算"><a href="#文件大小计算" class="headerlink" title="文件大小计算"></a>文件大小计算</h3><p>文件的大小是是音视频流大小的和。<br> 视频流的大小的方程式是(除以8是由bits到bytes的转换):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">video_size = video_bitrate * time_in_seconds / 8;</span><br></pre></td></tr></table></figure>
+
+<p>如果音频是解压缩的，计算公式是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">audio_size = smpaling_rate * bit_depth * channels * time_in_second / 8;</span><br></pre></td></tr></table></figure>
+
+<p>例如：计算10分钟的视频， 1500kbits/s 视频比特率和 128kbits/s的音频比特率，用下面的计算方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">file_size = video_size + audio_size;</span><br><span class="line">file_size = (video_bitrate + audio_bitrate) * time_in_seconds / 8;</span><br><span class="line">file_size = (1500 kbits/s + 128kbits/s) * 600s</span><br><span class="line">file_size = 1628kbits/s * 600s</span><br><span class="line">file_size = 976800kb = 976800000 b / 8 = 122100000 B / 1024 = 119238.28125KB</span><br><span class="line">file_size = 119238.28125 KB / 1024 = 116.443634033203125MB = 116.44M</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
