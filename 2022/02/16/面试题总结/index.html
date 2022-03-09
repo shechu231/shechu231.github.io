@@ -98,7 +98,9 @@
 
 <h5 id="情况三：结构一样"><a href="#情况三：结构一样" class="headerlink" title="情况三：结构一样"></a>情况三：结构一样</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into data2.table2select * from data1.table1</span><br></pre></td></tr></table></figure>
 
-<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="5-sql分库分表。"><a href="#5-sql分库分表。" class="headerlink" title="5.sql分库分表。"></a>5.sql分库分表。</h1><p>当表的数据达到500百万，需要进行分库分表（通过数据库中间件进行分库分表），我只了解mycat。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE mytbl_new LIKE production.mytbl;</span><br><span class="line">INSERT mytbl_new SELECT * FROM production.mytbl; </span><br></pre></td></tr></table></figure>
+
+<h1 id="5-sql分库分表。"><a href="#5-sql分库分表。" class="headerlink" title="5.sql分库分表。"></a>5.sql分库分表。</h1><p>当表的数据达到500百万，需要进行分库分表（通过数据库中间件进行分库分表），我只了解mycat。</p>
 <p>垂直拆分-分库：垂直切分是按照业务将表进行分类，分布到不同的数据库上。</p>
 <h5 id="一个问题：在两台主机上的两个数据库中的表，能否关联查询？"><a href="#一个问题：在两台主机上的两个数据库中的表，能否关联查询？" class="headerlink" title="一个问题：在两台主机上的两个数据库中的表，能否关联查询？"></a>一个问题：在两台主机上的两个数据库中的表，能否关联查询？</h5><h5 id="答案：不可以关联查询"><a href="#答案：不可以关联查询" class="headerlink" title="答案：不可以关联查询"></a>答案：不可以关联查询</h5><h5 id="分库原则：有紧密关联关系的表应该在一个库里面，相互没有关联关系的表可以分到不同的库里面。"><a href="#分库原则：有紧密关联关系的表应该在一个库里面，相互没有关联关系的表可以分到不同的库里面。" class="headerlink" title="分库原则：有紧密关联关系的表应该在一个库里面，相互没有关联关系的表可以分到不同的库里面。"></a>分库原则：有紧密关联关系的表应该在一个库里面，相互没有关联关系的表可以分到不同的库里面。</h5><p>水平拆分-分表：</p>
 <p>对于垂直拆分，水平拆分不是对表进行分类，而是按照表中的某个字段的某种规则分散到多个数据库中。每个表中包含一部分数据。水平拆分是对数据的行进行切分。</p>
