@@ -674,27 +674,6 @@
       </categories>
   </entry>
   <entry>
-    <title>MyCat数据库中间键</title>
-    <url>/2022/03/04/MyCat%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E9%97%B4%E9%94%AE/</url>
-    <content><![CDATA[<h2 id="为什么要用MyCat？"><a href="#为什么要用MyCat？" class="headerlink" title="为什么要用MyCat？"></a>为什么要用MyCat？</h2><p><img src="https://s2.loli.net/2022/03/04/HxD7tvdiB1q5mws.png" alt="image-20220304095929912"></p>
-<h3 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h3><p><img src="https://s2.loli.net/2022/03/04/wH2Kt1aub9ZDFeS.png" alt="image-20220304100507586"></p>
-<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><h4 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h4><p><img src="https://s2.loli.net/2022/03/04/PW8hxiB6CrOeMZH.png" alt="image-20220304100845625"></p>
-<h2 id="多数据源整合操作"><a href="#多数据源整合操作" class="headerlink" title="多数据源整合操作"></a>多数据源整合操作</h2><p><img src="https://s2.loli.net/2022/03/04/27wRFyLPblUE5uB.png" alt="image-20220304100944375"></p>
-<h2 id="Windows安装配置文件"><a href="#Windows安装配置文件" class="headerlink" title="Windows安装配置文件"></a>Windows安装配置文件</h2><h4 id="版本为1-6版本，不然无法启动"><a href="#版本为1-6版本，不然无法启动" class="headerlink" title="版本为1.6版本，不然无法启动"></a>版本为1.6版本，不然无法启动</h4><h3 id="wrapper-conf"><a href="#wrapper-conf" class="headerlink" title="wrapper.conf"></a>wrapper.conf</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#********************************************************************</span><br><span class="line"># Wrapper Properties</span><br><span class="line">#********************************************************************</span><br><span class="line"># Java Application</span><br><span class="line">wrapper.java.command=C:\Program Files\Java\jdk1.8.0_101\bin\java.exe</span><br><span class="line">wrapper.working.dir=..</span><br><span class="line"></span><br><span class="line"># Java Main class.  This class must implement the WrapperListener interface</span><br></pre></td></tr></table></figure>
-
-<h3 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;user name=&quot;root&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;password&quot;&gt;123456&lt;/property&gt;</span><br><span class="line">	&lt;property name=&quot;schemas&quot;&gt;TESTDB&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 表级 DML 权限设置 --&gt;</span><br><span class="line">	&lt;!-- 		</span><br><span class="line">	&lt;privileges check=&quot;false&quot;&gt;</span><br><span class="line">		&lt;schema name=&quot;TESTDB&quot; dml=&quot;0110&quot; &gt;</span><br><span class="line">			&lt;table name=&quot;tb01&quot; dml=&quot;0000&quot;&gt;&lt;/table&gt;</span><br><span class="line">			&lt;table name=&quot;tb02&quot; dml=&quot;1111&quot;&gt;&lt;/table&gt;</span><br><span class="line">		&lt;/schema&gt;</span><br><span class="line">	&lt;/privileges&gt;		</span><br><span class="line">	 --&gt;</span><br><span class="line">&lt;/user&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="schema-xml"><a href="#schema-xml" class="headerlink" title="schema.xml"></a>schema.xml</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE mycat:schema SYSTEM &quot;schema.dtd&quot;&gt;</span><br><span class="line">&lt;mycat:schema xmlns:mycat=&quot;http://io.mycat/&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;schema name=&quot;TESTDB&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;  dataNode=&quot;dn1&quot;&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/schema&gt;</span><br><span class="line">	&lt;!-- &lt;dataNode name=&quot;dn1$0-743&quot; dataHost=&quot;localhost1&quot; database=&quot;db$0-743&quot;</span><br><span class="line">		/&gt; --&gt;</span><br><span class="line">	&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;localhost1&quot; database=&quot;test&quot; /&gt;</span><br><span class="line">	&lt;dataHost name=&quot;localhost1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot;</span><br><span class="line">			  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot; switchType=&quot;1&quot;  slaveThreshold=&quot;100&quot;&gt;</span><br><span class="line">		&lt;heartbeat&gt;select user()&lt;/heartbeat&gt;</span><br><span class="line">		&lt;!-- can have multi write hosts --&gt;</span><br><span class="line">		&lt;writeHost host=&quot;hostM1&quot; url=&quot;localhost:3306&quot; user=&quot;root&quot;</span><br><span class="line">				   password=&quot;123456&quot;&gt;</span><br><span class="line">			&lt;!-- can have multi read hosts --&gt;</span><br><span class="line">			&lt;readHost host=&quot;hostS2&quot; url=&quot;localhost:3306&quot; user=&quot;root&quot; password=&quot;123456&quot; /&gt;</span><br><span class="line">		&lt;/writeHost&gt;</span><br><span class="line"></span><br><span class="line">		&lt;!-- &lt;writeHost host=&quot;hostM2&quot; url=&quot;localhost:3316&quot; user=&quot;root&quot; password=&quot;123456&quot;/&gt; --&gt;</span><br><span class="line">	&lt;/dataHost&gt;</span><br><span class="line">	</span><br><span class="line">&lt;/mycat:schema&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="https://s2.loli.net/2022/03/04/IxRLzUGY5CJH6F3.png" alt="image-20220304112127300"></p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-        <category>数据库</category>
-        <category>中间键</category>
-      </categories>
-  </entry>
-  <entry>
     <title>JAVA多线程</title>
     <url>/2022/01/19/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="1-sleep、wait、notify的作用"><a href="#1-sleep、wait、notify的作用" class="headerlink" title="1.sleep、wait、notify的作用"></a>1.sleep、wait、notify的作用</h2><p>sleep用于线程的休眠，可以指定休眠的时长，如果在一个同步块中，sleep不会释放锁。</p>
@@ -728,6 +707,47 @@
       <categories>
         <category>JAVA</category>
         <category>多线程</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>MyCat数据库中间键</title>
+    <url>/2022/03/04/MyCat%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E9%97%B4%E9%94%AE/</url>
+    <content><![CDATA[<h2 id="为什么要用MyCat？"><a href="#为什么要用MyCat？" class="headerlink" title="为什么要用MyCat？"></a>为什么要用MyCat？</h2><p><img src="https://s2.loli.net/2022/03/04/HxD7tvdiB1q5mws.png" alt="image-20220304095929912"></p>
+<h3 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h3><p><img src="https://s2.loli.net/2022/03/04/wH2Kt1aub9ZDFeS.png" alt="image-20220304100507586"></p>
+<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><h4 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h4><p><img src="https://s2.loli.net/2022/03/04/PW8hxiB6CrOeMZH.png" alt="image-20220304100845625"></p>
+<h2 id="多数据源整合操作"><a href="#多数据源整合操作" class="headerlink" title="多数据源整合操作"></a>多数据源整合操作</h2><p><img src="https://s2.loli.net/2022/03/04/27wRFyLPblUE5uB.png" alt="image-20220304100944375"></p>
+<h2 id="Windows安装配置文件"><a href="#Windows安装配置文件" class="headerlink" title="Windows安装配置文件"></a>Windows安装配置文件</h2><h4 id="版本为1-6版本，不然无法启动"><a href="#版本为1-6版本，不然无法启动" class="headerlink" title="版本为1.6版本，不然无法启动"></a>版本为1.6版本，不然无法启动</h4><h3 id="wrapper-conf"><a href="#wrapper-conf" class="headerlink" title="wrapper.conf"></a>wrapper.conf</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#********************************************************************</span><br><span class="line"># Wrapper Properties</span><br><span class="line">#********************************************************************</span><br><span class="line"># Java Application</span><br><span class="line">wrapper.java.command=C:\Program Files\Java\jdk1.8.0_101\bin\java.exe</span><br><span class="line">wrapper.working.dir=..</span><br><span class="line"></span><br><span class="line"># Java Main class.  This class must implement the WrapperListener interface</span><br></pre></td></tr></table></figure>
+
+<h3 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;user name=&quot;root&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;password&quot;&gt;123456&lt;/property&gt;</span><br><span class="line">	&lt;property name=&quot;schemas&quot;&gt;TESTDB&lt;/property&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 表级 DML 权限设置 --&gt;</span><br><span class="line">	&lt;!-- 		</span><br><span class="line">	&lt;privileges check=&quot;false&quot;&gt;</span><br><span class="line">		&lt;schema name=&quot;TESTDB&quot; dml=&quot;0110&quot; &gt;</span><br><span class="line">			&lt;table name=&quot;tb01&quot; dml=&quot;0000&quot;&gt;&lt;/table&gt;</span><br><span class="line">			&lt;table name=&quot;tb02&quot; dml=&quot;1111&quot;&gt;&lt;/table&gt;</span><br><span class="line">		&lt;/schema&gt;</span><br><span class="line">	&lt;/privileges&gt;		</span><br><span class="line">	 --&gt;</span><br><span class="line">&lt;/user&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="schema-xml"><a href="#schema-xml" class="headerlink" title="schema.xml"></a>schema.xml</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE mycat:schema SYSTEM &quot;schema.dtd&quot;&gt;</span><br><span class="line">&lt;mycat:schema xmlns:mycat=&quot;http://io.mycat/&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;schema name=&quot;TESTDB&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;  dataNode=&quot;dn1&quot;&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/schema&gt;</span><br><span class="line">	&lt;!-- &lt;dataNode name=&quot;dn1$0-743&quot; dataHost=&quot;localhost1&quot; database=&quot;db$0-743&quot;</span><br><span class="line">		/&gt; --&gt;</span><br><span class="line">	&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;localhost1&quot; database=&quot;test&quot; /&gt;</span><br><span class="line">	&lt;dataHost name=&quot;localhost1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot;</span><br><span class="line">			  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot; switchType=&quot;1&quot;  slaveThreshold=&quot;100&quot;&gt;</span><br><span class="line">		&lt;heartbeat&gt;select user()&lt;/heartbeat&gt;</span><br><span class="line">		&lt;!-- can have multi write hosts --&gt;</span><br><span class="line">		&lt;writeHost host=&quot;hostM1&quot; url=&quot;localhost:3306&quot; user=&quot;root&quot;</span><br><span class="line">				   password=&quot;123456&quot;&gt;</span><br><span class="line">			&lt;!-- can have multi read hosts --&gt;</span><br><span class="line">			&lt;readHost host=&quot;hostS2&quot; url=&quot;localhost:3306&quot; user=&quot;root&quot; password=&quot;123456&quot; /&gt;</span><br><span class="line">		&lt;/writeHost&gt;</span><br><span class="line"></span><br><span class="line">		&lt;!-- &lt;writeHost host=&quot;hostM2&quot; url=&quot;localhost:3316&quot; user=&quot;root&quot; password=&quot;123456&quot;/&gt; --&gt;</span><br><span class="line">	&lt;/dataHost&gt;</span><br><span class="line">	</span><br><span class="line">&lt;/mycat:schema&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><img src="https://s2.loli.net/2022/03/04/IxRLzUGY5CJH6F3.png" alt="image-20220304112127300"></p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+        <category>数据库</category>
+        <category>中间键</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Sentinel限流熔断应用实践</title>
+    <url>/2021/12/27/Sentinel%E9%99%90%E6%B5%81%E7%86%94%E6%96%AD%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</url>
+    <content><![CDATA[<h2 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器:"></a>拦截器:</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;==preHandler==&quot;</span>);</span><br><span class="line">        LocalTime now = LocalTime.now();</span><br><span class="line">        <span class="keyword">int</span> hour = now.getHour();</span><br><span class="line">        <span class="keyword">if</span>(hour&lt;<span class="number">6</span>||hour&gt;<span class="number">23</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;请在6到23点之间访问&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringWebConfig</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注册拦截器(添加到spring容器)，并指定拦截规则</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> registry</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addInterceptor(<span class="keyword">new</span> TimeInterceptor())</span><br><span class="line">                .addPathPatterns(<span class="string">&quot;/provider/sentinel01&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1、preHandle<br>调用时间：Controller方法处理之前</p>
+<p>执行顺序：链式Intercepter情况下，Intercepter按照声明的顺序一个接一个执行</p>
+<p>若返回false，则中断执行，注意：不会进入afterCompletion</p>
+<p>2、postHandle<br>调用前提：preHandle返回true</p>
+<p>调用时间：Controller方法处理完之后，DispatcherServlet进行视图的渲染之前，也就是说在这个方法中你可以对ModelAndView进行操作</p>
+<p>执行顺序：链式Intercepter情况下，Intercepter按照声明的顺序倒着执行。</p>
+<p>备注：postHandle虽然post打头，但post、get方法都能处理</p>
+<p>3、afterCompletion<br>调用前提：preHandle返回true</p>
+<p>调用时间：DispatcherServlet进行视图的渲染之后</p>
+<p>多用于清理资源</p>
+]]></content>
+      <categories>
+        <category>Sentinel</category>
       </categories>
   </entry>
   <entry>
@@ -888,26 +908,6 @@
 <h5 id="内存换页"><a href="#内存换页" class="headerlink" title="内存换页"></a>内存换页</h5><h1 id="RabbitMQ集群学习"><a href="#RabbitMQ集群学习" class="headerlink" title="RabbitMQ集群学习"></a>RabbitMQ集群学习</h1>]]></content>
       <categories>
         <category>JAVA</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Sentinel限流熔断应用实践</title>
-    <url>/2021/12/27/Sentinel%E9%99%90%E6%B5%81%E7%86%94%E6%96%AD%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5/</url>
-    <content><![CDATA[<h2 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器:"></a>拦截器:</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;==preHandler==&quot;</span>);</span><br><span class="line">        LocalTime now = LocalTime.now();</span><br><span class="line">        <span class="keyword">int</span> hour = now.getHour();</span><br><span class="line">        <span class="keyword">if</span>(hour&lt;<span class="number">6</span>||hour&gt;<span class="number">23</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;请在6到23点之间访问&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringWebConfig</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注册拦截器(添加到spring容器)，并指定拦截规则</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> registry</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addInterceptor(<span class="keyword">new</span> TimeInterceptor())</span><br><span class="line">                .addPathPatterns(<span class="string">&quot;/provider/sentinel01&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>1、preHandle<br>调用时间：Controller方法处理之前</p>
-<p>执行顺序：链式Intercepter情况下，Intercepter按照声明的顺序一个接一个执行</p>
-<p>若返回false，则中断执行，注意：不会进入afterCompletion</p>
-<p>2、postHandle<br>调用前提：preHandle返回true</p>
-<p>调用时间：Controller方法处理完之后，DispatcherServlet进行视图的渲染之前，也就是说在这个方法中你可以对ModelAndView进行操作</p>
-<p>执行顺序：链式Intercepter情况下，Intercepter按照声明的顺序倒着执行。</p>
-<p>备注：postHandle虽然post打头，但post、get方法都能处理</p>
-<p>3、afterCompletion<br>调用前提：preHandle返回true</p>
-<p>调用时间：DispatcherServlet进行视图的渲染之后</p>
-<p>多用于清理资源</p>
-]]></content>
-      <categories>
-        <category>Sentinel</category>
       </categories>
   </entry>
   <entry>
@@ -2031,153 +2031,6 @@
       <categories>
         <category>nacos</category>
         <category>JAVA</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Redis缓存机制与应用</title>
-    <url>/2022/03/04/redis%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<p>Redis是目前最为主流的缓存技术之一，Redis基于内存操作从而拥有强大的性能，可以达到每秒10万次的请求，可以说是一款非常强大的缓存技术了。</p>
-<p>本文分为三部分：</p>
-<ul>
-<li>基础知识介绍</li>
-<li>常用技术讲解与缓存机制</li>
-<li>使用场景、缓存问题</li>
-</ul>
-<h1 id="基础知识介绍"><a href="#基础知识介绍" class="headerlink" title="基础知识介绍"></a>基础知识介绍</h1><p><strong>NoSQL概述</strong></p>
-<p>什么是NoSQL？</p>
-<p>NoSQL = Not Only SQL （不仅仅是SQL）</p>
-<p>关系型数据库：表格 ，行 ，列</p>
-<p>非关系型数据库：没有固定的查询语言，键值对存储，列存储，文档存储</p>
-<p>随着web2.0互联网的诞生！传统的关系型数据库很难对付web2.0时代！尤其是超大规模的高并发的社区。</p>
-<p>NoSQL 特点</p>
-<p>1、方便扩展</p>
-<p>2、大数据量高性能（Redis 一秒写8万次，读取11万）</p>
-<p>3、数据类型是多样性的</p>
-<p>NoSQL四大分类</p>
-<p>KV键值对：如Redis主要是用于内容缓存，主要是为了处理大量数据高访问负载</p>
-<p>文档型数据库：如MongoDBMongoDB 是一个基于分布式文件存储的数据库</p>
-<p>列存储数据库：如HBase分布式文件系统，以列簇式存储，将同一列数据存储在一起</p>
-<p><strong>Redis简介</strong></p>
-<p>Redis 是什么？</p>
-<p>Redis（Remote Dictionary Server )，即远程字典服务，它是一个开源的由ANSI C语言编写，性能优秀、支持网络、可持久化的Key-Value内存的NoSQL数据库!</p>
-<p>Redis 能干嘛？</p>
-<p>1、内存存储、持久化。</p>
-<p>2、效率高，可以用于高速缓存</p>
-<p>3、发布订阅系统</p>
-<p>4、计时器、浏览量！ 5、……..</p>
-<p><strong>Redis好处</strong></p>
-<p>主要从“高性能”和“高并发”这两点来介绍。</p>
-<p><img src="https://s2.loli.net/2022/03/04/W8gYo3ODqa4Cjxz.png" alt="image-20220304090814060"></p>
-<p>把数据库数据存入缓存，请求直接从内存中读取不用经过数据库，减轻数据库压力并且提升性能。</p>
-<h1 id="常用技术讲解与缓存机制"><a href="#常用技术讲解与缓存机制" class="headerlink" title="常用技术讲解与缓存机制"></a>常用技术讲解与缓存机制</h1><p>Redis主要有5种数据类型，包括String，List，Set，Zset，Hash，满足大部分的使用要求</p>
-<p><strong>String</strong></p>
-<ul>
-<li>String：session、对象、小文件（存文件流字节数组，比磁盘IO快）？</li>
-<li>int：秒杀、限流、计数</li>
-<li>bitmap：</li>
-</ul>
-<p>场景1.setbit和bitcount结合可以统计一年365天哪天有用户操作过，getbit可以获取某一天是否用户操作过</p>
-<p>场景2.权限控制，比如每个权限对应一个bit,哪个用户有该权限，该位为1，没权限为0</p>
-<p><strong>list</strong></p>
-<p>替换java jvm中的集合，可以作为数据共享，java的话多进程间不能共享或不好共享</p>
-<p><strong>hash</strong></p>
-<p>可以使redis key变少，类似对象。</p>
-<p>场景1.商品详情页、商品对应的收藏数、库存啊，放在redis中因为是原子性的，多地方访问都是实时性的</p>
-<p>场景2.聚合场景：一个对象在数据库中可能各个属性在不同表，可以聚合到redis同个对象中</p>
-<p><strong>set</strong></p>
-<p>set性能慢，可以单独redis实例</p>
-<p>场景1.SRANDMEMBER或者spop命令可以用来抽奖</p>
-<p>场景2.随机事件</p>
-<p>场景3.共同好友（交集）</p>
-<p>场景4.推荐好友（差集）</p>
-<p><strong>sorted_set</strong></p>
-<p>有序集合，数量少时底层是zipList压缩表，数据多了变skiplist</p>
-<p>场景1.排行榜</p>
-<p>场景2.有序事件</p>
-<p>场景3.评论分页</p>
-<p><img src="https://s2.loli.net/2022/03/04/xidTYmsfXCEIper.png" alt="image-20220304090918435"></p>
-<p>Redis 中除开最常用的 5 种数据类型之外，还有 3 种特殊的数据类型</p>
-<p><img src="https://s2.loli.net/2022/03/04/2pJnTr98Lycsfjv.png" alt="image-20220304090934388"></p>
-<p>可以通过help命令查询相关类型命令说明，比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help @string help @list</span><br></pre></td></tr></table></figure>
-
-<p>分享一下我记录的几种数据类型的基本命令</p>
-<p><strong>String</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置值 set key value   #获取值 get key   #获取值类型（set的都是String） type key    #获取值编码类型(raw/int) object encoding key   #获取字节长度(注意1字节等于8位bit) strlen key   #+1计算 #incr key</span><br></pre></td></tr></table></figure>
-
-<p><strong>bitmap</strong>（二进制操作）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置该值左边第几位为1，bit长度不是8位整数的补成8的整数长度,如 10会补成00000010，  0100000001 会补成0000000100000001 格式：setbit key offset value setbit k1 1 1  #01000000  对应ascii码为‘@’ get k1  #&#x27;@&#x27; </span><br><span class="line">#将k1值得第7位设置为1 setbit k1 7 1 #01000001 对应ascii码为‘A’ setbit k1 8 1 #0100000110000000    </span><br><span class="line">#获取对应位置bit的值（1或0） getbit key offset  getbit k1 7  #假如k1值位00000001，第7位返回1 getbit k1 5  #假如k1值位00000001，第5位返回0  </span><br><span class="line">#获取对应范围内1的数量（注意范围是字节区间，不是Bit位区间） bitcount key [start end] bitcount k1 #获取bit位为1的数量 相当于bitcount k1 0 -1（假如k1值位00001001，返回2，假如k1值位0000000100001001，返回3） bitcount k1 0 0 </span><br><span class="line">#获取第一个字节的8位Bit中有几位为1 （假如k1值位0000000100001001，返回1），注意是从左边开始数每8位为一个字节  #与、或、非、异或操作 bitop opration destkey key [key...]  </span><br><span class="line">#opration可选值（and/or/not）,destkey为计算完后要保存的新的key bitop and k3 k1 k2 #与运算，假如k1为01000000，k2为00000001，则结果k3为00000000 bitop or k3 k1 k2 </span><br><span class="line">#或运算，假如k1为01000000，k2为00000001，则结果k3为01000001 bitop xor k3 k1 k2 #异或运算，假如k1为01000000，k2为01000001，则结果k3为00000001 bitop not k3 k1  </span><br><span class="line">#非运算，假如k1为01000000，则结果k3为10111111</span><br></pre></td></tr></table></figure>
-
-<p><strong>list(链表)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#左边插入 格式：lpush key value [value...] lpush k1 1 2 3 4 5 6  #k1值为六项：6 5 4 3 2 1  #右边插入 格式：rpush key value [value...] rpush k1 1 2 3 4 5 6  #k1值为六项：1 2 3 4 5 6  #获取k1范围内的的值 lrange k1 0 -1   #获取第一个数（最左边的数）并删除该值（像栈操作） lpop key  #k1值为六项：1 2 3 4 5 6 那么会返回1，k1值变为2 3 4 5 6  #获取指定下标值 lindex key  #删除范围之外的数值 ltrim key start end  ltrim k1 0 3 #k1值为六项：1 2 3 4 5 6,那么k1只留下1 2 3 4</span><br></pre></td></tr></table></figure>
-
-<p><strong>hash（对象）</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置对象属性值 hset key field value hset user1 name huangtl #设置user1的name属性为huangtl hset user1 age  18 #设置user1的age属性为18  #单个属性获取 hget user1 age #18  #所有属性获取 hgetall user1 #返回属性、值、属性、值 ：name huangtl age 18  #获取对象所有key hkeys user1 #返回user1的所有属性:name age  #获取对象所有kvalue hvals user1 #返回user1的所有属性得值:huangtl 18</span><br></pre></td></tr></table></figure>
-
-<p><strong>set(无序、去重集合)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#存入集合数据 sadd key member [member...] sadd k1 1 2 3 4 5 6 2 #两个2知会存一个2，集合内数值有1 2 3 4 5 6  #获取集合数据 SMEMBERS k1  #随机获取集合几条数据 SRANDMEMBER k1 [count] SRANDMEMBER k1 #随机获取一条 SRANDMEMBER k1 8 #随机获取8条数据，不会重复的数据，集合不足8条取集合全部数据 SRANDMEMBER k1 -8 #随机取8条，可能会重复的数据，集合不足8条也会取8条数据  #取数值并删除 spop key [count] spop key  #随机取一条并删除 spop key 5 #随机取5条并删除  #多个集合取并集 SUNION key [key...] SUNION k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3 4 5 6 7 8 9  #多个集合取交集 SINTER key [key...] SINTER k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回4 5 6   #多个集合取差集 sdiff key [key...] sdiff k1 k2 #按顺序取k1减掉k2中的值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3  sdiff k2 k1 #按顺序取k2不减掉k1中的值值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回7 8 9  </span><br></pre></td></tr></table></figure>
-
-<p><strong>sorted_set（有序集合）</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#新建key并添加元素 zadd key score member [score member...] zadd set1 1 apple 2 orange 3 banana  #返回范围内集合数据，按score分值正序 zrange set1 0 -1  #默认返回 apple orange banana zrange set1 -2 -1 #按正序取最后两名，返回 orange banana ZREVRANGE set1 0 1 #倒序返回前两名，返回  banana orange  #获取元素位置 zrank set1 apple #返回0，代表apple在第一位</span><br></pre></td></tr></table></figure>
-
-<p><strong>事务</strong></p>
-<p>Redis 事务本质：一组命令的集合！ 一个事务中的所有命令都会被序列化，在事务执行过程的中，会按照顺序执行！</p>
-<p>Redis单条命令式保存原子性的，但是事务不保证原子性！</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启事务 multi   #命令入队 set k1 v1  set k2 v2   get k2    # 执行事务 exec   </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://s2.loli.net/2022/03/04/rfCmtEXMW8ARndp.png" alt="image-20220304091437206"></p>
-<p><strong>Redis持久化</strong></p>
-<p>持久化就是把内存的数据写到磁盘中去，防止服务宕机了内存数据丢失。</p>
-<p>redis提供两种持久化机制 RDB（默认） 和 AOF 机制。</p>
-<p>1、RDB</p>
-<p>RDB是Redis DataBase缩写快照 ，默认的持久化方式。按照一定的时间将内存的数据以快照的形式保存到硬盘中，对应产生的数据文件为dump.rdb</p>
-<p><img src="https://s2.loli.net/2022/03/04/7tN6LkFedIGqW2m.png" alt="image-20220304091451985"></p>
-<p>触发机制</p>
-<p>（1）save的规则满足的情况下</p>
-<p>（2）执行 flushall 命令</p>
-<p>（3）退出redis，也会产生 rdb 文件</p>
-<p>2、AOF：</p>
-<p>持久化，AOF持久化(即Append Only File持久化)，则是将Redis执行的每次写命令记录到单独的日志文件中，当重启Redis会重新将持久化的日志中文件恢复数据。</p>
-<p><img src="https://s2.loli.net/2022/03/04/NhxGAjVYck7o81Q.png" alt="image-20220304091513278"></p>
-<p>AOF的三种策略（1）always （2）everysec(默认值) （3）no always</p>
-<p><img src="https://s2.loli.net/2022/03/04/Mtqgn9fL5PyhHYk.png" alt="image-20220304091602502"></p>
-<p>在应用时，要根据自己的实际需求，选择RDB或者AOF，其实，如果想要数据足够安全，可以两种方式都开启，但两种持久化方式同时进行IO操作，会严重影响服务器性能，因此有时候不得不做出选择。</p>
-<p><strong>redis主从复制</strong></p>
-<p>概念主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master/leader)，后者称为从节点(slave/follower)；数据的复制是单向的，只能由主节点到从节点。</p>
-<p>优点：（1）读写分离 （2）备份</p>
-<p>缺点：主服务器宕机，需要人工启动</p>
-<p><img src="https://s2.loli.net/2022/03/04/sSLV6CxMA2X7hJt.png" alt="image-20220304091623236"></p>
-<p><strong>哨兵模式</strong></p>
-<p>哨兵模式是一种特殊的模式，首先Redis提供了哨兵的命令，哨兵是一个独立的进程，作为进程，它会独立运行。其原理是哨兵通过发送命令，等待Redis服务器响应，从而监控运行的多个Redis实例。</p>
-<p><img src="https://s2.loli.net/2022/03/04/BoLwWKcVXkvPEjD.png" alt="image-20220304091641893"></p>
-<h1 id="使用场景、缓存问题"><a href="#使用场景、缓存问题" class="headerlink" title="使用场景、缓存问题"></a>使用场景、缓存问题</h1><p>1、热点数据的缓存</p>
-<p>公司项目用户量达到一定数量的时候，这时合理的利用缓存不仅能够提升项目访问速度，还能大大降低数据库的压力。</p>
-<p>2、业务上的统计，排行榜</p>
-<p>为了保证数据实时效，比如项目的访问量，每次浏览都得给+1，并发量高时如果每次都请求数据库操作无疑是种挑战和压力</p>
-<p>3、限时业务的运用</p>
-<p>每日签到、限制登录功能等业务场景</p>
-<p>4、消息队列</p>
-<p>提供基本的发布订阅功能，但不像消息队列那种专业级别</p>
-<p><strong>缓存雪崩</strong></p>
-<p>原因：大量redis key在同一时间失效，导致大量请求访问数据库，数据库服务器宕机，线上服务大面积报错。</p>
-<p>解决办法：</p>
-<p>（1）redis高可用</p>
-<p>（2）加锁排队，限流降级</p>
-<p>（3）缓存失效时间均匀分布</p>
-<p><img src="https://s2.loli.net/2022/03/04/W5leSDp8nbOHsXu.png" alt="image-20220304091719539"></p>
-<p><strong>缓存穿透</strong></p>
-<p>原因：指缓存和数据库中都没有的数据，导致所有的请求都落到数据库上，造成数据库短时间内承受大量请求而崩掉。</p>
-<p>解决办法： （1）接口层增加校验 （2）采用布隆过滤器</p>
-<p><img src="https://s2.loli.net/2022/03/04/AQEgvFThdrxGH7R.png" alt="image-20220304091759459"></p>
-<p><strong>缓存击穿</strong></p>
-<p>原因：指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。比如微博热搜。</p>
-<p>解决办法：</p>
-<p>（1）设置热点数据缓存没有过期时间</p>
-<p>（2）加互斥锁</p>
-<p><img src="https://s2.loli.net/2022/03/04/15FEWkiSNftRGmJ.png" alt="image-20220304091829212"></p>
-]]></content>
-      <categories>
-        <category>redis</category>
       </categories>
   </entry>
   <entry>
@@ -3358,6 +3211,153 @@
 ]]></content>
       <categories>
         <category>mysql</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Redis缓存机制与应用</title>
+    <url>/2022/03/04/redis%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<p>Redis是目前最为主流的缓存技术之一，Redis基于内存操作从而拥有强大的性能，可以达到每秒10万次的请求，可以说是一款非常强大的缓存技术了。</p>
+<p>本文分为三部分：</p>
+<ul>
+<li>基础知识介绍</li>
+<li>常用技术讲解与缓存机制</li>
+<li>使用场景、缓存问题</li>
+</ul>
+<h1 id="基础知识介绍"><a href="#基础知识介绍" class="headerlink" title="基础知识介绍"></a>基础知识介绍</h1><p><strong>NoSQL概述</strong></p>
+<p>什么是NoSQL？</p>
+<p>NoSQL = Not Only SQL （不仅仅是SQL）</p>
+<p>关系型数据库：表格 ，行 ，列</p>
+<p>非关系型数据库：没有固定的查询语言，键值对存储，列存储，文档存储</p>
+<p>随着web2.0互联网的诞生！传统的关系型数据库很难对付web2.0时代！尤其是超大规模的高并发的社区。</p>
+<p>NoSQL 特点</p>
+<p>1、方便扩展</p>
+<p>2、大数据量高性能（Redis 一秒写8万次，读取11万）</p>
+<p>3、数据类型是多样性的</p>
+<p>NoSQL四大分类</p>
+<p>KV键值对：如Redis主要是用于内容缓存，主要是为了处理大量数据高访问负载</p>
+<p>文档型数据库：如MongoDBMongoDB 是一个基于分布式文件存储的数据库</p>
+<p>列存储数据库：如HBase分布式文件系统，以列簇式存储，将同一列数据存储在一起</p>
+<p><strong>Redis简介</strong></p>
+<p>Redis 是什么？</p>
+<p>Redis（Remote Dictionary Server )，即远程字典服务，它是一个开源的由ANSI C语言编写，性能优秀、支持网络、可持久化的Key-Value内存的NoSQL数据库!</p>
+<p>Redis 能干嘛？</p>
+<p>1、内存存储、持久化。</p>
+<p>2、效率高，可以用于高速缓存</p>
+<p>3、发布订阅系统</p>
+<p>4、计时器、浏览量！ 5、……..</p>
+<p><strong>Redis好处</strong></p>
+<p>主要从“高性能”和“高并发”这两点来介绍。</p>
+<p><img src="https://s2.loli.net/2022/03/04/W8gYo3ODqa4Cjxz.png" alt="image-20220304090814060"></p>
+<p>把数据库数据存入缓存，请求直接从内存中读取不用经过数据库，减轻数据库压力并且提升性能。</p>
+<h1 id="常用技术讲解与缓存机制"><a href="#常用技术讲解与缓存机制" class="headerlink" title="常用技术讲解与缓存机制"></a>常用技术讲解与缓存机制</h1><p>Redis主要有5种数据类型，包括String，List，Set，Zset，Hash，满足大部分的使用要求</p>
+<p><strong>String</strong></p>
+<ul>
+<li>String：session、对象、小文件（存文件流字节数组，比磁盘IO快）？</li>
+<li>int：秒杀、限流、计数</li>
+<li>bitmap：</li>
+</ul>
+<p>场景1.setbit和bitcount结合可以统计一年365天哪天有用户操作过，getbit可以获取某一天是否用户操作过</p>
+<p>场景2.权限控制，比如每个权限对应一个bit,哪个用户有该权限，该位为1，没权限为0</p>
+<p><strong>list</strong></p>
+<p>替换java jvm中的集合，可以作为数据共享，java的话多进程间不能共享或不好共享</p>
+<p><strong>hash</strong></p>
+<p>可以使redis key变少，类似对象。</p>
+<p>场景1.商品详情页、商品对应的收藏数、库存啊，放在redis中因为是原子性的，多地方访问都是实时性的</p>
+<p>场景2.聚合场景：一个对象在数据库中可能各个属性在不同表，可以聚合到redis同个对象中</p>
+<p><strong>set</strong></p>
+<p>set性能慢，可以单独redis实例</p>
+<p>场景1.SRANDMEMBER或者spop命令可以用来抽奖</p>
+<p>场景2.随机事件</p>
+<p>场景3.共同好友（交集）</p>
+<p>场景4.推荐好友（差集）</p>
+<p><strong>sorted_set</strong></p>
+<p>有序集合，数量少时底层是zipList压缩表，数据多了变skiplist</p>
+<p>场景1.排行榜</p>
+<p>场景2.有序事件</p>
+<p>场景3.评论分页</p>
+<p><img src="https://s2.loli.net/2022/03/04/xidTYmsfXCEIper.png" alt="image-20220304090918435"></p>
+<p>Redis 中除开最常用的 5 种数据类型之外，还有 3 种特殊的数据类型</p>
+<p><img src="https://s2.loli.net/2022/03/04/2pJnTr98Lycsfjv.png" alt="image-20220304090934388"></p>
+<p>可以通过help命令查询相关类型命令说明，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help @string help @list</span><br></pre></td></tr></table></figure>
+
+<p>分享一下我记录的几种数据类型的基本命令</p>
+<p><strong>String</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置值 set key value   #获取值 get key   #获取值类型（set的都是String） type key    #获取值编码类型(raw/int) object encoding key   #获取字节长度(注意1字节等于8位bit) strlen key   #+1计算 #incr key</span><br></pre></td></tr></table></figure>
+
+<p><strong>bitmap</strong>（二进制操作）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置该值左边第几位为1，bit长度不是8位整数的补成8的整数长度,如 10会补成00000010，  0100000001 会补成0000000100000001 格式：setbit key offset value setbit k1 1 1  #01000000  对应ascii码为‘@’ get k1  #&#x27;@&#x27; </span><br><span class="line">#将k1值得第7位设置为1 setbit k1 7 1 #01000001 对应ascii码为‘A’ setbit k1 8 1 #0100000110000000    </span><br><span class="line">#获取对应位置bit的值（1或0） getbit key offset  getbit k1 7  #假如k1值位00000001，第7位返回1 getbit k1 5  #假如k1值位00000001，第5位返回0  </span><br><span class="line">#获取对应范围内1的数量（注意范围是字节区间，不是Bit位区间） bitcount key [start end] bitcount k1 #获取bit位为1的数量 相当于bitcount k1 0 -1（假如k1值位00001001，返回2，假如k1值位0000000100001001，返回3） bitcount k1 0 0 </span><br><span class="line">#获取第一个字节的8位Bit中有几位为1 （假如k1值位0000000100001001，返回1），注意是从左边开始数每8位为一个字节  #与、或、非、异或操作 bitop opration destkey key [key...]  </span><br><span class="line">#opration可选值（and/or/not）,destkey为计算完后要保存的新的key bitop and k3 k1 k2 #与运算，假如k1为01000000，k2为00000001，则结果k3为00000000 bitop or k3 k1 k2 </span><br><span class="line">#或运算，假如k1为01000000，k2为00000001，则结果k3为01000001 bitop xor k3 k1 k2 #异或运算，假如k1为01000000，k2为01000001，则结果k3为00000001 bitop not k3 k1  </span><br><span class="line">#非运算，假如k1为01000000，则结果k3为10111111</span><br></pre></td></tr></table></figure>
+
+<p><strong>list(链表)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#左边插入 格式：lpush key value [value...] lpush k1 1 2 3 4 5 6  #k1值为六项：6 5 4 3 2 1  #右边插入 格式：rpush key value [value...] rpush k1 1 2 3 4 5 6  #k1值为六项：1 2 3 4 5 6  #获取k1范围内的的值 lrange k1 0 -1   #获取第一个数（最左边的数）并删除该值（像栈操作） lpop key  #k1值为六项：1 2 3 4 5 6 那么会返回1，k1值变为2 3 4 5 6  #获取指定下标值 lindex key  #删除范围之外的数值 ltrim key start end  ltrim k1 0 3 #k1值为六项：1 2 3 4 5 6,那么k1只留下1 2 3 4</span><br></pre></td></tr></table></figure>
+
+<p><strong>hash（对象）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置对象属性值 hset key field value hset user1 name huangtl #设置user1的name属性为huangtl hset user1 age  18 #设置user1的age属性为18  #单个属性获取 hget user1 age #18  #所有属性获取 hgetall user1 #返回属性、值、属性、值 ：name huangtl age 18  #获取对象所有key hkeys user1 #返回user1的所有属性:name age  #获取对象所有kvalue hvals user1 #返回user1的所有属性得值:huangtl 18</span><br></pre></td></tr></table></figure>
+
+<p><strong>set(无序、去重集合)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#存入集合数据 sadd key member [member...] sadd k1 1 2 3 4 5 6 2 #两个2知会存一个2，集合内数值有1 2 3 4 5 6  #获取集合数据 SMEMBERS k1  #随机获取集合几条数据 SRANDMEMBER k1 [count] SRANDMEMBER k1 #随机获取一条 SRANDMEMBER k1 8 #随机获取8条数据，不会重复的数据，集合不足8条取集合全部数据 SRANDMEMBER k1 -8 #随机取8条，可能会重复的数据，集合不足8条也会取8条数据  #取数值并删除 spop key [count] spop key  #随机取一条并删除 spop key 5 #随机取5条并删除  #多个集合取并集 SUNION key [key...] SUNION k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3 4 5 6 7 8 9  #多个集合取交集 SINTER key [key...] SINTER k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回4 5 6   #多个集合取差集 sdiff key [key...] sdiff k1 k2 #按顺序取k1减掉k2中的值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3  sdiff k2 k1 #按顺序取k2不减掉k1中的值值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回7 8 9  </span><br></pre></td></tr></table></figure>
+
+<p><strong>sorted_set（有序集合）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#新建key并添加元素 zadd key score member [score member...] zadd set1 1 apple 2 orange 3 banana  #返回范围内集合数据，按score分值正序 zrange set1 0 -1  #默认返回 apple orange banana zrange set1 -2 -1 #按正序取最后两名，返回 orange banana ZREVRANGE set1 0 1 #倒序返回前两名，返回  banana orange  #获取元素位置 zrank set1 apple #返回0，代表apple在第一位</span><br></pre></td></tr></table></figure>
+
+<p><strong>事务</strong></p>
+<p>Redis 事务本质：一组命令的集合！ 一个事务中的所有命令都会被序列化，在事务执行过程的中，会按照顺序执行！</p>
+<p>Redis单条命令式保存原子性的，但是事务不保证原子性！</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启事务 multi   #命令入队 set k1 v1  set k2 v2   get k2    # 执行事务 exec   </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/04/rfCmtEXMW8ARndp.png" alt="image-20220304091437206"></p>
+<p><strong>Redis持久化</strong></p>
+<p>持久化就是把内存的数据写到磁盘中去，防止服务宕机了内存数据丢失。</p>
+<p>redis提供两种持久化机制 RDB（默认） 和 AOF 机制。</p>
+<p>1、RDB</p>
+<p>RDB是Redis DataBase缩写快照 ，默认的持久化方式。按照一定的时间将内存的数据以快照的形式保存到硬盘中，对应产生的数据文件为dump.rdb</p>
+<p><img src="https://s2.loli.net/2022/03/04/7tN6LkFedIGqW2m.png" alt="image-20220304091451985"></p>
+<p>触发机制</p>
+<p>（1）save的规则满足的情况下</p>
+<p>（2）执行 flushall 命令</p>
+<p>（3）退出redis，也会产生 rdb 文件</p>
+<p>2、AOF：</p>
+<p>持久化，AOF持久化(即Append Only File持久化)，则是将Redis执行的每次写命令记录到单独的日志文件中，当重启Redis会重新将持久化的日志中文件恢复数据。</p>
+<p><img src="https://s2.loli.net/2022/03/04/NhxGAjVYck7o81Q.png" alt="image-20220304091513278"></p>
+<p>AOF的三种策略（1）always （2）everysec(默认值) （3）no always</p>
+<p><img src="https://s2.loli.net/2022/03/04/Mtqgn9fL5PyhHYk.png" alt="image-20220304091602502"></p>
+<p>在应用时，要根据自己的实际需求，选择RDB或者AOF，其实，如果想要数据足够安全，可以两种方式都开启，但两种持久化方式同时进行IO操作，会严重影响服务器性能，因此有时候不得不做出选择。</p>
+<p><strong>redis主从复制</strong></p>
+<p>概念主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master/leader)，后者称为从节点(slave/follower)；数据的复制是单向的，只能由主节点到从节点。</p>
+<p>优点：（1）读写分离 （2）备份</p>
+<p>缺点：主服务器宕机，需要人工启动</p>
+<p><img src="https://s2.loli.net/2022/03/04/sSLV6CxMA2X7hJt.png" alt="image-20220304091623236"></p>
+<p><strong>哨兵模式</strong></p>
+<p>哨兵模式是一种特殊的模式，首先Redis提供了哨兵的命令，哨兵是一个独立的进程，作为进程，它会独立运行。其原理是哨兵通过发送命令，等待Redis服务器响应，从而监控运行的多个Redis实例。</p>
+<p><img src="https://s2.loli.net/2022/03/04/BoLwWKcVXkvPEjD.png" alt="image-20220304091641893"></p>
+<h1 id="使用场景、缓存问题"><a href="#使用场景、缓存问题" class="headerlink" title="使用场景、缓存问题"></a>使用场景、缓存问题</h1><p>1、热点数据的缓存</p>
+<p>公司项目用户量达到一定数量的时候，这时合理的利用缓存不仅能够提升项目访问速度，还能大大降低数据库的压力。</p>
+<p>2、业务上的统计，排行榜</p>
+<p>为了保证数据实时效，比如项目的访问量，每次浏览都得给+1，并发量高时如果每次都请求数据库操作无疑是种挑战和压力</p>
+<p>3、限时业务的运用</p>
+<p>每日签到、限制登录功能等业务场景</p>
+<p>4、消息队列</p>
+<p>提供基本的发布订阅功能，但不像消息队列那种专业级别</p>
+<p><strong>缓存雪崩</strong></p>
+<p>原因：大量redis key在同一时间失效，导致大量请求访问数据库，数据库服务器宕机，线上服务大面积报错。</p>
+<p>解决办法：</p>
+<p>（1）redis高可用</p>
+<p>（2）加锁排队，限流降级</p>
+<p>（3）缓存失效时间均匀分布</p>
+<p><img src="https://s2.loli.net/2022/03/04/W5leSDp8nbOHsXu.png" alt="image-20220304091719539"></p>
+<p><strong>缓存穿透</strong></p>
+<p>原因：指缓存和数据库中都没有的数据，导致所有的请求都落到数据库上，造成数据库短时间内承受大量请求而崩掉。</p>
+<p>解决办法： （1）接口层增加校验 （2）采用布隆过滤器</p>
+<p><img src="https://s2.loli.net/2022/03/04/AQEgvFThdrxGH7R.png" alt="image-20220304091759459"></p>
+<p><strong>缓存击穿</strong></p>
+<p>原因：指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。比如微博热搜。</p>
+<p>解决办法：</p>
+<p>（1）设置热点数据缓存没有过期时间</p>
+<p>（2）加互斥锁</p>
+<p><img src="https://s2.loli.net/2022/03/04/15FEWkiSNftRGmJ.png" alt="image-20220304091829212"></p>
+]]></content>
+      <categories>
+        <category>redis</category>
       </categories>
   </entry>
   <entry>
