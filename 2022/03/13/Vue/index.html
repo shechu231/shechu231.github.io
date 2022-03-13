@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vue - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="视频地址
+笔记地址
+组件之间共享数据的方式
+Vuex是什么组件之间共享数据的方案
+
+
+引入组件123456789101112131415161718import navcon from &amp;#x27;,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Vue - Hexo"/>
+    <meta name="twitter:description" content="视频地址
+笔记地址
+组件之间共享数据的方式
+Vuex是什么组件之间共享数据的方案
+
+
+引入组件123456789101112131415161718import navcon from &amp;#x27;,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Vue - Hexo"/>
+    <meta property="og:description" content="视频地址
+笔记地址
+组件之间共享数据的方式
+Vuex是什么组件之间共享数据的方案
+
+
+引入组件123456789101112131415161718import navcon from &amp;#x27;,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Vue</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Vue</h1>
+        <div class="stuff">
+            <span>三月 13, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1h7411N7bg?p=8">视频地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43742708/article/details/114667391">笔记地址</a></p>
+<h1 id="组件之间共享数据的方式"><a href="#组件之间共享数据的方式" class="headerlink" title="组件之间共享数据的方式"></a>组件之间共享数据的方式</h1><p><img src="https://s2.loli.net/2022/03/13/xAVO39iYqyM6Svn.png" alt="image-20220313104108288"></p>
+<h1 id="Vuex是什么"><a href="#Vuex是什么" class="headerlink" title="Vuex是什么"></a>Vuex是什么</h1><p>组件之间共享数据的方案</p>
+<p><img src="https://s2.loli.net/2022/03/13/xGLhDvTZ9Kj5XPi.png" alt="image-20220313104454888"></p>
+<p><img src="https://s2.loli.net/2022/03/13/bjF5QJDHVz1SwXE.png" alt="image-20220313104532719"></p>
+<h4 id="引入组件"><a href="#引入组件" class="headerlink" title="引入组件"></a>引入组件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import navcon from &#x27;../components/navcon.vue&#x27;</span><br><span class="line">import leftnav from &#x27;../components/leftnav.vue&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;index&#x27;,</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      showclass: &#x27;asideshow&#x27;,</span><br><span class="line">      showtype: false</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  // 注册组件</span><br><span class="line">  components: &#123;</span><br><span class="line">    &quot;my-navcon&quot;:navcon,</span><br><span class="line">    leftnav</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><h3 id="1-安装vuex依赖包"><a href="#1-安装vuex依赖包" class="headerlink" title="1.安装vuex依赖包"></a>1.安装vuex依赖包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vuex --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-导入vuex包"><a href="#2-导入vuex包" class="headerlink" title="2.导入vuex包"></a>2.导入vuex包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import Vuex from &#x27;vuex&#x27;</span><br><span class="line">Vue.use(Vuex)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-创建store对象"><a href="#3-创建store对象" class="headerlink" title="3.创建store对象"></a>3.创建store对象</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">//state存放全局共享的数据</span><br><span class="line">state:&#123;count:0&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-将store对象挂在到vue实例中"><a href="#4-将store对象挂在到vue实例中" class="headerlink" title="4.将store对象挂在到vue实例中"></a>4.将store对象挂在到vue实例中</h3><h5 id="main-js："><a href="#main-js：" class="headerlink" title="main.js："></a>main.js：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import App from &#x27;./App.vue&#x27;</span><br><span class="line">import store from &#x27;./store&#x27;</span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = false</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">el:&#x27;#app&#x27;,</span><br><span class="line">render:h=&gt;h(app),</span><br><span class="line">//将创建的共享数据对象，挂载到Vue实例中</span><br><span class="line">//所有的组件，就可以直接从store中获取全局的数据了。	</span><br><span class="line">store</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="store-index-js"><a href="#store-index-js" class="headerlink" title="store / index.js"></a>store / index.js</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import Vuex from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  modules: &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="State-数据源"><a href="#State-数据源" class="headerlink" title="State 数据源"></a>State 数据源</h1><p>State提供唯一的公共数据源，所有共享的数据都要统一放到 Store的 State I中进行存储。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//创建store数据源，提供唯一公共数据</span><br><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import Vuex from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)</span><br><span class="line"></span><br><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count: 0</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  modules: &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过-this-store-state-全局数据名称-访问"><a href="#通过-this-store-state-全局数据名称-访问" class="headerlink" title="通过 this.$store.state.全局数据名称 访问"></a>通过 this.$store.state.全局数据名称 访问</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$store.state.全局数据名称</span><br></pre></td></tr></table></figure>
+
+<p>由于在模板字符串中，是不需要写this的，所以直接写this后边的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h3&gt;当前最新的count值为：&#123;&#123;$store.state.count&#125;&#125;&lt;/h3&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="mapState-映射为计算属性"><a href="#mapState-映射为计算属性" class="headerlink" title="mapState 映射为计算属性"></a>mapState 映射为计算属性</h2><p>通过刚オ导入的 mapState 函数，将当前组件需要的全局数据，映射为当前组件的 computed计算属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 使用： --&gt;</span><br><span class="line">&lt;h3&gt;当前最新的count值为：&#123;&#123; Count &#125;&#125;&lt;/h3&gt;</span><br><span class="line">&lt;h3&gt;当前最新的count值为：&#123;&#123; xCount &#125;&#125;&lt;/h3&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//1.导入辅助函数 mapState</span><br><span class="line">import &#123; mapState &#125; from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">  	// mapState 可以接收数组或对象形式的参数 映射为计算属性，下面分别示例</span><br><span class="line">  	</span><br><span class="line">  	//2.1 传入数组 </span><br><span class="line">    ...mapState([&#x27;count&#x27;]),</span><br><span class="line">	</span><br><span class="line">	//2.2 对象形式 可以自定义名称</span><br><span class="line">	...mapState(&#123;</span><br><span class="line">		xCount:state =&gt; state.count</span><br><span class="line">	&#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Mutations-变更store中的数据"><a href="#Mutations-变更store中的数据" class="headerlink" title="Mutations 变更store中的数据"></a>Mutations 变更store中的数据</h1><blockquote>
+<p>Mutations用于变更 Store中的数据。</p>
+</blockquote>
+<p>注意： 只有 mutations里的函数，才有权利修改 state 的数据<br>注意： <strong>mutations里不能包含异步操作</strong>。</p>
+<p>①只能通过 mutations变更 Store数据，不可以直接操作 Store中的数据。<br>②通过这种方式虽然操作起来稍微繁琐一些，但是可以集中监控所有数据的变化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">  state:&#123;</span><br><span class="line">	count:0</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations:&#123;</span><br><span class="line">	add(state)&#123;</span><br><span class="line">	  //变更状态</span><br><span class="line">	  state.count++</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="this-store-commit-触发-mutations"><a href="#this-store-commit-触发-mutations" class="headerlink" title="this.$store.commit() 触发 mutations"></a>this.$store.commit() 触发 mutations</h2><p><code>this.$store.commit()</code> 是触发 mutations的第一种方式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">Increment</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.$store.commit(<span class="string">&#x27;add&#x27;</span>)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="触发-mutations-时传递值"><a href="#触发-mutations-时传递值" class="headerlink" title="触发 mutations 时传递值"></a>触发 mutations 时传递值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">IncrementN()&#123;</span><br><span class="line">  this.$store.commit(&#x27;addN&#x27;,5)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mutations: &#123;</span><br><span class="line">  add(state) &#123;</span><br><span class="line">    // 变更状态</span><br><span class="line">    state.count++</span><br><span class="line">  &#125;,</span><br><span class="line">  addN(state,step)&#123;</span><br><span class="line">    // 变更状态</span><br><span class="line">    state.count += step</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="MapMutations-映射为方法"><a href="#MapMutations-映射为方法" class="headerlink" title="MapMutations 映射为方法"></a>MapMutations 映射为方法</h2><p>触发mutations的第二种方式：</p>
+<p>1.从vuex中按需导入 mapMutations函数<br><code>import &#123;mapMutations&#125; from &#39;vuex&#39;</code></p>
+<p>2.通过刚才按需导入的 mapMutations函数，映射为当前组件的<code>methods</code>函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// store</span><br><span class="line">mutations: &#123;</span><br><span class="line">  add(state) &#123;</span><br><span class="line">    // 变更状态</span><br><span class="line">    state.count++</span><br><span class="line">  &#125;,</span><br><span class="line">  sub(state) &#123;</span><br><span class="line">    state.count--</span><br><span class="line">  &#125;,</span><br><span class="line">  addN(state, step) &#123;</span><br><span class="line">    // 变更状态</span><br><span class="line">    state.count += step</span><br><span class="line">  &#125;,</span><br><span class="line">  subN(state, step) &#123;</span><br><span class="line">    state.count -= step</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">// 组件A</span><br><span class="line">import &#123; mapState,mapMutations &#125; from &#x27;vuex&#x27;</span><br><span class="line">methods:&#123;</span><br><span class="line">  ...mapMutations([&#x27;sub&#x27;,&#x27;subN&#x27;]),</span><br><span class="line">  decrement()&#123;</span><br><span class="line">    // 调用 </span><br><span class="line">    this.sub()</span><br><span class="line">  &#125;,</span><br><span class="line">  decrementN()&#123;</span><br><span class="line">    this.subN(5)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="MapMutations-映射为方法-1"><a href="#MapMutations-映射为方法-1" class="headerlink" title="MapMutations 映射为方法"></a>MapMutations 映射为方法</h2><p>触发mutations的第二种方式：</p>
+<p>1.从vuex中按需导入 mapMutations函数<br><code>import &#123;mapMutations&#125; from &#39;vuex&#39;</code></p>
+<p>2.通过刚才按需导入的 mapMutations函数，映射为当前组件的<code>methods</code>函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// store</span><br><span class="line">mutations: &#123;</span><br><span class="line">  add(state) &#123;</span><br><span class="line">    // 变更状态</span><br><span class="line">    state.count++</span><br><span class="line">  &#125;,</span><br><span class="line">  sub(state) &#123;</span><br><span class="line">    state.count--</span><br><span class="line">  &#125;,</span><br><span class="line">  addN(state, step) &#123;</span><br><span class="line">    // 变更状态</span><br><span class="line">    state.count += step</span><br><span class="line">  &#125;,</span><br><span class="line">  subN(state, step) &#123;</span><br><span class="line">    state.count -= step</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">// 组件A</span><br><span class="line">import &#123; mapState,mapMutations &#125; from &#x27;vuex&#x27;</span><br><span class="line">methods:&#123;</span><br><span class="line">  ...mapMutations([&#x27;sub&#x27;,&#x27;subN&#x27;]),</span><br><span class="line">  decrement()&#123;</span><br><span class="line">    // 调用 </span><br><span class="line">    this.sub()</span><br><span class="line">  &#125;,</span><br><span class="line">  decrementN()&#123;</span><br><span class="line">    this.subN(5)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Actions-专门处理异步操作"><a href="#Actions-专门处理异步操作" class="headerlink" title="Actions 专门处理异步操作"></a>Actions 专门处理异步操作</h1><p>Actions用于处理异步任务。</p>
+<p>如果通过<strong>异步</strong>操作变更数据，<strong>必须通过 Action</strong>,而不能使用Mutation,但是在 Action中还是要<strong>通过触发Mutation</strong>的方式间接<strong>变更数据</strong>。</p>
+<p>注意： 在Actions 中不能直接修改 state中的数据，要通过 mutations修改。</p>
+<h2 id="this-store-dispatch-触发-Actions"><a href="#this-store-dispatch-触发-Actions" class="headerlink" title="this.$store.dispatch 触发 Actions"></a>this.$store.dispatch 触发 Actions</h2><p>store.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 定义 Action</span><br><span class="line">const store = new Vuex.store(&#123;</span><br><span class="line">  // ...省略其他代码</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    // 只有 mutations中的函数才有权利修改 state。</span><br><span class="line">    // 不能在 mutations里执行异步操作。</span><br><span class="line">    add(state) &#123;</span><br><span class="line">      state.count++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    // 在Actions 中不能直接修改 state中的数据，要通过 mutations修改。</span><br><span class="line">    addAsync(context) &#123;</span><br><span class="line">      setTimeout(() =&gt; &#123;</span><br><span class="line">        context.commit(&#x27;add&#x27;)</span><br><span class="line">      &#125;, 1000);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>组件A</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 触发 Action</span></span><br><span class="line"><span class="attr">methods</span>:&#123;</span><br><span class="line">  <span class="function"><span class="title">handle</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 触发 actions 的第一种方式</span></span><br><span class="line">    <span class="built_in">this</span>.$store.dispatch(<span class="string">&#x27;addAsync&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="mapActions-映射为方法"><a href="#mapActions-映射为方法" class="headerlink" title="mapActions 映射为方法"></a>mapActions 映射为方法</h2><p>1.从Vuex中按需导入 <code>mapActions</code> 函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapActions&#125; from &#x27;vuex&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>2.将指定的 actions 函数，映射为当前组件 methods 的方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">methods:&#123;</span><br><span class="line">  ...mapActions([<span class="string">&#x27;subAsync&#x27;</span>]),</span><br><span class="line">  <span class="function"><span class="title">decrementAsync</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.subAsync()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>store.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">actions: &#123;</span><br><span class="line"> // 在Actions 中不能直接修改 state中的数据，要通过 mutations修改。</span><br><span class="line">  subAsync(context)&#123;</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      context.commit(&#x27;sub&#x27;)</span><br><span class="line">    &#125;, 1000);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h1><p>Getter 用于对 Store中的数据进行加工处理形成新的数据。</p>
+<p>Getter <strong>不会修改 Store 中的原数据</strong>，它只起到一个包装器的作用，将Store中的数据加工后输出出来。</p>
+<ol>
+<li>Getter可以对 Store中已有的数据加工处理之后形成新的数据，类似Vue的计算属性。</li>
+<li>Store中数据发生变化， Getter 的数据也会跟着变化。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;h3&gt;&#123;&#123;$store.getters.showNum&#125;&#125;&gt;&gt;</span><br><span class="line">//定义 Getter</span><br><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">  state:&#123;</span><br><span class="line">	count:0</span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line">    showNum(state) &#123;</span><br><span class="line">      return &#x27;当前最新的数量是【&#x27; + state.count + &#x27;】&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过-this-store-getters-名称-访问"><a href="#通过-this-store-getters-名称-访问" class="headerlink" title="通过 this.$store.getters.名称 访问"></a>通过 this.$store.getters.名称 访问</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$store.getters.名称</span><br></pre></td></tr></table></figure>
+
+<h2 id="mapGetters-映射为计算属性"><a href="#mapGetters-映射为计算属性" class="headerlink" title="mapGetters 映射为计算属性"></a>mapGetters 映射为计算属性</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; mapGetters &#125; <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">computed</span>:&#123;</span><br><span class="line">	...mapGetters([<span class="string">&#x27;showNum&#x27;</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="简写"><a href="#简写" class="headerlink" title="简写"></a>简写</h1><p>其实，通过<code>mapState,mapMutations,mapActions,mapGetters</code>映射过来的计算属性，或者方法都可以直接调用，不用在 <code>commit</code> 或者 <code>dispatch</code></p>
+<p>如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=&quot;decrementAsync&quot;&gt;-1Async&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapActions&#125; from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">//...省略一些代码</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">  ...mapActions([&#x27;subAsync&#x27;]),</span><br><span class="line">  decrementAsync()&#123;</span><br><span class="line">    this.subAsync()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>其实可以简写成：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;subAsync&quot;</span>&gt;</span>-1Async<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapActions&#125; from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">//...省略一些代码</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">  ...mapActions([&#x27;subAsync&#x27;]),</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>有参数的时候，也可以直接把参数带上，就像这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;subAsync(5)&quot;</span>&gt;</span>+5<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapActions&#125; from &#x27;vuex&#x27;</span><br><span class="line"></span><br><span class="line">//...省略一些代码</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">  ...mapActions([&#x27;addAsync&#x27;]),</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h1 id="Vuex-todoList-案例"><a href="#Vuex-todoList-案例" class="headerlink" title="Vuex todoList 案例"></a>Vuex todoList 案例</h1><p>由于代码较多就不放在 CSDN了。</p>
+<p>我打包上传到了 蓝奏云，需要的去下载吧。</p>
+<p>源码地址：<a target="_blank" rel="noopener" href="https://wwe.lanzoui.com/iMWRImu1kad">蓝奏云素材</a></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
