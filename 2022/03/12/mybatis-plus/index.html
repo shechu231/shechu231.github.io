@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    
+    <meta name="description" content="Mapper层中配置：RightsMapper类:1234567import com.jt.pojo.Rights;import java.util.List;@Mapperpublic inter,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     
@@ -19,7 +19,7 @@
     
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:title" content="mybatis-plus - Hexo"/>
-    
+    <meta name="twitter:description" content="Mapper层中配置：RightsMapper类:1234567import com.jt.pojo.Rights;import java.util.List;@Mapperpublic inter,"/>
     
     
     
@@ -27,7 +27,7 @@
     <meta property="og:site_name" content="Hexo"/>
     <meta property="og:type" content="object"/>
     <meta property="og:title" content="mybatis-plus - Hexo"/>
-    
+    <meta property="og:description" content="Mapper层中配置：RightsMapper类:1234567import com.jt.pojo.Rights;import java.util.List;@Mapperpublic inter,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -63,7 +63,29 @@
 
         </div>
         <div class="content markdown">
-            
+            <h1 id="Mapper层中配置："><a href="#Mapper层中配置：" class="headerlink" title="Mapper层中配置："></a>Mapper层中配置：</h1><h4 id="RightsMapper类"><a href="#RightsMapper类" class="headerlink" title="RightsMapper类:"></a>RightsMapper类:</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import com.jt.pojo.Rights;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line">@Mapper</span><br><span class="line">public interface RightsMapper &#123;</span><br><span class="line">    public List&lt;Rights&gt; getRightsList();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="resources-mappers下面配置写"><a href="#resources-mappers下面配置写" class="headerlink" title="resources/mappers下面配置写:"></a>resources/mappers下面配置写:</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span><br><span class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.jt.mapper.RightsMapper&quot;&gt;</span><br><span class="line">    &lt;select id=&quot;getRightsList&quot; resultMap=&quot;rightRM&quot;&gt;</span><br><span class="line">        SELECT * FROM</span><br><span class="line">            (SELECT * FROM rights WHERE parent_id = 0)p</span><br><span class="line">	    LEFT JOIN</span><br><span class="line">            (SELECT id c_id,NAME c_name,parent_id c_parent_id,</span><br><span class="line">        path c_path,LEVEL c_level,created c_created,</span><br><span class="line">        updated c_updated FROM rights) c</span><br><span class="line">            ON p.id = c.c_parent_id</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line"></span><br><span class="line">    &lt;resultMap id=&quot;rightRM&quot; type=&quot;Rights&quot; autoMapping=&quot;true&quot;&gt;</span><br><span class="line">        &lt;id property=&quot;id&quot; column=&quot;id&quot;&gt;&lt;/id&gt;</span><br><span class="line"></span><br><span class="line">        &lt;collection property=&quot;children&quot; ofType=&quot;Rights&quot;&gt;</span><br><span class="line">            &lt;id column=&quot;c_id&quot; property=&quot;id&quot;&gt;&lt;/id&gt;</span><br><span class="line">            &lt;result column=&quot;c_name&quot; property=&quot;name&quot;&gt;&lt;/result&gt;</span><br><span class="line">            &lt;result column=&quot;c_parent_id&quot; property=&quot;parentId&quot;&gt;&lt;/result&gt;</span><br><span class="line">            &lt;result column=&quot;c_path&quot; property=&quot;path&quot;&gt;&lt;/result&gt;</span><br><span class="line">            &lt;result column=&quot;c_level&quot; property=&quot;level&quot;&gt;&lt;/result&gt;</span><br><span class="line">            &lt;result column=&quot;c_created&quot; property=&quot;created&quot;&gt;&lt;/result&gt;</span><br><span class="line">            &lt;result column=&quot;c_updated&quot; property=&quot;updated&quot;&gt;&lt;/result&gt;</span><br><span class="line">        &lt;/collection&gt;</span><br><span class="line">    &lt;/resultMap&gt;</span><br><span class="line"></span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="application-yml文件中配置"><a href="#application-yml文件中配置" class="headerlink" title="application.yml文件中配置"></a>application.yml文件中配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#SpringBoot整合Mybatis</span><br><span class="line">mybatis-plus:</span><br><span class="line">  #指定别名包</span><br><span class="line">  type-aliases-package: com.jt.pojo</span><br><span class="line">  #扫描指定路径下的映射文件</span><br><span class="line">  mapper-locations: classpath:/mappers/*.xml</span><br><span class="line">  #开启驼峰映射</span><br><span class="line">  configuration:</span><br><span class="line">    map-underscore-to-camel-case: true</span><br><span class="line">    cache-enabled: true</span><br><span class="line">  # 一二级缓存默认开始 所以可以简化</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
                 <source type="audio/mpeg" src="">
