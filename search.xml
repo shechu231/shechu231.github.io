@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>C++基础学习</title>
-    <url>/2022/01/20/C++%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-  </entry>
-  <entry>
     <title>2021年一月新番</title>
     <url>/2021/12/22/2021%E5%B9%B4%E4%B8%80%E6%9C%88%E6%96%B0%E7%95%AA/</url>
     <content><![CDATA[<h1 id="老番续作"><a href="#老番续作" class="headerlink" title="老番续作"></a>老番续作</h1><p>《擅长捉弄人的高木同学》第三季</p>
@@ -73,6 +65,14 @@
 ]]></content>
       <categories>
         <category>动漫</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>C++基础学习</title>
+    <url>/2022/01/20/C++%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>C++</category>
       </categories>
   </entry>
   <entry>
@@ -707,6 +707,38 @@
       <categories>
         <category>JAVA</category>
         <category>多线程</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>JavaAPI基础</title>
+    <url>/2022/03/18/JavaAPI%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="JSON处理大全"><a href="#JSON处理大全" class="headerlink" title="JSON处理大全"></a>JSON处理大全</h1><p>依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;httpclient&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;4.5.8&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;selenium-java&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;3.141.59&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;1.2.47&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;2.10.3&lt;/version&gt;</span><br><span class="line">&lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">&lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;gson&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;2.8.6&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cn.wanghaomiao&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;JsoupXpath&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.1.1&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br><span class="line"> </span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.jsoup&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jsoup&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.12.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;cn.wanghaomiao&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;JsoupXpath&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;0.1.1&lt;/version&gt;</span><br><span class="line"> &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package service;</span><br><span class="line"></span><br><span class="line">import com.alibaba.fastjson.JSON;</span><br><span class="line">import com.alibaba.fastjson.JSONObject;</span><br><span class="line">import com.fasterxml.jackson.core.JsonProcessingException;</span><br><span class="line">import com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line">import com.google.gson.Gson;</span><br><span class="line">import com.google.gson.reflect.TypeToken;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">public class JsonTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        /*JSON 对象与字符串的相互转化</span><br><span class="line">        方法	作用</span><br><span class="line">        JSON.parseObject()	从字符串解析 JSON 对象</span><br><span class="line">        JSON.parseArray()	从字符串解析 JSON 数组</span><br><span class="line">        JSON.toJSONString(obj/array)	将 JSON 对象或 JSON 数组转化为字符串*/</span><br><span class="line">        /*JSONObject object = new JSONObject();</span><br><span class="line">        //string</span><br><span class="line">        object.put(&quot;string&quot;,&quot;string&quot;);</span><br><span class="line">        //int</span><br><span class="line">        object.put(&quot;int&quot;,2);</span><br><span class="line">        //boolean</span><br><span class="line">        object.put(&quot;boolean&quot;,true);</span><br><span class="line">        //array</span><br><span class="line">        List&lt;Integer&gt; integers = Arrays.asList(1,2,3);</span><br><span class="line">        object.put(&quot;list&quot;,integers);</span><br><span class="line">        //null</span><br><span class="line">        object.put(&quot;null&quot;,null);</span><br><span class="line">        System.out.println(object);*/</span><br><span class="line"></span><br><span class="line">        /*JSONObject object = JSONObject</span><br><span class="line">                .parseObject(&quot;&#123;\&quot;boolean\&quot;:true,\&quot;string\&quot;:\&quot;string\&quot;,\&quot;list\&quot;:[1,2,3],\&quot;int\&quot;:2&#125;&quot;);</span><br><span class="line">        //string</span><br><span class="line">        String s = object.getString(&quot;string&quot;);</span><br><span class="line">        System.out.println(s);</span><br><span class="line">        //int</span><br><span class="line">        int i = object.getIntValue(&quot;int&quot;);</span><br><span class="line">        System.out.println(i);</span><br><span class="line">        //boolean</span><br><span class="line">        boolean b = object.getBooleanValue(&quot;boolean&quot;);</span><br><span class="line">        System.out.println(b);</span><br><span class="line">        //list</span><br><span class="line">        List&lt;Integer&gt; integers = JSON.parseArray(object.getJSONArray(&quot;list&quot;).toJSONString(),Integer.class);</span><br><span class="line">        integers.forEach(System.out::println);</span><br><span class="line">        //null0</span><br><span class="line">        System.out.println(object.getString(&quot;null&quot;));*/</span><br><span class="line"></span><br><span class="line">//        jask-json</span><br><span class="line">        /*List&lt;Student&gt; studentList=new ArrayList&lt;&gt;();</span><br><span class="line">        studentList.add(new Student(1L,&quot;王磊&quot;));</span><br><span class="line">        studentList.add(new Student(2L,&quot;张三&quot;));</span><br><span class="line">        String studentListJsonStr=JSONUtil.toJson(studentList);</span><br><span class="line">        System.out.println(&quot;jsonStr:&quot;+studentListJsonStr);</span><br><span class="line">        List&lt;Student&gt; students= (List&lt;Student&gt;) JSONUtil.parseObject(studentListJsonStr,List.class);</span><br><span class="line">        System.out.println(&quot;列表第一个student:&quot;+students.get(0));*/</span><br><span class="line"></span><br><span class="line">        // 创建Bean</span><br><span class="line">        Person p = new Person(&quot;艾伦·耶格尔&quot;, 16, true, Arrays.asList(&quot;自由&quot;, &quot;迫害莱纳&quot;));</span><br><span class="line">        // 创建Gson对象</span><br><span class="line">        Gson gson = new Gson();</span><br><span class="line">        // 调用Gson的String toJson(Object)方法将Bean转换为json字符串</span><br><span class="line">        String pJson = gson.toJson(p);</span><br><span class="line"></span><br><span class="line">        System.out.println(pJson);</span><br><span class="line"></span><br><span class="line">        // 先准备一个List集合</span><br><span class="line">        List&lt;Person&gt; list = new ArrayList&lt;Person&gt;();</span><br><span class="line">        list.add(new Person(&quot;三笠·阿克曼&quot;, 16, false, Arrays.asList(&quot;砍巨人&quot;, &quot;保护艾伦&quot;)));</span><br><span class="line">        list.add(new Person(&quot;阿明·阿诺德&quot;, 16, true, Arrays.asList(&quot;看书&quot;, &quot;玩海螺&quot;)));</span><br><span class="line">        System.out.println(list);</span><br><span class="line">        // 创建Gson实例</span><br><span class="line">        gson = new Gson();</span><br><span class="line">        // 调用Gson的toJson方法</span><br><span class="line">        String listJson = gson.toJson(list);</span><br><span class="line">        System.out.println(listJson);</span><br><span class="line">        List fromJson = gson.fromJson(listJson, List.class);</span><br><span class="line">        System.out.println(fromJson.get(0).getClass());</span><br><span class="line">        // 调用Gson的 T fromJson(String, Type)将List集合的json串反序列化为List对象</span><br><span class="line">        List&lt;Person&gt; plist = gson.fromJson(listJson, new TypeToken&lt;List&lt;Person&gt;&gt;()&#123;&#125;.getType());</span><br><span class="line">        System.out.println(plist);</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Person&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">        map.put(&quot;p1&quot;, new Person(&quot;利威尔·阿克曼&quot;, 35, true, Arrays.asList(&quot;砍猴儿&quot;, &quot;打扫卫生&quot;)));</span><br><span class="line">        map.put(&quot;p2&quot;, new Person(&quot;韩吉·佐耶&quot;, 33, false, Arrays.asList(&quot;研究巨人&quot;, &quot;讲故事&quot;)));</span><br><span class="line"></span><br><span class="line">        gson = new Gson();</span><br><span class="line">        String mapJson = gson.toJson(map);</span><br><span class="line"></span><br><span class="line">        System.out.println(mapJson);</span><br><span class="line">        // &#123;&quot;p1&quot;:&#123;&quot;name&quot;:&quot;利威尔·阿克曼&quot;,&quot;age&quot;:35,&quot;isMale&quot;:true,&quot;hobbies&quot;:[&quot;砍猴儿&quot;,&quot;打扫卫生&quot;]&#125;,&quot;p2&quot;:&#123;&quot;name&quot;:&quot;韩吉·佐耶&quot;,&quot;age&quot;:33,&quot;isMale&quot;:false,&quot;hobbies&quot;:[&quot;研究巨人&quot;,&quot;讲故事&quot;]&#125;&#125;</span><br><span class="line">        Map&lt;String, Person&gt; jsonMap = gson.fromJson(mapJson, new TypeToken&lt;Map&lt;String, Person&gt;&gt;() &#123; &#125;.getType());</span><br><span class="line">        System.out.println(jsonMap);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static class Student&#123;</span><br><span class="line">        private String name;</span><br><span class="line">        private Long id;</span><br><span class="line"></span><br><span class="line">        public Student() &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Student(Long id,String name) &#123;</span><br><span class="line">            this.name = name;</span><br><span class="line">            this.id = id;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public String getName() &#123;</span><br><span class="line">            return name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void setName(String name) &#123;</span><br><span class="line">            this.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Long getId() &#123;</span><br><span class="line">            return id;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void setId(Long id) &#123;</span><br><span class="line">            this.id = id;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public String toString() &#123;</span><br><span class="line">            return &quot;Student&#123;&quot; +</span><br><span class="line">                    &quot;name=&#x27;&quot; + name + &#x27;\&#x27;&#x27; +</span><br><span class="line">                    &quot;, id=&quot; + id +</span><br><span class="line">                    &#x27;&#125;&#x27;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">class Person</span><br><span class="line">&#123;</span><br><span class="line">    private String name;</span><br><span class="line">    private int age;</span><br><span class="line">    private boolean isMale;</span><br><span class="line">    private List&lt;String&gt; hobbies;</span><br><span class="line"></span><br><span class="line">    // 省略构造器和getter/setter方法，注意重写toString方法，便于查看控制台输出。</span><br><span class="line"></span><br><span class="line">    public Person(String name, int age, boolean isMale, List&lt;String&gt; hobbies) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.age = age;</span><br><span class="line">        this.isMale = isMale;</span><br><span class="line">        this.hobbies = hobbies;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getName() &#123;</span><br><span class="line">        return name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setName(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getAge() &#123;</span><br><span class="line">        return age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setAge(int age) &#123;</span><br><span class="line">        this.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean isMale() &#123;</span><br><span class="line">        return isMale;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setMale(boolean male) &#123;</span><br><span class="line">        isMale = male;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public List&lt;String&gt; getHobbies() &#123;</span><br><span class="line">        return hobbies;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setHobbies(List&lt;String&gt; hobbies) &#123;</span><br><span class="line">        this.hobbies = hobbies;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString()</span><br><span class="line">    &#123;</span><br><span class="line">        final StringBuilder sb = new StringBuilder(&quot;Person&#123;&quot;);</span><br><span class="line">        sb.append(&quot;name=&#x27;&quot;).append(name).append(&#x27;\&#x27;&#x27;);</span><br><span class="line">        sb.append(&quot;, age=&quot;).append(age);</span><br><span class="line">        sb.append(&quot;, isMale=&quot;).append(isMale);</span><br><span class="line">        sb.append(&quot;, hobbies=&quot;).append(hobbies);</span><br><span class="line">        sb.append(&#x27;&#125;&#x27;);</span><br><span class="line">        return sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">class JSONUtil &#123;</span><br><span class="line">    private static ObjectMapper objectMapper=new ObjectMapper();</span><br><span class="line">    public static String  toJson(Object obj1)&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return objectMapper.writeValueAsString(obj1);</span><br><span class="line">        &#125; catch (JsonProcessingException e) &#123;</span><br><span class="line">            System.out.println(&quot;json转换异常&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Object parseObject(String jsonStr,Class targetClass)&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            return   objectMapper.readValue(jsonStr,targetClass);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            System.out.println(&quot;json转换异常&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="HttpClient基本用法"><a href="#HttpClient基本用法" class="headerlink" title="HttpClient基本用法"></a>HttpClient基本用法</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package service;</span><br><span class="line"></span><br><span class="line">import org.apache.http.HttpEntity;</span><br><span class="line">import org.apache.http.HttpStatus;</span><br><span class="line">import org.apache.http.client.ClientProtocolException;</span><br><span class="line">import org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line">import org.apache.http.client.methods.HttpGet;</span><br><span class="line">import org.apache.http.client.utils.HttpClientUtils;</span><br><span class="line">import org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line">import org.apache.http.impl.client.HttpClients;</span><br><span class="line">import org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">public class HttpClientTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //1.生成httpclient，相当于该打开一个浏览器</span><br><span class="line">        CloseableHttpClient httpClient = HttpClients.createDefault();</span><br><span class="line">        CloseableHttpResponse response = null;</span><br><span class="line">        //2.创建get请求，相当于在浏览器地址栏输入 网址</span><br><span class="line">        HttpGet request = new HttpGet(&quot;https://www.baidu.com/&quot;);</span><br><span class="line">        request.setHeader(&quot;User-Agent&quot;,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36&quot;);</span><br><span class="line">        /*HttpHost proxy = new HttpHost(&quot;112.85.168.223&quot;, 9999);</span><br><span class="line">        RequestConfig config = RequestConfig.custom().setProxy(proxy).build();</span><br><span class="line">        request.setConfig(config);*/</span><br><span class="line">        try &#123;</span><br><span class="line">            //3.执行get请求，相当于在输入地址栏后敲回车键</span><br><span class="line">            response = httpClient.execute(request);</span><br><span class="line"></span><br><span class="line">            //4.判断响应状态为200，进行处理</span><br><span class="line">            if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) &#123;</span><br><span class="line">                //5.获取响应内容</span><br><span class="line">                HttpEntity httpEntity = response.getEntity();</span><br><span class="line">                String html = EntityUtils.toString(httpEntity, &quot;utf-8&quot;);</span><br><span class="line">                System.out.println(html);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                //如果返回状态不是200，比如404（页面不存在）等，根据情况做处理，这里略</span><br><span class="line">                System.out.println(&quot;返回状态不是200&quot;);</span><br><span class="line">                System.out.println(EntityUtils.toString(response.getEntity(), &quot;utf-8&quot;));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (ClientProtocolException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            //6.关闭</span><br><span class="line">            HttpClientUtils.closeQuietly(response);</span><br><span class="line">            HttpClientUtils.closeQuietly(httpClient);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="xpath解析"><a href="#xpath解析" class="headerlink" title="xpath解析"></a>xpath解析</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">String xpath=&quot;//div[@id=&#x27;post_list&#x27;]/div[./div/div/span[@class=&#x27;article_view&#x27;]/a/num()&gt;1000]/div/h3/allText()&quot;;</span><br><span class="line">String doc = &quot;...&quot;;</span><br><span class="line">JXDocument jxDocument = new JXDocument(doc);</span><br><span class="line">List&lt;Object&gt; rs = jxDocument.sel(xpath);</span><br><span class="line">for (Object o:rs)&#123;</span><br><span class="line">     if (o instanceof Element)&#123;</span><br><span class="line">         int index = ((Element) o).siblingIndex();</span><br><span class="line">         System.out.println(index);</span><br><span class="line">     &#125;</span><br><span class="line">     System.out.println(o.toString());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Jsonp解析"><a href="#Jsonp解析" class="headerlink" title="Jsonp解析"></a>Jsonp解析</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line">                 * 下面是Jsoup展现自我的平台</span><br><span class="line">                 */</span><br><span class="line">                //6.Jsoup解析html</span><br><span class="line">                Document document = Jsoup.parse(html);</span><br><span class="line">                //像js一样，通过标签获取title</span><br><span class="line">                System.out.println(document.getElementsByTag(&quot;title&quot;).first());</span><br><span class="line">                //像js一样，通过id 获取文章列表元素对象</span><br><span class="line">                Element postList = document.getElementById(&quot;post_list&quot;);</span><br><span class="line">                //像js一样，通过class 获取列表下的所有博客</span><br><span class="line">                Elements postItems = postList.getElementsByClass(&quot;post_item&quot;);</span><br><span class="line">                //循环处理每篇博客</span><br><span class="line">                for (Element postItem : postItems) &#123;</span><br><span class="line">                    //像jquery选择器一样，获取文章标题元素</span><br><span class="line">                    Elements titleEle = postItem.select(&quot;.post_item_body a[class=&#x27;titlelnk&#x27;]&quot;);</span><br><span class="line">                    System.out.println(&quot;文章标题:&quot; + titleEle.text());;</span><br><span class="line">                    System.out.println(&quot;文章地址:&quot; + titleEle.attr(&quot;href&quot;));</span><br><span class="line">                    //像jquery选择器一样，获取文章作者元素</span><br><span class="line">                    Elements footEle = postItem.select(&quot;.post_item_foot a[class=&#x27;lightblue&#x27;]&quot;);</span><br><span class="line">                    System.out.println(&quot;文章作者:&quot; + footEle.text());;</span><br><span class="line">                    System.out.println(&quot;作者主页:&quot; + footEle.attr(&quot;href&quot;));</span><br><span class="line">                    System.out.println(&quot;*********************************&quot;);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Document document = Jsoup.parse(new File(&quot;d://1.html&quot;), &quot;utf-8&quot;);</span><br><span class="line">            System.out.println(document);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    四、Jsoup另一个值得一提的功能</span><br><span class="line"></span><br><span class="line"> 你肯定有过这种经历，在你的页面文本框中，如果输入html元素的话，保存后再查看很大概率会导致页面排版乱七八糟，如果能对这些内容进行过滤的话，就完美了。</span><br><span class="line"></span><br><span class="line">刚好我Jsoup就能做到。</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">        String unsafe = &quot;&lt;p&gt;&lt;a href=&#x27;网址&#x27; onclick=&#x27;stealCookies()&#x27;&gt;博客园&lt;/a&gt;&lt;/p&gt;&quot;;</span><br><span class="line">        System.out.println(&quot;unsafe: &quot; + unsafe);</span><br><span class="line">        String safe = Jsoup.clean(unsafe, Whitelist.basic());</span><br><span class="line">        System.out.println(&quot;safe: &quot; + safe);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Selenium使用"><a href="#Selenium使用" class="headerlink" title="Selenium使用"></a>Selenium使用</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/* selenium总共有八种定位方法</span><br><span class="line">     By.id()  通过id定位</span><br><span class="line"> By.name()  通过name 定位</span><br><span class="line"> By.xpath() 通过xpath定位</span><br><span class="line"> By.className() 通过className定位</span><br><span class="line"> By.cssSelector() 通过CSS 定位</span><br><span class="line"> By.linkText() 通过linkText</span><br><span class="line"> By.tagName() 通过tagName*/</span><br><span class="line">public static void test() throws InterruptedException&#123;</span><br><span class="line">       // 设置 chromedirver 的存放位置</span><br><span class="line">      System.getProperties().setProperty(&quot;webdriver.chrome.driver&quot;, &quot;F:/download/chromedriver_win32_1/chromedriver.exe&quot;);</span><br><span class="line">       // 设置浏览器参数</span><br><span class="line">       ChromeOptions chromeOptions = new ChromeOptions();</span><br><span class="line">       chromeOptions.addArguments(&quot;--no-sandbox&quot;);//禁用沙箱</span><br><span class="line">       chromeOptions.addArguments(&quot;--disable-dev-shm-usage&quot;);//禁用开发者shm</span><br><span class="line">       chromeOptions.addArguments(&quot;--headless&quot;); //无头浏览器，这样不会打开浏览器窗口</span><br><span class="line">       WebDriver driver = new ChromeDriver(chromeOptions);</span><br><span class="line">       //实现窗口最大化</span><br><span class="line">       driver.manage().window().maximize();</span><br><span class="line">       //打开百度首页</span><br><span class="line">       driver.get(&quot;https://www.baidu.com&quot;);</span><br><span class="line">       //通过ID，找到文本输入框</span><br><span class="line">       WebElement shurukuang = driver.findElement(By.id(&quot;kw&quot;));</span><br><span class="line">       //设置输入框的内容</span><br><span class="line">       shurukuang.sendKeys(&quot;战狼2&quot;);</span><br><span class="line">       //通过ID，找到搜索按钮</span><br><span class="line">       WebElement tijiao = driver.findElement(By.id(&quot;su&quot;));</span><br><span class="line">       //点击搜索按钮</span><br><span class="line">       tijiao.click();</span><br><span class="line">       //关闭浏览器</span><br><span class="line">       driver.close();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>JAVA</category>
       </categories>
   </entry>
   <entry>
@@ -3490,153 +3522,6 @@ upstream tomcats &#123;
       </categories>
   </entry>
   <entry>
-    <title>Redis缓存机制与应用</title>
-    <url>/2022/03/04/redis%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/</url>
-    <content><![CDATA[<p>Redis是目前最为主流的缓存技术之一，Redis基于内存操作从而拥有强大的性能，可以达到每秒10万次的请求，可以说是一款非常强大的缓存技术了。</p>
-<p>本文分为三部分：</p>
-<ul>
-<li>基础知识介绍</li>
-<li>常用技术讲解与缓存机制</li>
-<li>使用场景、缓存问题</li>
-</ul>
-<h1 id="基础知识介绍"><a href="#基础知识介绍" class="headerlink" title="基础知识介绍"></a>基础知识介绍</h1><p><strong>NoSQL概述</strong></p>
-<p>什么是NoSQL？</p>
-<p>NoSQL = Not Only SQL （不仅仅是SQL）</p>
-<p>关系型数据库：表格 ，行 ，列</p>
-<p>非关系型数据库：没有固定的查询语言，键值对存储，列存储，文档存储</p>
-<p>随着web2.0互联网的诞生！传统的关系型数据库很难对付web2.0时代！尤其是超大规模的高并发的社区。</p>
-<p>NoSQL 特点</p>
-<p>1、方便扩展</p>
-<p>2、大数据量高性能（Redis 一秒写8万次，读取11万）</p>
-<p>3、数据类型是多样性的</p>
-<p>NoSQL四大分类</p>
-<p>KV键值对：如Redis主要是用于内容缓存，主要是为了处理大量数据高访问负载</p>
-<p>文档型数据库：如MongoDBMongoDB 是一个基于分布式文件存储的数据库</p>
-<p>列存储数据库：如HBase分布式文件系统，以列簇式存储，将同一列数据存储在一起</p>
-<p><strong>Redis简介</strong></p>
-<p>Redis 是什么？</p>
-<p>Redis（Remote Dictionary Server )，即远程字典服务，它是一个开源的由ANSI C语言编写，性能优秀、支持网络、可持久化的Key-Value内存的NoSQL数据库!</p>
-<p>Redis 能干嘛？</p>
-<p>1、内存存储、持久化。</p>
-<p>2、效率高，可以用于高速缓存</p>
-<p>3、发布订阅系统</p>
-<p>4、计时器、浏览量！ 5、……..</p>
-<p><strong>Redis好处</strong></p>
-<p>主要从“高性能”和“高并发”这两点来介绍。</p>
-<p><img src="https://s2.loli.net/2022/03/04/W8gYo3ODqa4Cjxz.png" alt="image-20220304090814060"></p>
-<p>把数据库数据存入缓存，请求直接从内存中读取不用经过数据库，减轻数据库压力并且提升性能。</p>
-<h1 id="常用技术讲解与缓存机制"><a href="#常用技术讲解与缓存机制" class="headerlink" title="常用技术讲解与缓存机制"></a>常用技术讲解与缓存机制</h1><p>Redis主要有5种数据类型，包括String，List，Set，Zset，Hash，满足大部分的使用要求</p>
-<p><strong>String</strong></p>
-<ul>
-<li>String：session、对象、小文件（存文件流字节数组，比磁盘IO快）？</li>
-<li>int：秒杀、限流、计数</li>
-<li>bitmap：</li>
-</ul>
-<p>场景1.setbit和bitcount结合可以统计一年365天哪天有用户操作过，getbit可以获取某一天是否用户操作过</p>
-<p>场景2.权限控制，比如每个权限对应一个bit,哪个用户有该权限，该位为1，没权限为0</p>
-<p><strong>list</strong></p>
-<p>替换java jvm中的集合，可以作为数据共享，java的话多进程间不能共享或不好共享</p>
-<p><strong>hash</strong></p>
-<p>可以使redis key变少，类似对象。</p>
-<p>场景1.商品详情页、商品对应的收藏数、库存啊，放在redis中因为是原子性的，多地方访问都是实时性的</p>
-<p>场景2.聚合场景：一个对象在数据库中可能各个属性在不同表，可以聚合到redis同个对象中</p>
-<p><strong>set</strong></p>
-<p>set性能慢，可以单独redis实例</p>
-<p>场景1.SRANDMEMBER或者spop命令可以用来抽奖</p>
-<p>场景2.随机事件</p>
-<p>场景3.共同好友（交集）</p>
-<p>场景4.推荐好友（差集）</p>
-<p><strong>sorted_set</strong></p>
-<p>有序集合，数量少时底层是zipList压缩表，数据多了变skiplist</p>
-<p>场景1.排行榜</p>
-<p>场景2.有序事件</p>
-<p>场景3.评论分页</p>
-<p><img src="https://s2.loli.net/2022/03/04/xidTYmsfXCEIper.png" alt="image-20220304090918435"></p>
-<p>Redis 中除开最常用的 5 种数据类型之外，还有 3 种特殊的数据类型</p>
-<p><img src="https://s2.loli.net/2022/03/04/2pJnTr98Lycsfjv.png" alt="image-20220304090934388"></p>
-<p>可以通过help命令查询相关类型命令说明，比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help @string help @list</span><br></pre></td></tr></table></figure>
-
-<p>分享一下我记录的几种数据类型的基本命令</p>
-<p><strong>String</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置值 set key value   #获取值 get key   #获取值类型（set的都是String） type key    #获取值编码类型(raw/int) object encoding key   #获取字节长度(注意1字节等于8位bit) strlen key   #+1计算 #incr key</span><br></pre></td></tr></table></figure>
-
-<p><strong>bitmap</strong>（二进制操作）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置该值左边第几位为1，bit长度不是8位整数的补成8的整数长度,如 10会补成00000010，  0100000001 会补成0000000100000001 格式：setbit key offset value setbit k1 1 1  #01000000  对应ascii码为‘@’ get k1  #&#x27;@&#x27; </span><br><span class="line">#将k1值得第7位设置为1 setbit k1 7 1 #01000001 对应ascii码为‘A’ setbit k1 8 1 #0100000110000000    </span><br><span class="line">#获取对应位置bit的值（1或0） getbit key offset  getbit k1 7  #假如k1值位00000001，第7位返回1 getbit k1 5  #假如k1值位00000001，第5位返回0  </span><br><span class="line">#获取对应范围内1的数量（注意范围是字节区间，不是Bit位区间） bitcount key [start end] bitcount k1 #获取bit位为1的数量 相当于bitcount k1 0 -1（假如k1值位00001001，返回2，假如k1值位0000000100001001，返回3） bitcount k1 0 0 </span><br><span class="line">#获取第一个字节的8位Bit中有几位为1 （假如k1值位0000000100001001，返回1），注意是从左边开始数每8位为一个字节  #与、或、非、异或操作 bitop opration destkey key [key...]  </span><br><span class="line">#opration可选值（and/or/not）,destkey为计算完后要保存的新的key bitop and k3 k1 k2 #与运算，假如k1为01000000，k2为00000001，则结果k3为00000000 bitop or k3 k1 k2 </span><br><span class="line">#或运算，假如k1为01000000，k2为00000001，则结果k3为01000001 bitop xor k3 k1 k2 #异或运算，假如k1为01000000，k2为01000001，则结果k3为00000001 bitop not k3 k1  </span><br><span class="line">#非运算，假如k1为01000000，则结果k3为10111111</span><br></pre></td></tr></table></figure>
-
-<p><strong>list(链表)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#左边插入 格式：lpush key value [value...] lpush k1 1 2 3 4 5 6  #k1值为六项：6 5 4 3 2 1  #右边插入 格式：rpush key value [value...] rpush k1 1 2 3 4 5 6  #k1值为六项：1 2 3 4 5 6  #获取k1范围内的的值 lrange k1 0 -1   #获取第一个数（最左边的数）并删除该值（像栈操作） lpop key  #k1值为六项：1 2 3 4 5 6 那么会返回1，k1值变为2 3 4 5 6  #获取指定下标值 lindex key  #删除范围之外的数值 ltrim key start end  ltrim k1 0 3 #k1值为六项：1 2 3 4 5 6,那么k1只留下1 2 3 4</span><br></pre></td></tr></table></figure>
-
-<p><strong>hash（对象）</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置对象属性值 hset key field value hset user1 name huangtl #设置user1的name属性为huangtl hset user1 age  18 #设置user1的age属性为18  #单个属性获取 hget user1 age #18  #所有属性获取 hgetall user1 #返回属性、值、属性、值 ：name huangtl age 18  #获取对象所有key hkeys user1 #返回user1的所有属性:name age  #获取对象所有kvalue hvals user1 #返回user1的所有属性得值:huangtl 18</span><br></pre></td></tr></table></figure>
-
-<p><strong>set(无序、去重集合)</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#存入集合数据 sadd key member [member...] sadd k1 1 2 3 4 5 6 2 #两个2知会存一个2，集合内数值有1 2 3 4 5 6  #获取集合数据 SMEMBERS k1  #随机获取集合几条数据 SRANDMEMBER k1 [count] SRANDMEMBER k1 #随机获取一条 SRANDMEMBER k1 8 #随机获取8条数据，不会重复的数据，集合不足8条取集合全部数据 SRANDMEMBER k1 -8 #随机取8条，可能会重复的数据，集合不足8条也会取8条数据  #取数值并删除 spop key [count] spop key  #随机取一条并删除 spop key 5 #随机取5条并删除  #多个集合取并集 SUNION key [key...] SUNION k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3 4 5 6 7 8 9  #多个集合取交集 SINTER key [key...] SINTER k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回4 5 6   #多个集合取差集 sdiff key [key...] sdiff k1 k2 #按顺序取k1减掉k2中的值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3  sdiff k2 k1 #按顺序取k2不减掉k1中的值值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回7 8 9  </span><br></pre></td></tr></table></figure>
-
-<p><strong>sorted_set（有序集合）</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#新建key并添加元素 zadd key score member [score member...] zadd set1 1 apple 2 orange 3 banana  #返回范围内集合数据，按score分值正序 zrange set1 0 -1  #默认返回 apple orange banana zrange set1 -2 -1 #按正序取最后两名，返回 orange banana ZREVRANGE set1 0 1 #倒序返回前两名，返回  banana orange  #获取元素位置 zrank set1 apple #返回0，代表apple在第一位</span><br></pre></td></tr></table></figure>
-
-<p><strong>事务</strong></p>
-<p>Redis 事务本质：一组命令的集合！ 一个事务中的所有命令都会被序列化，在事务执行过程的中，会按照顺序执行！</p>
-<p>Redis单条命令式保存原子性的，但是事务不保证原子性！</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启事务 multi   #命令入队 set k1 v1  set k2 v2   get k2    # 执行事务 exec   </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://s2.loli.net/2022/03/04/rfCmtEXMW8ARndp.png" alt="image-20220304091437206"></p>
-<p><strong>Redis持久化</strong></p>
-<p>持久化就是把内存的数据写到磁盘中去，防止服务宕机了内存数据丢失。</p>
-<p>redis提供两种持久化机制 RDB（默认） 和 AOF 机制。</p>
-<p>1、RDB</p>
-<p>RDB是Redis DataBase缩写快照 ，默认的持久化方式。按照一定的时间将内存的数据以快照的形式保存到硬盘中，对应产生的数据文件为dump.rdb</p>
-<p><img src="https://s2.loli.net/2022/03/04/7tN6LkFedIGqW2m.png" alt="image-20220304091451985"></p>
-<p>触发机制</p>
-<p>（1）save的规则满足的情况下</p>
-<p>（2）执行 flushall 命令</p>
-<p>（3）退出redis，也会产生 rdb 文件</p>
-<p>2、AOF：</p>
-<p>持久化，AOF持久化(即Append Only File持久化)，则是将Redis执行的每次写命令记录到单独的日志文件中，当重启Redis会重新将持久化的日志中文件恢复数据。</p>
-<p><img src="https://s2.loli.net/2022/03/04/NhxGAjVYck7o81Q.png" alt="image-20220304091513278"></p>
-<p>AOF的三种策略（1）always （2）everysec(默认值) （3）no always</p>
-<p><img src="https://s2.loli.net/2022/03/04/Mtqgn9fL5PyhHYk.png" alt="image-20220304091602502"></p>
-<p>在应用时，要根据自己的实际需求，选择RDB或者AOF，其实，如果想要数据足够安全，可以两种方式都开启，但两种持久化方式同时进行IO操作，会严重影响服务器性能，因此有时候不得不做出选择。</p>
-<p><strong>redis主从复制</strong></p>
-<p>概念主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master/leader)，后者称为从节点(slave/follower)；数据的复制是单向的，只能由主节点到从节点。</p>
-<p>优点：（1）读写分离 （2）备份</p>
-<p>缺点：主服务器宕机，需要人工启动</p>
-<p><img src="https://s2.loli.net/2022/03/04/sSLV6CxMA2X7hJt.png" alt="image-20220304091623236"></p>
-<p><strong>哨兵模式</strong></p>
-<p>哨兵模式是一种特殊的模式，首先Redis提供了哨兵的命令，哨兵是一个独立的进程，作为进程，它会独立运行。其原理是哨兵通过发送命令，等待Redis服务器响应，从而监控运行的多个Redis实例。</p>
-<p><img src="https://s2.loli.net/2022/03/04/BoLwWKcVXkvPEjD.png" alt="image-20220304091641893"></p>
-<h1 id="使用场景、缓存问题"><a href="#使用场景、缓存问题" class="headerlink" title="使用场景、缓存问题"></a>使用场景、缓存问题</h1><p>1、热点数据的缓存</p>
-<p>公司项目用户量达到一定数量的时候，这时合理的利用缓存不仅能够提升项目访问速度，还能大大降低数据库的压力。</p>
-<p>2、业务上的统计，排行榜</p>
-<p>为了保证数据实时效，比如项目的访问量，每次浏览都得给+1，并发量高时如果每次都请求数据库操作无疑是种挑战和压力</p>
-<p>3、限时业务的运用</p>
-<p>每日签到、限制登录功能等业务场景</p>
-<p>4、消息队列</p>
-<p>提供基本的发布订阅功能，但不像消息队列那种专业级别</p>
-<p><strong>缓存雪崩</strong></p>
-<p>原因：大量redis key在同一时间失效，导致大量请求访问数据库，数据库服务器宕机，线上服务大面积报错。</p>
-<p>解决办法：</p>
-<p>（1）redis高可用</p>
-<p>（2）加锁排队，限流降级</p>
-<p>（3）缓存失效时间均匀分布</p>
-<p><img src="https://s2.loli.net/2022/03/04/W5leSDp8nbOHsXu.png" alt="image-20220304091719539"></p>
-<p><strong>缓存穿透</strong></p>
-<p>原因：指缓存和数据库中都没有的数据，导致所有的请求都落到数据库上，造成数据库短时间内承受大量请求而崩掉。</p>
-<p>解决办法： （1）接口层增加校验 （2）采用布隆过滤器</p>
-<p><img src="https://s2.loli.net/2022/03/04/AQEgvFThdrxGH7R.png" alt="image-20220304091759459"></p>
-<p><strong>缓存击穿</strong></p>
-<p>原因：指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。比如微博热搜。</p>
-<p>解决办法：</p>
-<p>（1）设置热点数据缓存没有过期时间</p>
-<p>（2）加互斥锁</p>
-<p><img src="https://s2.loli.net/2022/03/04/15FEWkiSNftRGmJ.png" alt="image-20220304091829212"></p>
-]]></content>
-      <categories>
-        <category>redis</category>
-      </categories>
-  </entry>
-  <entry>
     <title>redis学习记录</title>
     <url>/2022/01/10/redis%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>我们现在的项目架构中，基本上是Web服务器(Tomcat)和数据库独立部署，独占服务器资源，随着用户数的增长，并发读写数据库，会加大数据库访问压力，导致性能的下降，严重时直接导致系统宕机，例如：</p>
@@ -4046,6 +3931,153 @@ appendfsync everysec //每秒钟写入磁盘一次，在性能和持久化方面
 <h4 id=""><a href="#" class="headerlink" title=""></a></h4>]]></content>
       <categories>
         <category>数据库</category>
+        <category>redis</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Redis缓存机制与应用</title>
+    <url>/2022/03/04/redis%E7%90%86%E8%AE%BA%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<p>Redis是目前最为主流的缓存技术之一，Redis基于内存操作从而拥有强大的性能，可以达到每秒10万次的请求，可以说是一款非常强大的缓存技术了。</p>
+<p>本文分为三部分：</p>
+<ul>
+<li>基础知识介绍</li>
+<li>常用技术讲解与缓存机制</li>
+<li>使用场景、缓存问题</li>
+</ul>
+<h1 id="基础知识介绍"><a href="#基础知识介绍" class="headerlink" title="基础知识介绍"></a>基础知识介绍</h1><p><strong>NoSQL概述</strong></p>
+<p>什么是NoSQL？</p>
+<p>NoSQL = Not Only SQL （不仅仅是SQL）</p>
+<p>关系型数据库：表格 ，行 ，列</p>
+<p>非关系型数据库：没有固定的查询语言，键值对存储，列存储，文档存储</p>
+<p>随着web2.0互联网的诞生！传统的关系型数据库很难对付web2.0时代！尤其是超大规模的高并发的社区。</p>
+<p>NoSQL 特点</p>
+<p>1、方便扩展</p>
+<p>2、大数据量高性能（Redis 一秒写8万次，读取11万）</p>
+<p>3、数据类型是多样性的</p>
+<p>NoSQL四大分类</p>
+<p>KV键值对：如Redis主要是用于内容缓存，主要是为了处理大量数据高访问负载</p>
+<p>文档型数据库：如MongoDBMongoDB 是一个基于分布式文件存储的数据库</p>
+<p>列存储数据库：如HBase分布式文件系统，以列簇式存储，将同一列数据存储在一起</p>
+<p><strong>Redis简介</strong></p>
+<p>Redis 是什么？</p>
+<p>Redis（Remote Dictionary Server )，即远程字典服务，它是一个开源的由ANSI C语言编写，性能优秀、支持网络、可持久化的Key-Value内存的NoSQL数据库!</p>
+<p>Redis 能干嘛？</p>
+<p>1、内存存储、持久化。</p>
+<p>2、效率高，可以用于高速缓存</p>
+<p>3、发布订阅系统</p>
+<p>4、计时器、浏览量！ 5、……..</p>
+<p><strong>Redis好处</strong></p>
+<p>主要从“高性能”和“高并发”这两点来介绍。</p>
+<p><img src="https://s2.loli.net/2022/03/04/W8gYo3ODqa4Cjxz.png" alt="image-20220304090814060"></p>
+<p>把数据库数据存入缓存，请求直接从内存中读取不用经过数据库，减轻数据库压力并且提升性能。</p>
+<h1 id="常用技术讲解与缓存机制"><a href="#常用技术讲解与缓存机制" class="headerlink" title="常用技术讲解与缓存机制"></a>常用技术讲解与缓存机制</h1><p>Redis主要有5种数据类型，包括String，List，Set，Zset，Hash，满足大部分的使用要求</p>
+<p><strong>String</strong></p>
+<ul>
+<li>String：session、对象、小文件（存文件流字节数组，比磁盘IO快）？</li>
+<li>int：秒杀、限流、计数</li>
+<li>bitmap：</li>
+</ul>
+<p>场景1.setbit和bitcount结合可以统计一年365天哪天有用户操作过，getbit可以获取某一天是否用户操作过</p>
+<p>场景2.权限控制，比如每个权限对应一个bit,哪个用户有该权限，该位为1，没权限为0</p>
+<p><strong>list</strong></p>
+<p>替换java jvm中的集合，可以作为数据共享，java的话多进程间不能共享或不好共享</p>
+<p><strong>hash</strong></p>
+<p>可以使redis key变少，类似对象。</p>
+<p>场景1.商品详情页、商品对应的收藏数、库存啊，放在redis中因为是原子性的，多地方访问都是实时性的</p>
+<p>场景2.聚合场景：一个对象在数据库中可能各个属性在不同表，可以聚合到redis同个对象中</p>
+<p><strong>set</strong></p>
+<p>set性能慢，可以单独redis实例</p>
+<p>场景1.SRANDMEMBER或者spop命令可以用来抽奖</p>
+<p>场景2.随机事件</p>
+<p>场景3.共同好友（交集）</p>
+<p>场景4.推荐好友（差集）</p>
+<p><strong>sorted_set</strong></p>
+<p>有序集合，数量少时底层是zipList压缩表，数据多了变skiplist</p>
+<p>场景1.排行榜</p>
+<p>场景2.有序事件</p>
+<p>场景3.评论分页</p>
+<p><img src="https://s2.loli.net/2022/03/04/xidTYmsfXCEIper.png" alt="image-20220304090918435"></p>
+<p>Redis 中除开最常用的 5 种数据类型之外，还有 3 种特殊的数据类型</p>
+<p><img src="https://s2.loli.net/2022/03/04/2pJnTr98Lycsfjv.png" alt="image-20220304090934388"></p>
+<p>可以通过help命令查询相关类型命令说明，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help @string help @list</span><br></pre></td></tr></table></figure>
+
+<p>分享一下我记录的几种数据类型的基本命令</p>
+<p><strong>String</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置值 set key value   #获取值 get key   #获取值类型（set的都是String） type key    #获取值编码类型(raw/int) object encoding key   #获取字节长度(注意1字节等于8位bit) strlen key   #+1计算 #incr key</span><br></pre></td></tr></table></figure>
+
+<p><strong>bitmap</strong>（二进制操作）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置该值左边第几位为1，bit长度不是8位整数的补成8的整数长度,如 10会补成00000010，  0100000001 会补成0000000100000001 格式：setbit key offset value setbit k1 1 1  #01000000  对应ascii码为‘@’ get k1  #&#x27;@&#x27; </span><br><span class="line">#将k1值得第7位设置为1 setbit k1 7 1 #01000001 对应ascii码为‘A’ setbit k1 8 1 #0100000110000000    </span><br><span class="line">#获取对应位置bit的值（1或0） getbit key offset  getbit k1 7  #假如k1值位00000001，第7位返回1 getbit k1 5  #假如k1值位00000001，第5位返回0  </span><br><span class="line">#获取对应范围内1的数量（注意范围是字节区间，不是Bit位区间） bitcount key [start end] bitcount k1 #获取bit位为1的数量 相当于bitcount k1 0 -1（假如k1值位00001001，返回2，假如k1值位0000000100001001，返回3） bitcount k1 0 0 </span><br><span class="line">#获取第一个字节的8位Bit中有几位为1 （假如k1值位0000000100001001，返回1），注意是从左边开始数每8位为一个字节  #与、或、非、异或操作 bitop opration destkey key [key...]  </span><br><span class="line">#opration可选值（and/or/not）,destkey为计算完后要保存的新的key bitop and k3 k1 k2 #与运算，假如k1为01000000，k2为00000001，则结果k3为00000000 bitop or k3 k1 k2 </span><br><span class="line">#或运算，假如k1为01000000，k2为00000001，则结果k3为01000001 bitop xor k3 k1 k2 #异或运算，假如k1为01000000，k2为01000001，则结果k3为00000001 bitop not k3 k1  </span><br><span class="line">#非运算，假如k1为01000000，则结果k3为10111111</span><br></pre></td></tr></table></figure>
+
+<p><strong>list(链表)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#左边插入 格式：lpush key value [value...] lpush k1 1 2 3 4 5 6  #k1值为六项：6 5 4 3 2 1  #右边插入 格式：rpush key value [value...] rpush k1 1 2 3 4 5 6  #k1值为六项：1 2 3 4 5 6  #获取k1范围内的的值 lrange k1 0 -1   #获取第一个数（最左边的数）并删除该值（像栈操作） lpop key  #k1值为六项：1 2 3 4 5 6 那么会返回1，k1值变为2 3 4 5 6  #获取指定下标值 lindex key  #删除范围之外的数值 ltrim key start end  ltrim k1 0 3 #k1值为六项：1 2 3 4 5 6,那么k1只留下1 2 3 4</span><br></pre></td></tr></table></figure>
+
+<p><strong>hash（对象）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#设置对象属性值 hset key field value hset user1 name huangtl #设置user1的name属性为huangtl hset user1 age  18 #设置user1的age属性为18  #单个属性获取 hget user1 age #18  #所有属性获取 hgetall user1 #返回属性、值、属性、值 ：name huangtl age 18  #获取对象所有key hkeys user1 #返回user1的所有属性:name age  #获取对象所有kvalue hvals user1 #返回user1的所有属性得值:huangtl 18</span><br></pre></td></tr></table></figure>
+
+<p><strong>set(无序、去重集合)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#存入集合数据 sadd key member [member...] sadd k1 1 2 3 4 5 6 2 #两个2知会存一个2，集合内数值有1 2 3 4 5 6  #获取集合数据 SMEMBERS k1  #随机获取集合几条数据 SRANDMEMBER k1 [count] SRANDMEMBER k1 #随机获取一条 SRANDMEMBER k1 8 #随机获取8条数据，不会重复的数据，集合不足8条取集合全部数据 SRANDMEMBER k1 -8 #随机取8条，可能会重复的数据，集合不足8条也会取8条数据  #取数值并删除 spop key [count] spop key  #随机取一条并删除 spop key 5 #随机取5条并删除  #多个集合取并集 SUNION key [key...] SUNION k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3 4 5 6 7 8 9  #多个集合取交集 SINTER key [key...] SINTER k1 k2 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回4 5 6   #多个集合取差集 sdiff key [key...] sdiff k1 k2 #按顺序取k1减掉k2中的值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回1 2 3  sdiff k2 k1 #按顺序取k2不减掉k1中的值值后剩下的值 #假如k1为1 2 3 4 5 6 ，k2为4 5 6 7 8 9，则返回7 8 9  </span><br></pre></td></tr></table></figure>
+
+<p><strong>sorted_set（有序集合）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#新建key并添加元素 zadd key score member [score member...] zadd set1 1 apple 2 orange 3 banana  #返回范围内集合数据，按score分值正序 zrange set1 0 -1  #默认返回 apple orange banana zrange set1 -2 -1 #按正序取最后两名，返回 orange banana ZREVRANGE set1 0 1 #倒序返回前两名，返回  banana orange  #获取元素位置 zrank set1 apple #返回0，代表apple在第一位</span><br></pre></td></tr></table></figure>
+
+<p><strong>事务</strong></p>
+<p>Redis 事务本质：一组命令的集合！ 一个事务中的所有命令都会被序列化，在事务执行过程的中，会按照顺序执行！</p>
+<p>Redis单条命令式保存原子性的，但是事务不保证原子性！</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启事务 multi   #命令入队 set k1 v1  set k2 v2   get k2    # 执行事务 exec   </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/03/04/rfCmtEXMW8ARndp.png" alt="image-20220304091437206"></p>
+<p><strong>Redis持久化</strong></p>
+<p>持久化就是把内存的数据写到磁盘中去，防止服务宕机了内存数据丢失。</p>
+<p>redis提供两种持久化机制 RDB（默认） 和 AOF 机制。</p>
+<p>1、RDB</p>
+<p>RDB是Redis DataBase缩写快照 ，默认的持久化方式。按照一定的时间将内存的数据以快照的形式保存到硬盘中，对应产生的数据文件为dump.rdb</p>
+<p><img src="https://s2.loli.net/2022/03/04/7tN6LkFedIGqW2m.png" alt="image-20220304091451985"></p>
+<p>触发机制</p>
+<p>（1）save的规则满足的情况下</p>
+<p>（2）执行 flushall 命令</p>
+<p>（3）退出redis，也会产生 rdb 文件</p>
+<p>2、AOF：</p>
+<p>持久化，AOF持久化(即Append Only File持久化)，则是将Redis执行的每次写命令记录到单独的日志文件中，当重启Redis会重新将持久化的日志中文件恢复数据。</p>
+<p><img src="https://s2.loli.net/2022/03/04/NhxGAjVYck7o81Q.png" alt="image-20220304091513278"></p>
+<p>AOF的三种策略（1）always （2）everysec(默认值) （3）no always</p>
+<p><img src="https://s2.loli.net/2022/03/04/Mtqgn9fL5PyhHYk.png" alt="image-20220304091602502"></p>
+<p>在应用时，要根据自己的实际需求，选择RDB或者AOF，其实，如果想要数据足够安全，可以两种方式都开启，但两种持久化方式同时进行IO操作，会严重影响服务器性能，因此有时候不得不做出选择。</p>
+<p><strong>redis主从复制</strong></p>
+<p>概念主从复制，是指将一台Redis服务器的数据，复制到其他的Redis服务器。前者称为主节点(master/leader)，后者称为从节点(slave/follower)；数据的复制是单向的，只能由主节点到从节点。</p>
+<p>优点：（1）读写分离 （2）备份</p>
+<p>缺点：主服务器宕机，需要人工启动</p>
+<p><img src="https://s2.loli.net/2022/03/04/sSLV6CxMA2X7hJt.png" alt="image-20220304091623236"></p>
+<p><strong>哨兵模式</strong></p>
+<p>哨兵模式是一种特殊的模式，首先Redis提供了哨兵的命令，哨兵是一个独立的进程，作为进程，它会独立运行。其原理是哨兵通过发送命令，等待Redis服务器响应，从而监控运行的多个Redis实例。</p>
+<p><img src="https://s2.loli.net/2022/03/04/BoLwWKcVXkvPEjD.png" alt="image-20220304091641893"></p>
+<h1 id="使用场景、缓存问题"><a href="#使用场景、缓存问题" class="headerlink" title="使用场景、缓存问题"></a>使用场景、缓存问题</h1><p>1、热点数据的缓存</p>
+<p>公司项目用户量达到一定数量的时候，这时合理的利用缓存不仅能够提升项目访问速度，还能大大降低数据库的压力。</p>
+<p>2、业务上的统计，排行榜</p>
+<p>为了保证数据实时效，比如项目的访问量，每次浏览都得给+1，并发量高时如果每次都请求数据库操作无疑是种挑战和压力</p>
+<p>3、限时业务的运用</p>
+<p>每日签到、限制登录功能等业务场景</p>
+<p>4、消息队列</p>
+<p>提供基本的发布订阅功能，但不像消息队列那种专业级别</p>
+<p><strong>缓存雪崩</strong></p>
+<p>原因：大量redis key在同一时间失效，导致大量请求访问数据库，数据库服务器宕机，线上服务大面积报错。</p>
+<p>解决办法：</p>
+<p>（1）redis高可用</p>
+<p>（2）加锁排队，限流降级</p>
+<p>（3）缓存失效时间均匀分布</p>
+<p><img src="https://s2.loli.net/2022/03/04/W5leSDp8nbOHsXu.png" alt="image-20220304091719539"></p>
+<p><strong>缓存穿透</strong></p>
+<p>原因：指缓存和数据库中都没有的数据，导致所有的请求都落到数据库上，造成数据库短时间内承受大量请求而崩掉。</p>
+<p>解决办法： （1）接口层增加校验 （2）采用布隆过滤器</p>
+<p><img src="https://s2.loli.net/2022/03/04/AQEgvFThdrxGH7R.png" alt="image-20220304091759459"></p>
+<p><strong>缓存击穿</strong></p>
+<p>原因：指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力。比如微博热搜。</p>
+<p>解决办法：</p>
+<p>（1）设置热点数据缓存没有过期时间</p>
+<p>（2）加互斥锁</p>
+<p><img src="https://s2.loli.net/2022/03/04/15FEWkiSNftRGmJ.png" alt="image-20220304091829212"></p>
+]]></content>
+      <categories>
         <category>redis</category>
       </categories>
   </entry>
@@ -6644,15 +6676,6 @@ Date使用:
       </categories>
   </entry>
   <entry>
-    <title>达内老师链接</title>
-    <url>/2021/12/23/%E8%BE%BE%E5%86%85%E8%80%81%E5%B8%88%E9%93%BE%E6%8E%A5/</url>
-    <content><![CDATA[<p><a href="https://blog.csdn.net/langlangKing520/article/details/121034505?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164022271416780271545027%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=164022271416780271545027&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-121034505.pc_search_result_cache&utm_term=cgblpx%E5%88%98%E4%BD%A9%E9%9C%9E&spm=1018.2226.3001.4187">所有老师链接</a></p>
-]]></content>
-      <categories>
-        <category>website</category>
-      </categories>
-  </entry>
-  <entry>
     <title>FFmpeg压缩视频</title>
     <url>/2022/02/16/%E8%A7%86%E9%A2%91%E5%8E%8B%E5%88%B6/</url>
     <content><![CDATA[<h1 id="FFmpeg压制bilibili视频随便写写"><a href="#FFmpeg压制bilibili视频随便写写" class="headerlink" title="FFmpeg压制bilibili视频随便写写"></a>FFmpeg压制bilibili视频随便写写</h1><p>先看下压制要求</p>
@@ -6761,6 +6784,15 @@ Date使用:
 ]]></content>
       <categories>
         <category>FFmpeg</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>达内老师链接</title>
+    <url>/2021/12/23/%E8%BE%BE%E5%86%85%E8%80%81%E5%B8%88%E9%93%BE%E6%8E%A5/</url>
+    <content><![CDATA[<p><a href="https://blog.csdn.net/langlangKing520/article/details/121034505?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164022271416780271545027%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=164022271416780271545027&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-121034505.pc_search_result_cache&utm_term=cgblpx%E5%88%98%E4%BD%A9%E9%9C%9E&spm=1018.2226.3001.4187">所有老师链接</a></p>
+]]></content>
+      <categories>
+        <category>website</category>
       </categories>
   </entry>
   <entry>
