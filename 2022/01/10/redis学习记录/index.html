@@ -273,37 +273,105 @@
 <h3 id="Controller逻辑对象设计及实现"><a href="#Controller逻辑对象设计及实现" class="headerlink" title="Controller逻辑对象设计及实现"></a>Controller逻辑对象设计及实现</h3><p>第一步:定义Controller处理,处理客户端对菜单数据的请求操作,例如:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package com.jt.controller;</span><br><span class="line">import com.jt.pojo.Menu;</span><br><span class="line">import com.jt.service.MenuService;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.beans.factory.annotation.Qualifier;</span><br><span class="line">import org.springframework.web.bind.annotation.*;</span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/menu&quot;)</span><br><span class="line">public class MenuController&#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    @Qualifier(&quot;defaultMenuService&quot;)</span><br><span class="line">    private MenuService menuService;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/&#123;id&#125;&quot;)</span><br><span class="line">    public Menu doSelectById(@PathVariable(&quot;id&quot;) Long id)&#123;</span><br><span class="line">        return menuService.selectById(id);</span><br><span class="line">    &#125;</span><br><span class="line">    @PutMapping</span><br><span class="line">    public String doUpdate(@RequestBody Menu menu)&#123;</span><br><span class="line">         menuService.updateMenu(menu);</span><br><span class="line">         return &quot;update ok&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    @PostMapping</span><br><span class="line">    public String doInsert(@RequestBody Menu menu)&#123;</span><br><span class="line">        menuService.insertMenu(menu);</span><br><span class="line">        return &quot;insert ok&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="持久化存储"><a href="#持久化存储" class="headerlink" title="持久化存储"></a>持久化存储</h1><p>redis.conf文件配置:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置准备工作</span><br><span class="line">第一步:从redis.io官方下载对应版本的redis.conf文件,地址</span><br><span class="line">https://redis.io/topics/config/</span><br><span class="line">第二步:停止redis并删除挂载目录下(/usr/local/docker/redis01/conf)的redis.conf配置文件.</span><br><span class="line">第三步:将下载的redis.conf文件拷贝到redis挂载目录(/usr/local/docker/redis01/conf)</span><br><span class="line">第四步:基于vim打开redis.conf文件,然后注释 bind 127.0.0.1这一行,并修改protected-mode的值修改为no.(java连接redis需要改这两项目)</span><br><span class="line">第五步:重启redis服务,并检查启动日志(docker logs 容器id)</span><br></pre></td></tr></table></figure>
-
+<h1 id="持久化存储"><a href="#持久化存储" class="headerlink" title="持久化存储"></a>持久化存储</h1><h3 id="Redis-提供了2个不同形式的持久化方式。"><a href="#Redis-提供了2个不同形式的持久化方式。" class="headerlink" title="Redis 提供了2个不同形式的持久化方式。"></a>Redis 提供了2个不同形式的持久化方式。</h3><p>l RDB（Redis DataBase）</p>
+<p>l AOF（Append Of File）</p>
+<p>redis.conf文件配置:</p>
+<p>Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入到 一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。 整个过程中，主进程是不进行任何IO操作的，这就确保了极高的性能 如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。<em><strong>*RDB的缺点是*</strong></em>****最后一次持久化后的数据可能丢失****。</p>
+<h1 id="RDB持久化流程"><a href="#RDB持久化流程" class="headerlink" title="RDB持久化流程"></a>RDB持久化流程</h1><p><img src="https://s2.loli.net/2022/03/24/MVUgDk7i4KQFjHA.png" alt="image-20220324164743407"></p>
+<h1 id="dump-rdb文件"><a href="#dump-rdb文件" class="headerlink" title="dump.rdb文件"></a>dump.rdb文件</h1><p>在redis.conf中配置文件名称，默认为dump.rdb</p>
+<p><img src="https://s2.loli.net/2022/03/24/RZYnehbpftL84NB.png" alt="image-20220324165006989"></p>
+<p><em><strong>*配置位置*</strong></em></p>
+<p>rdb文件的保存路径，也可以修改。默认为Redis启动时命令行所在的目录下</p>
+<p>dir “/myredis/“</p>
+<p><img src="https://s2.loli.net/2022/03/24/cdDwmlnpqH7oXR9.png" alt="image-20220324165043012"></p>
+<p>*<strong>如何触发RDB快照；保持策略*</strong></p>
+<h1 id="配置文件中默认的快照配置"><a href="#配置文件中默认的快照配置" class="headerlink" title="配置文件中默认的快照配置"></a>配置文件中默认的快照配置</h1><p><img src="https://s2.loli.net/2022/03/24/Ol9jwmvD8dKGtb5.png" alt="image-20220324165130243"></p>
 <h2 id="RDB方式配置"><a href="#RDB方式配置" class="headerlink" title="RDB方式配置"></a>RDB方式配置</h2><p>Snapshotting</p>
-<blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">下面介绍详细的快照保存过程：</span><br><span class="line">        1.redis 调用 fork,现在有了子进程和父进程。</span><br><span class="line">        2. 父进程继续处理 client 请求，子进程负责将内存内容写入到临时文件。由于 os 的实时复制机制（ copy on write)父子进程会共享相同的物理页面，当父进程处理写请求时 os 会为父进程要修改的页面创建副本，而不是写共享的页面。所以子进程地址空间内的数据是 fork时刻整个数据库的一个快照。</span><br><span class="line">        3.当子进程将快照写入临时文件完毕后，用临时文件替换原来的快照文件，然后子进程退出。client 也可以使用 save 或者 bgsave 命令通知 redis 做一次快照持久化。 save 操作是在主线程中保存快照的，由于 redis 是用一个主线程来处理所有 client 的请求，这种方式会阻塞所有client 请求。所以不推荐使用。另一点需要注意的是，每次快照持久化都是将内存数据完整写入到磁盘一次，并不是增量的只同步变更数据。如果数据量大的话，而且写操作比较多，必然会引起大量的磁盘 io 操作，可能会严重影响性能。</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>AOF方式</p>
-<pre><code>    由于快照方式是在一定间隔时间做一次的，所以如果 redis 意外 down 掉的话，就会丢失最后一次快照后的所有修改。如果应用要求不能丢失任何修改的话，可以采用 aof 持久化方式。下面介绍 Append-only file:aof 比快照方式有更好的持久化性，是由于在使用 aof 持久化方式时,redis 会将每一个收到的写命令都通过 write 函数追加到文件中(默认是 appendonly.aof)。当 redis 重启时会通过重新执行文件中保存的写命令来在内存中重建整个数据库的内容。当然由于 os 会在内核中缓存 write 做的修改，所以可能不是立即写到磁盘上。这样 aof 方式的持久化也还是有可能会丢失部分修改。不过我们可以通过配置文件告诉 redis 我们想要通过 fsync 函数强制 os 写入到磁盘的时机。有三种方式如下（默认是：每秒 fsync 一次）
-    appendonly yes //启用 aof 持久化方式
-# appendfsync always //收到写命令就立即写入磁盘，最慢，但是保证完全的持久化
-appendfsync everysec //每秒钟写入磁盘一次，在性能和持久化方面做了很好的折中
-# appendfsync no //完全依赖 os，性能最好,持久化没保证
-        aof 的方式也同时带来了另一个问题。持久化文件会变的越来越大。例如我们调用 incr test命令 100 次，文件中必须保存全部的 100 条命令，其实有 99 条都是多余的。因为要恢复数据库的状态其实文件中保存一条 set test 100 就够了。为了压缩 aof 的持久化文件。 redis 提供了 bgrewriteaof 命令。收到此命令 redis 将使用与快照类似的方式将内存中的数据以命令的方式保存到临时文件中，最后替换原来的文件。
-</code></pre>
-<p>快照是默认的持久化方式。RDB方式的持久化是默认开启的，也可按规则自己配置，例如，打开redis.conf文件，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 这里表示每隔60s，如果有超过1000个key发生了变更，那么就生成一个新的dump.rdb文件，就是当前redis内存中完整的数据快照，这个操作也被称之为snapshotting(快照)。</span><br><span class="line">save 60 1000</span><br><span class="line"># 持久化 rdb文件遇到问题时，主进程是否接受写入，yes 表示停止写入，如果是no 表示redis继续提供服务。</span><br><span class="line">stop-writes-on-bgsave-error yes</span><br><span class="line"># 在进行快照镜像时,是否进行压缩。yes:压缩，但是需要一些cpu的消耗。no:不压缩，需要更多的磁盘空间。</span><br><span class="line">rdbcompression yes</span><br><span class="line"># 一个CRC64的校验就被放在了文件末尾，当存储或者加载rbd文件的时候会有一个10%左右的性能下降，为了达到性能的最大化，你可以关掉这个配置项。</span><br><span class="line">rdbchecksum yes</span><br><span class="line"># 快照的文件名</span><br><span class="line">dbfilename dump.rdb</span><br><span class="line"># 存放快照的目录</span><br><span class="line">dir /var/lib/redis</span><br></pre></td></tr></table></figure>
-
-<p>手动调用save(同步保存)或者bgsave(异步保存)执行rdb快照生成.然后杀掉redis进程,再重启检测是否还有刚刚保存的数据.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set id 100</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set name jack</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; save  #阻塞式持久化</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set address beijing</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; bgsave  #异步方式持久化</span><br><span class="line">Background saving started</span><br></pre></td></tr></table></figure>
-
-<p>RDB持久化机制有哪些优点？</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">第一：RDB会生成多个数据文件，每个数据文件都代表了某一个时刻中redis的数据，这种多个数据文件的方式，非常适合做冷备，可以将这种完整的数据文件发送到一些远程云服务上去，在国内可以是阿里云的ODPS分布式存储上，以预定好的备份策略来定期备份redis中的数据.</span><br><span class="line">第二：RDB对redis对外提供的读写服务，影响非常小，可以让redis保持高性能，因为redis主进程只需要fork一个子进程，让子进程执行磁盘IO操作来进行RDB持久化即可。</span><br><span class="line">第三：相对于AOF持久化机制来说，直接基于RDB数据文件来重启和恢复redis进程，更加快速。</span><br></pre></td></tr></table></figure>
-
-<h2 id="Aof方式数据持久化"><a href="#Aof方式数据持久化" class="headerlink" title="Aof方式数据持久化"></a>Aof方式数据持久化</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Aof方式是通过记录写操作日志的方式,记录redis数据的一种持久化机制,这个机制默认是关闭的。</p>
-<h3 id="AOF方式配置"><a href="#AOF方式配置" class="headerlink" title="AOF方式配置"></a>AOF方式配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 是否开启AOF，默认关闭</span><br><span class="line">appendonly yes</span><br><span class="line"># 指定 AOF 文件名</span><br><span class="line">appendfilename appendonly.aof</span><br><span class="line"># Redis支持三种刷写模式：</span><br><span class="line"># appendfsync always #每次收到写命令就立即强制写入磁盘，类似MySQL的sync_binlog=1,是最安全的。但该模式下速度也是最慢的，一般不推荐使用。</span><br><span class="line">appendfsync everysec #每秒钟强制写入磁盘一次，在性能和持久化方面做平衡，推荐该方式。</span><br><span class="line"># appendfsync no     #完全依赖OS的写入，一般为30秒左右一次，性能最好但是持久化最没有保证，不推荐。</span><br><span class="line">    </span><br><span class="line">#在日志重写时，不进行命令追加操作，而只是将其放在缓冲区里，避免与命令的追加造成DISK IO上的冲突。</span><br><span class="line">#设置为yes表示rewrite期间对新写操作不fsync,暂时存在内存中,等rewrite完成后再写入，默认为no，建议yes</span><br><span class="line">no-appendfsync-on-rewrite yes</span><br><span class="line">#当前AOF文件大小是上次日志重写得到AOF文件大小的二倍时，自动启动新的日志重写过程。</span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">#当前AOF文件启动新的日志重写过程的最小值，避免刚刚启动Reids时由于文件尺寸较小导致频繁的重写。</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br></pre></td></tr></table></figure>
-
-<h3 id="AOF方式持久化实践"><a href="#AOF方式持久化实践" class="headerlink" title="AOF方式持久化实践"></a>AOF方式持久化实践</h3><p>第一：打开AOF的开关，启用AOF持久化<br>第二：写入一些数据，观察AOF文件（appendonly.aof）中的日志内容<br>第三：kill -9杀掉redis进程，重新启动redis进程，发现数据被恢复回来了，就是从AOF文件中恢复回来的，redis进程启动的时候，直接就会从appendonly.aof中加载所有的日志，把内存中的数据恢复回来。</p>
+<p><em><strong>*命令*</strong></em><em><strong>*save VS bgsave*</strong></em></p>
+<p>save ：save时只管保存，其它不管，全部阻塞。手动保存。不建议。</p>
+<p><em><strong>*bgsave：*</strong></em><em><strong>*Redis*</strong></em><em><strong>*会在后台异步进行快照操作， 快照同时还可以响应客户端请求。*</strong></em></p>
+<p>可以通过lastsave 命令获取最后一次成功执行快照的时间</p>
+<p><em><strong>*flushall*</strong></em><em><strong>*命令*</strong></em></p>
+<p>执行flushall命令，也会产生dump.rdb文件，但里面是空的，无意义</p>
+<p><em><strong>*###SNAPSHOTTING*</strong></em><em><strong>*快照*</strong></em><em><strong>*###*</strong></em></p>
+<p><em><strong>*Save*</strong></em></p>
+<p>格式：save 秒钟 写操作次数</p>
+<p>RDB是整个内存的压缩过的Snapshot，RDB的数据结构，可以配置复合的快照触发条件，</p>
+<p><em><strong>*默认是1分钟内改了*</strong></em><em><strong>*1*</strong></em><em><strong>*万次，或*</strong></em><em><strong>*5*</strong></em><em><strong>*分钟内改了*</strong></em><em><strong>*10*</strong></em><em><strong>*次，或*</strong></em><em><strong>*15*</strong></em><em><strong>*分钟内改了*</strong></em><em><strong>*1*</strong></em><em><strong>*次。*</strong></em></p>
+<p>禁用</p>
+<p>不设置save指令，或者给save传入空字符串</p>
+<p><em><strong>*stop-writes-on-bgsave-error*</strong></em></p>
+<p><img src="https://s2.loli.net/2022/03/24/VUL7dr3GzuH8W6M.jpg" alt="img"> </p>
+<p>当Redis无法写入磁盘的话，直接关掉Redis的写操作。推荐yes.</p>
+<p><em><strong>*rdbcompression*</strong></em> <em><strong>*压缩文件*</strong></em></p>
+<p><img src="https://s2.loli.net/2022/03/24/cQLCXPVN14Mtlpk.jpg" alt="img"> </p>
+<p>对于存储到磁盘中的快照，可以设置是否进行压缩存储。如果是的话，redis会采用LZF算法进行压缩。</p>
+<p>如果你不想消耗CPU来进行压缩的话，可以设置为关闭此功能。推荐yes.</p>
+<p><em><strong>*rdbchecksum*</strong></em> <em><strong>*检查完整性*</strong></em></p>
+<p><img src="https://s2.loli.net/2022/03/24/iAljqv6h3JXcwY4.jpg" alt="img"> </p>
+<p>在存储快照后，还可以让redis使用CRC64算法来进行数据校验，</p>
+<p>但是这样做会增加大约10%的性能消耗，如果希望获取到最大的性能提升，可以关闭此功能</p>
+<p>推荐yes.</p>
+<p><em><strong>*rdb*</strong></em><em><strong>*的备份*</strong></em></p>
+<p>先通过config get dir  查询rdb文件的目录 </p>
+<p>将*.rdb的文件拷贝到别的地方</p>
+<p>rdb的恢复</p>
+<ol>
+<li> 关闭Redis</li>
+<li> 先把备份的文件拷贝到工作目录下 cp dump2.rdb dump.rdb</li>
+<li> 启动Redis, 备份数据会直接加载</li>
+</ol>
+<p><em><strong>*优势*</strong></em></p>
+<p>l 适合大规模的数据恢复</p>
+<p>l 对数据完整性和一致性要求不高更适合使用</p>
+<p>l 节省磁盘空间</p>
+<p>l 恢复速度快</p>
+<h3 id="AOF方式"><a href="#AOF方式" class="headerlink" title="AOF方式"></a>AOF方式</h3><p><em><strong>*AOF持久化流程*</strong></em></p>
+<p>（1）客户端的请求写命令会被append追加到AOF缓冲区内；</p>
+<p>（2）AOF缓冲区根据AOF持久化策略[always,everysec,no]将操作sync同步到磁盘的AOF文件中；</p>
+<p>（3）AOF文件大小超过重写策略或手动重写时，会对AOF文件rewrite重写，压缩AOF文件容量；</p>
+<h3 id="Redis服务重启时，会重新load加载AOF文件中的写操作达到数据恢复的目的；"><a href="#Redis服务重启时，会重新load加载AOF文件中的写操作达到数据恢复的目的；" class="headerlink" title="Redis服务重启时，会重新load加载AOF文件中的写操作达到数据恢复的目的；"></a>Redis服务重启时，会重新load加载AOF文件中的写操作达到数据恢复的目的；</h3><p><img src="https://s2.loli.net/2022/03/24/D6Lui9TNl8PYUqw.png" alt="image-20220324165540158"></p>
+<p><em><strong>*AOF启动*</strong></em><em><strong>*/*</strong></em><em><strong>*修复*</strong></em><em><strong>*/*</strong></em><em><strong>*恢复*</strong></em></p>
+<p>l AOF的备份机制和性能虽然和RDB不同, 但是备份和恢复的操作同RDB一样，都是拷贝备份文件，需要恢复时再拷贝到Redis工作目录下，启动系统即加载。</p>
+<p>l 正常恢复</p>
+<ol>
+<li> 修改默认的appendonly no，改为yes</li>
+<li> 将有数据的aof文件复制一份保存到对应目录(查看目录：config get dir)</li>
+<li>恢复：重启redis然后重新加载</li>
+</ol>
+<p>l 异常恢复</p>
+<ol>
+<li> 修改默认的appendonly no，改为yes</li>
+<li>如遇到****AOF文件损坏*<em><strong>，通过/usr/local/bin/</strong></em>*redis-check-aof–fix appendonly.aof****进行恢复</li>
+<li> 备份被写坏的AOF文件</li>
+<li> 恢复：重启redis，然后重新加载</li>
+</ol>
+<h2 id="AOF同步频率设置"><a href="#AOF同步频率设置" class="headerlink" title="*AOF同步频率设置*"></a><em><strong>*AOF同步频率设置*</strong></em></h2><p>appendfsync always</p>
+<p>始终同步，每次Redis的写入都会立刻记入日志；性能较差但数据完整性比较好</p>
+<p>appendfsync everysec</p>
+<p>每秒同步，每秒记入日志一次，如果宕机，本秒的数据可能丢失。</p>
+<p>appendfsync no</p>
+<p>redis不主动进行同步，把同步时机交给操作系统。</p>
+<p><em><strong>*Rewrite压缩*</strong></em></p>
+<p>1是什么：</p>
+<p>AOF采用文件追加方式，文件会越来越大为避免出现此种情况，新增了重写机制, 当AOF文件的大小超过所设定的阈值时，Redis就会启动AOF文件的内容压缩， 只保留可以恢复数据的最小指令集.可以使用命令bgrewriteaof</p>
+<p>2重写原理，如何实现重写</p>
+<p>AOF文件持续增长而过大时，会fork出一条新进程来将文件重写(也是先写临时文件最后再rename)，redis4.0版本后的重写，是指上就是把rdb 的快照，以二级制的形式附在新的aof头部，作为已有的历史数据，替换掉原来的流水账操作。</p>
+<p>no-appendfsync-on-rewrite：</p>
+<p>如果 no-appendfsync-on-rewrite=yes ,不写入aof文件只写入缓存，用户请求不会阻塞，但是在这段时间如果宕机会丢失这段时间的缓存数据。（降低数据安全性，提高性能）</p>
+<p>​    如果 no-appendfsync-on-rewrite=no,  还是会把数据往磁盘里刷，但是遇到重写操作，可能会发生阻塞。（数据安全，但是性能降低）</p>
+<p>触发机制，何时重写</p>
+<p>Redis会记录上次重写时的AOF大小，默认配置是当AOF文件大小是上次rewrite后大小的一倍且文件大于64M时触发</p>
+<p>重写虽然可以节约大量磁盘空间，减少恢复时间。但是每次重写还是有一定的负担的，因此设定Redis要满足一定条件才会进行重写。 </p>
+<p>auto-aof-rewrite-percentage：设置重写的基准值，文件达到100%时开始重写（文件是原来重写后文件的2倍时触发）</p>
+<p>auto-aof-rewrite-min-size：设置重写的基准值，最小文件64MB。达到这个值开始重写。</p>
+<p>例如：文件达到70MB开始重写，降到50MB，下次什么时候开始重写？100MB</p>
+<p>系统载入时或者上次重写完毕时，Redis会记录此时AOF大小，设为base_size,</p>
+<p>如果Redis的AOF当前大小&gt;= base_size +base_size*100% (默认)且当前大小&gt;=64mb(默认)的情况下，Redis会对AOF进行重写。 </p>
 <h2 id="Redis-事务处理实践"><a href="#Redis-事务处理实践" class="headerlink" title="Redis 事务处理实践"></a>Redis 事务处理实践</h2><h3 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令"></a>基本指令</h3><p>redis进行事务控制时，通常是基于如下指令进行实现，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">multi 开启事务</span><br><span class="line">exec 提交事务</span><br><span class="line">discard 取消事务</span><br><span class="line">watch 监控，如果监控的值发生变化，则提交事务时会失败</span><br><span class="line">unwatch 去掉监控</span><br></pre></td></tr></table></figure>
 
+<p>从输入Multi命令开始，输入的命令都会依次进入命令队列中，但不会执行，直到输入Exec后，Redis会将之前的命令队列中的命令依次执行。</p>
 <p>Redis保证一个事务中的所有命令要么都执行，要么都不执行(原子性)。如果在发送EXEC命令前客户端断线了，则Redis会清空事务队列，事务中的所有命令都不会执行。而一旦客户端发送了EXEC命令，所有的命令就都会被执行，即使此后客户端断线也没关系，因为Redis中已经记录了所有要执行的命令。</p>
 <h3 id="Redis事务控制实践"><a href="#Redis事务控制实践" class="headerlink" title="Redis事务控制实践"></a>Redis事务控制实践</h3><h4 id="exec提交事务"><a href="#exec提交事务" class="headerlink" title="exec提交事务"></a>exec提交事务</h4><p>例如：模拟转账，tony 500，jack 200，tony转给jack100。过程如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set tony 500</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; set jack 200</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; mget tony jack</span><br><span class="line">1) &quot;500&quot;</span><br><span class="line">2) &quot;200&quot;</span><br><span class="line">127.0.0.1:6379&gt; multi #开启事务</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379(TX)&gt; decrby tony 100 #所有指令操作会进入到队列</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; incrby jack 100</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; mget tony jack</span><br><span class="line">QUEUED </span><br><span class="line">127.0.0.1:6379(TX)&gt; exec  #提交事务</span><br><span class="line">1) (integer) 400</span><br><span class="line">2) (integer) 300</span><br><span class="line">3) 1) &quot;400&quot;</span><br><span class="line">   2) &quot;300&quot;</span><br><span class="line">127.0.0.1:6379&gt; mget tony jack</span><br><span class="line">1) &quot;400&quot;</span><br><span class="line">2) &quot;300&quot;</span><br></pre></td></tr></table></figure>
