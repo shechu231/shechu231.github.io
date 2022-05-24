@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JSP学习记录 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="自定义标签12345678910111213141516171819202122232425262728293031自定义标签传统方式(JSP 1.1):实现tag接口javax.servlet.j,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="JSP学习记录 - Hexo"/>
+    <meta name="twitter:description" content="自定义标签12345678910111213141516171819202122232425262728293031自定义标签传统方式(JSP 1.1):实现tag接口javax.servlet.j,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="JSP学习记录 - Hexo"/>
+    <meta property="og:description" content="自定义标签12345678910111213141516171819202122232425262728293031自定义标签传统方式(JSP 1.1):实现tag接口javax.servlet.j,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">JSP学习记录</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">JSP学习记录</h1>
+        <div class="stuff">
+            <span>五月 06, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="自定义标签"><a href="#自定义标签" class="headerlink" title="自定义标签"></a>自定义标签</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">自定义标签</span><br><span class="line">传统方式(JSP 1.1):实现tag接口javax.servlet.jsp.tagext.Tag    doStartTag()</span><br><span class="line">简单方式(JSP2.0):实现SimpleTag接口javax.servlet.jsp.tagext.SimpleTag   doTag()</span><br><span class="line">步骤：a.编写标签处理类 b.编写标签描述符 c.导入并使用</span><br><span class="line">a.编写标签处理类</span><br><span class="line">如果在jsp编译阶段 发现自定义标签，就会交给doStartTag()或doTag()</span><br><span class="line">b.编写标签描述符 tld</span><br><span class="line">myTag.tld导入WEB-INF或子目录下/WEB-INF/abc/(特例排除，不能是/WEB-INF/lib、WEB-INF/classes)</span><br><span class="line">使用：引入具体要使用的.tld文件</span><br><span class="line">&lt;%--</span><br><span class="line">a.空标签 &lt;body-content&gt;empty&lt;/body-content&gt;为空没有标签体&lt;d:foreach /&gt;</span><br><span class="line">b.带标签体  &lt;d:foreach&gt;xxx&lt;/d:foreach&gt;</span><br><span class="line">c.带属性 &lt;d:foreach 属性名=&quot;属性值&quot;&gt;xxx&lt;/d:foreach&gt;</span><br><span class="line">d.嵌套    &lt;d:foreach&gt;</span><br><span class="line">&lt;d:foreach&gt;xxx&lt;/d:foreach&gt;</span><br><span class="line">&lt;/d:foreach&gt;--%&gt;</span><br><span class="line">Tag接口：doStartTag:标签处理类的核心方法(标签体的执行逻辑)</span><br><span class="line">该方法有以下两个返回值：0/1</span><br><span class="line">int SKIP_BODY=0;标签体不会被执行</span><br><span class="line">int EVAL_BODY_INCLUDE =1;标签体会被执行</span><br><span class="line">doEndTag():标签执行完毕后的方法，例如可以让标签执行完成后再执行一次</span><br><span class="line">int SKIP_PAGE = 5;后面的JSP页面内容不会被执行</span><br><span class="line">int EVAL_PAGE = 6;后面的JSP页面内容会被继续执行</span><br><span class="line">Tag接口的执行流程:</span><br><span class="line"></span><br><span class="line">JSP引擎将遇到自定义标签时，首先创建标签处理器类的实例对象，然后按照JSP规范定义的通信规则依次调用它的方法。</span><br><span class="line">1、public void setPageContext(PageContext pc)， JSP引擎实例化标签处理器后，将调用setPageContext方法将JSP页面的pageContext对象传递给标签处理器，标签处理器以后可以通过这个pageContext对象与JSP页面进行通信。</span><br><span class="line">2、public void setParent(Tag t)，setPageContext方法执行完后，WEB容器接着调用的setParent方法将当前标签的父标签传递给当前标签处理器，如果当前标签没有父标签，则传递给setParent方法的参数值为null。</span><br><span class="line">3、public int doStartTag()，调用了setPageContext方法和setParent方法之后，WEB容器执行到自定义标签的开始标记时，就会调用标签处理器的doStartTag方法。</span><br><span class="line">4、public int doEndTag()，WEB容器执行完自定义标签的标签体后，就会接着去执行自定义标签的结束标记，此时，WEB容器会去调用标签处理器的doEndTag方法。</span><br><span class="line">5、public void release()，通常WEB容器执行完自定义标签后，标签处理器会驻留在内存中，为其它请求服务器，直至停止web应用时，web容器才会调用release方法。</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/05/07/Spf1CETVsMYK2rw.png" alt="image-20220507101157153"></p>
+<p>javax.servlet.jsp.tagext.IterationTag接口：（是Tag的子接口)</p>
+<p>如果有循环：IterationTags,</p>
+<p>没有循环：Tag</p>
+<p>IterationTags接口中存在以下方法：</p>
+<p>doAfterBody()：当标签体执行完毕后的曹祖，通过返回值决定，（int EVAL_BODY_AGAIN = 2;）要么重复执行，（int EVAL_BODY_AGAIN ！= 2;）要么不执行。</p>
+<h2 id="实例循环遍历三次"><a href="#实例循环遍历三次" class="headerlink" title="实例循环遍历三次"></a>实例循环遍历三次</h2><p><img src="https://s2.loli.net/2022/05/07/drg3aL9tJX6F81q.png" alt="image-20220507102535185"></p>
+<p>首先定义标签类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class DateTimeTag extends TagSupport &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private static final long serialVersionUID = 5897918233973977850L;</span><br><span class="line">    private int num;//执行次数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //执行标签</span><br><span class="line">    @Override</span><br><span class="line">    public int doStartTag() throws JspException &#123;</span><br><span class="line">        return EVAL_BODY_INCLUDE;//先执行一次</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int doAfterBody() &#123;</span><br><span class="line">        num--;</span><br><span class="line">        return num&gt;0?EVAL_BODY_AGAIN:-1;//重复执行</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void release() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在/WEB-INF/tld下定义tags.tld文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;taglib version=&quot;2.0&quot; xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot;</span><br><span class="line">        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">        xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd&quot;&gt;</span><br><span class="line">    &lt;tlib-version&gt;1.0&lt;/tlib-version&gt;</span><br><span class="line">    &lt;short-name&gt;mytag&lt;/short-name&gt;</span><br><span class="line">    &lt;uri&gt;http://mytag&lt;/uri&gt;</span><br><span class="line">    &lt;tag&gt;</span><br><span class="line">        &lt;name&gt;mytag&lt;/name&gt;</span><br><span class="line">        &lt;tag-class&gt;com.jt.demo.tag.DateTimeTag&lt;/tag-class&gt;</span><br><span class="line">        &lt;body-content&gt;JSP&lt;/body-content&gt;</span><br><span class="line">        &lt;attribute&gt;</span><br><span class="line">            &lt;name&gt;num&lt;/name&gt;</span><br><span class="line">            &lt;required&gt;true&lt;/required&gt;</span><br><span class="line">        &lt;/attribute&gt;</span><br><span class="line">    &lt;/tag&gt;</span><br><span class="line">&lt;/taglib&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在zidianyibiaoqian.jsp中引用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; pageEncoding=&quot;UTF-8&quot; %&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;mytag&quot; uri=&quot;http://mytag&quot; %&gt;</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;$Title$&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;mytag:mytag num=&quot;3&quot;&gt;</span><br><span class="line">    hello</span><br><span class="line">&lt;/mytag:mytag&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="BodyTag接口使用"><a href="#BodyTag接口使用" class="headerlink" title="BodyTag接口使用"></a>BodyTag接口使用</h2><p><img src="https://s2.loli.net/2022/05/07/mLfT5cgtXR8qFOP.png" alt="image-20220507104949242"></p>
+<p>编写ToUpperCase类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class ToUpperCase extends BodyTagSupport &#123;</span><br><span class="line">    //告诉程序，我要改变hello为大写，即将doStartTag()的返回值设置成EVAL_BODY_BUFFERED</span><br><span class="line">    //获取并修改</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int doEndTag() throws JspException &#123;</span><br><span class="line">        String content = getBodyContent().getString();//hello</span><br><span class="line">        content= content.toUpperCase();</span><br><span class="line">        try &#123;</span><br><span class="line">            bodyContent.getEnclosingWriter().write(content);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return super.doEndTag();//默认6，标签执行完成后是否执行其他的JSP</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写tags.tld文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;taglib version=&quot;2.0&quot; xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot;</span><br><span class="line">        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">        xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd&quot;&gt;</span><br><span class="line">    &lt;tlib-version&gt;1.0&lt;/tlib-version&gt;</span><br><span class="line">    &lt;short-name&gt;mytag&lt;/short-name&gt;</span><br><span class="line">    &lt;uri&gt;http://mytag&lt;/uri&gt;</span><br><span class="line">    &lt;tag&gt;</span><br><span class="line">        &lt;name&gt;mytag&lt;/name&gt;</span><br><span class="line">        &lt;tag-class&gt;com.jt.demo.tag.DateTimeTag&lt;/tag-class&gt;</span><br><span class="line">        &lt;body-content&gt;JSP&lt;/body-content&gt;</span><br><span class="line">        &lt;attribute&gt;</span><br><span class="line">            &lt;name&gt;num&lt;/name&gt;</span><br><span class="line">            &lt;required&gt;true&lt;/required&gt;</span><br><span class="line">        &lt;/attribute&gt;</span><br><span class="line">    &lt;/tag&gt;</span><br><span class="line">    &lt;tag&gt;</span><br><span class="line">        &lt;name&gt;myToUpperCase&lt;/name&gt;</span><br><span class="line">        &lt;tag-class&gt;com.jt.demo.tag.ToUpperCase&lt;/tag-class&gt;</span><br><span class="line">        &lt;body-content&gt;JSP&lt;/body-content&gt;</span><br><span class="line">    &lt;/tag&gt;</span><br><span class="line">&lt;/taglib&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;mytag:myToUpperCase&gt;</span><br><span class="line">    hello</span><br><span class="line">&lt;/mytag:myToUpperCase&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="简单方式，SimpleTag，最大简化，将传统的doStartTag-doEndTag-doafterBody-等方法-简化成一个通用的doTag-方法"><a href="#简单方式，SimpleTag，最大简化，将传统的doStartTag-doEndTag-doafterBody-等方法-简化成一个通用的doTag-方法" class="headerlink" title="简单方式，SimpleTag，最大简化，将传统的doStartTag() doEndTag() doafterBody()等方法 简化成一个通用的doTag()方法"></a>简单方式，SimpleTag，最大简化，将传统的doStartTag() doEndTag() doafterBody()等方法 简化成一个通用的doTag()方法</h2><p><img src="https://s2.loli.net/2022/05/07/gC5ZGwrPjWos9Hv.png" alt="image-20220507110825692"></p>
+<h4 id="简单方式不能写JSP"><a href="#简单方式不能写JSP" class="headerlink" title="简单方式不能写JSP"></a>简单方式不能写JSP</h4><p>doTag():传统方式可以对标签最终线上进行修改，核心是缓冲区，简单方式没有缓冲区。如何修改显示内容？流</p>
+<h3 id="MySimpleTagIterator类"><a href="#MySimpleTagIterator类" class="headerlink" title="MySimpleTagIterator类:"></a>MySimpleTagIterator类:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class MySimpleTagIterator extends SimpleTagSupport &#123;</span><br><span class="line"></span><br><span class="line">    private static final long serialVersionUID = 5897918233973977850L;</span><br><span class="line">    private int num;//执行次数</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void doTag() throws JspException, IOException &#123;</span><br><span class="line">        JspFragment jspFragment = getJspBody();</span><br><span class="line">        for (int i = 0; i &lt; num; i++) &#123;</span><br><span class="line">            jspFragment.invoke(null);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写tags.tld文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;tag&gt;</span><br><span class="line">        &lt;name&gt;mySimpleTag&lt;/name&gt;</span><br><span class="line">        &lt;tag-class&gt;com.jt.demo.tag.MySimpleTagIterator&lt;/tag-class&gt;</span><br><span class="line">        &lt;body-content&gt;scriptless&lt;/body-content&gt;</span><br><span class="line">        &lt;attribute&gt;</span><br><span class="line">            &lt;name&gt;num&lt;/name&gt;</span><br><span class="line">            &lt;required&gt;true&lt;/required&gt;</span><br><span class="line">        &lt;/attribute&gt;</span><br><span class="line">    &lt;/tag&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;simpletag:mySimpleTag num=&quot;5&quot;&gt;123456&lt;/simpletag:mySimpleTag&gt;</span><br></pre></td></tr></table></figure>
+
+<p>另一种：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class MySimpleTagIterator extends SimpleTagSupport &#123;</span><br><span class="line"></span><br><span class="line">    private static final long serialVersionUID = 5897918233973977850L;</span><br><span class="line">    private int num;//执行次数</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void doTag() throws JspException, IOException &#123;</span><br><span class="line">        PageContext pageContext = (PageContext) getJspContext();</span><br><span class="line">        JspWriter out = pageContext.getOut();</span><br><span class="line">        SimpleDateFormat df = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span><br><span class="line">        out.println(&quot;[&quot; + df.format(new Date()) + &quot;]&quot;);</span><br><span class="line">       StringWriter sw = new StringWriter();</span><br><span class="line">       //修改输出</span><br><span class="line">       for (int i = 0; i &lt; num; i++) &#123;</span><br><span class="line"></span><br><span class="line">            getJspBody().invoke(sw);</span><br><span class="line">            System.out.println(sw);</span><br><span class="line">            out.print(&quot;aaaaa&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;simpletag:mySimpleTag num=&quot;3&quot;&gt;123456&lt;/simpletag:mySimpleTag&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用标签登录："><a href="#使用标签登录：" class="headerlink" title="使用标签登录："></a>使用标签登录：</h2><p>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void doTag() throws JspException, IOException &#123;</span><br><span class="line">        PageContext pageContext =(PageContext) getJspContext();</span><br><span class="line"></span><br><span class="line">        Object name = pageContext.getSession().getAttribute(&quot;name&quot;);</span><br><span class="line">        if(name!=null)&#123;</span><br><span class="line"></span><br><span class="line">            getJspBody().invoke(null);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
