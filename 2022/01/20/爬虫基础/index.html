@@ -337,18 +337,8 @@ send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元�
         process_pool.join()等待
         print json.dumps(ret.get(), False, False)
 </code></pre>
-<p>​<br>​<br>​<br>        import multiprocessing<br>        另一种麻烦的：<br>        def do(n):             # 参数n由args=(1,)传入<br>            name = multiprocessing.current_process().name        # 获取当前进程的名字<br>            print(name, ‘starting’)<br>            print(“worker “, n)<br>            return</p>
-<pre><code>    if __name__ == &#39;__main__&#39;:
-        numList = []
-        for i in range(5):
-            p = multiprocessing.Process(target=do, args=(i,))      # (i,)中加入&quot;,&quot;表示元祖
-            numList.append(p)
-            print(numList)
-            p.start()                 # 用start()方法启动进程，执行do()方法
-            p.join()                  # 等待子进程结束以后再继续往下运行，通常用于进程间的同步
-            print(&quot;Process end.&quot;)
-    
-    异步协同：
+<p>​<br>​<br>​<br>​        import multiprocessing<br>​        另一种麻烦的：<br>​        def do(n):             # 参数n由args=(1,)传入<br>​            name = multiprocessing.current_process().name        # 获取当前进程的名字<br>​            print(name, ‘starting’)<br>​            print(“worker “, n)<br>​            return<br>​<br>        if <strong>name</strong> == ‘<strong>main</strong>‘:<br>            numList = []<br>            for i in range(5):<br>                p = multiprocessing.Process(target=do, args=(i,))      # (i,)中加入”,”表示元祖<br>                numList.append(p)<br>                print(numList)<br>                p.start()                 # 用start()方法启动进程，执行do()方法<br>                p.join()                  # 等待子进程结束以后再继续往下运行，通常用于进程间的同步<br>                print(“Process end.”)</p>
+<pre><code>    异步协同：
     async def request(url):
         #aiohttp:基于异步网络请求模块进行制定url的请求发送
         #get(),post();
@@ -385,10 +375,8 @@ send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元�
     res.text.encode(&#39;utf-8&#39;).decode(&#39;unicode_escape&#39;)#编码转换
     print(&#39;over!!!&#39;)
 </code></pre>
-<p>​<br>        导入包：<br>                import thread<br>                import time<br>                # 为线程定义一个函数<br>                def print_time( threadName, delay):<br>                    pass<br>                # 创建两个线程<br>                try:<br>                   thread.start_new_thread( print_time, (“Thread-1”, 2, ) )<br>                   thread.start_new_thread( print_time, (“Thread-2”, 4, ) )<br>                except:<br>                   print “Error: unable to start thread”</p>
-<pre><code>    Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。
-
-    threading 模块提供的其他方法：
+<p>​<br>​        导入包：<br>​                import thread<br>​                import time<br>​                # 为线程定义一个函数<br>​                def print_time( threadName, delay):<br>​                    pass<br>​                # 创建两个线程<br>​                try:<br>​                   thread.start_new_thread( print_time, (“Thread-1”, 2, ) )<br>​                   thread.start_new_thread( print_time, (“Thread-2”, 4, ) )<br>​                except:<br>​                   print “Error: unable to start thread”<br>​<br>        Python通过两个标准库thread和threading提供对线程的支持。thread提供了低级别的、原始的线程以及一个简单的锁。</p>
+<pre><code>    threading 模块提供的其他方法：
 
     threading.currentThread(): 返回当前的线程变量。
     threading.enumerate(): 返回一个包含正在运行的线程的list。正在运行指线程启动后、结束前，不包括启动前和终止后的线程。
@@ -420,13 +408,8 @@ send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元�
     for t in thread_list:
         t.join()  # 子线程全部加入，主线程等所有子线程运行完毕
 </code></pre>
-<p>​<br>​<br>        第二种：<br>        class myThread (threading.Thread):   #继承父类threading.Thread<br>            def <strong>init</strong>(self, threadID, name, counter):#覆写threading.Thread类<br>                threading.Thread.<strong>init</strong>(self)# 重构run函数必须要写<br>                self.threadID = threadID<br>                self.name = name<br>                self.counter = counter<br>            def run(self):                   #把要执行的代码写到run函数里面 线程在创建后会直接运行run函数<br>                print “Starting “ + self.name<br>                print_time(self.name, self.counter, 5)//外置函数<br>                print “Exiting “ + self.name<br>        # 创建新线程<br>        thread1 = myThread(1, “Thread-1”, 1)<br>        thread2 = myThread(2, “Thread-2”, 2)</p>
-<pre><code>    # 开启线程
-    thread1.start()
-    thread2.start()
-    #线程锁：
-    
-        threadLock = threading.Lock()
+<p>​<br>​<br>​        第二种：<br>​        class myThread (threading.Thread):   #继承父类threading.Thread<br>​            def <strong>init</strong>(self, threadID, name, counter):#覆写threading.Thread类<br>​                threading.Thread.<strong>init</strong>(self)# 重构run函数必须要写<br>​                self.threadID = threadID<br>​                self.name = name<br>​                self.counter = counter<br>​            def run(self):                   #把要执行的代码写到run函数里面 线程在创建后会直接运行run函数<br>​                print “Starting “ + self.name<br>​                print_time(self.name, self.counter, 5)//外置函数<br>​                print “Exiting “ + self.name<br>​        # 创建新线程<br>​        thread1 = myThread(1, “Thread-1”, 1)<br>​        thread2 = myThread(2, “Thread-2”, 2)<br>​<br>        # 开启线程<br>        thread1.start()<br>        thread2.start()<br>        #线程锁：</p>
+<pre><code>        threadLock = threading.Lock()
     # 获得锁，成功获得锁定后返回True
     # 可选的timeout参数不填时将一直阻塞直到获得锁定
     # 否则超时后将返回False
@@ -548,6 +531,8 @@ send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元�
         wait 会一直监听flag，如果没有检测到flag就一直处于阻塞状态
         事件处理的机制：全局定义了一个“Flag”，当flag值为“False”，那么event.wait()就会阻塞，当flag值为“True”，那么event.wait()便不再阻塞。
 </code></pre>
+<h2 id="多线程案例"><a href="#多线程案例" class="headerlink" title="多线程案例"></a>多线程案例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">event.isSet()：返回event的状态值；</span><br><span class="line"></span><br><span class="line">event.wait()：如果 event.isSet()==False将阻塞线程；</span><br><span class="line"></span><br><span class="line">event.set()： 设置event的状态值为True，所有阻塞池的线程激活进入就绪状态， 等待操作系统调度；</span><br><span class="line"></span><br><span class="line">event.clear()：恢复event的状态值为False。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">from threading import Thread,Event</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">event=Event()</span><br><span class="line"></span><br><span class="line">def light():</span><br><span class="line">    print(&#x27;红灯正亮着&#x27;)</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    event.set() #绿灯亮</span><br><span class="line"></span><br><span class="line">def car(name):</span><br><span class="line">    print(&#x27;车%s正在等绿灯&#x27; %name)</span><br><span class="line">    event.wait() #等灯绿 此时event为False,直到event.set()将其值设置为True,才会继续运行.</span><br><span class="line">    print(&#x27;车%s通行&#x27; %name)</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    # 红绿灯</span><br><span class="line">    t1=Thread(target=light)</span><br><span class="line">    t1.start()</span><br><span class="line">    # 车</span><br><span class="line">    for i in range(10):</span><br><span class="line">        t=Thread(target=car,args=(i,))</span><br><span class="line">        t.start()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>正则表达式：<br>        import re<br>        re.I    使匹配对大小写不敏感<br>        re.L    做本地化识别（locale-aware）匹配<br>        re.M    多行匹配，影响 ^ 和 $<br>        re.S    使 . 匹配包括换行在内的所有字符<br>        re.U    根据Unicode字符集解析字符。这个标志影响 \w, \W, \b, \B.<br>        re.X    该标志通过给予你更灵活的格式以便你将正则表达式写得更易于理解。</p>
 <pre><code>    re.findall(ex,page_text,re.S)
     
