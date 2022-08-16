@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>python的GUI编程 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="Tkinter 提供了布局功能，主要包含 pack、grid 和 place 三种布局方法。其中 pack 布局方法在前面使用过，这是最简单的布局方式。
+grid 布局法就是将屏幕切成表格的样子，通,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="python的GUI编程 - Hexo"/>
+    <meta name="twitter:description" content="Tkinter 提供了布局功能，主要包含 pack、grid 和 place 三种布局方法。其中 pack 布局方法在前面使用过，这是最简单的布局方式。
+grid 布局法就是将屏幕切成表格的样子，通,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="python的GUI编程 - Hexo"/>
+    <meta property="og:description" content="Tkinter 提供了布局功能，主要包含 pack、grid 和 place 三种布局方法。其中 pack 布局方法在前面使用过，这是最简单的布局方式。
+grid 布局法就是将屏幕切成表格的样子，通,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">python的GUI编程</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">python的GUI编程</h1>
+        <div class="stuff">
+            <span>六月 12, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>Tkinter 提供了布局功能，主要包含 pack、grid 和 place 三种布局方法。其中 pack 布局方法在前面使用过，这是最简单的布局方式。</p>
+<p>grid 布局法就是将屏幕切成表格的样子，通过横向坐标 row 和纵向坐标 column 来指定元素的位置。第一行标记为 0，第一列也标记为 0。</p>
+<p>最后一种布局方法是 place，它直接指定元素在父元素中的坐标值，单位是像素。</p>
+<h1 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h1><h4 id="轮播图"><a href="#轮播图" class="headerlink" title="轮播图"></a>轮播图</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import tkinter as tk</span><br><span class="line">import glob</span><br><span class="line">from PIL import Image,ImageTk</span><br><span class="line"></span><br><span class="line">root = tk.Tk()</span><br><span class="line">root.geometry(&#x27;906x687+100+100&#x27;)</span><br><span class="line">root.title(&quot;图片查看器&quot;)</span><br><span class="line"></span><br><span class="line">photos = glob.glob(&quot;photo/*.png&quot;)</span><br><span class="line">photos = [ImageTk.PhotoImage(Image.open(photo).resize((900,600))) for photo in photos]</span><br><span class="line">current_photo_no = 0</span><br><span class="line">photo_label = tk.Label(root,image=photos[current_photo_no],width=900,height=600)</span><br><span class="line">photo_label.pack()</span><br><span class="line">number_var = tk.StringVar()</span><br><span class="line">number_var.set(f&#x27;&#123;current_photo_no+1&#125; of &#123;len(photos)&#125;&#x27;)</span><br><span class="line">tk.Label(root,textvariable=number_var,bd=1,relief=tk.SUNKEN,anchor=tk.CENTER).pack(fill=tk.X)</span><br><span class="line"></span><br><span class="line">button_frame = tk.Frame(root)</span><br><span class="line">button_frame.pack()</span><br><span class="line">prev_photo = tk.Button(button_frame,text=&quot;上一页&quot;)</span><br><span class="line">next_photo = tk.Button(button_frame,text=&quot;下一页&quot;)</span><br><span class="line">prev_photo.pack(side=tk.LEFT,anchor=tk.CENTER)</span><br><span class="line">next_photo.pack(side=tk.RIGHT,anchor=tk.CENTER)</span><br><span class="line"></span><br><span class="line">def change_photos(next_no):</span><br><span class="line">    global current_photo_no</span><br><span class="line">    current_photo_no+=next_no</span><br><span class="line"></span><br><span class="line">    if current_photo_no&gt;= len(photos):</span><br><span class="line">        current_photo_no=0</span><br><span class="line">    if current_photo_no&lt; 0:</span><br><span class="line">        current_photo_no=len(photos)-1</span><br><span class="line">    number_var.set(f&#x27;&#123;current_photo_no+1&#125; of &#123;len(photos)&#125;&#x27;)</span><br><span class="line">    photo_label.configure(image=photos[current_photo_no])</span><br><span class="line"></span><br><span class="line">prev_photo.config(command=lambda:change_photos(-1))</span><br><span class="line">next_photo.config(command=lambda:change_photos(1))</span><br><span class="line"></span><br><span class="line">root.mainloop()</span><br></pre></td></tr></table></figure>
+
+<h4 id="辞职信"><a href="#辞职信" class="headerlink" title="辞职信"></a>辞职信</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">from cProfile import label</span><br><span class="line">import tkinter as tk</span><br><span class="line">from PIL import Image,ImageTk</span><br><span class="line">from tkinter import messagebox</span><br><span class="line">from random import random</span><br><span class="line">root = tk.Tk()</span><br><span class="line">root.geometry(&#x27;500x300+100+100&#x27;)</span><br><span class="line"></span><br><span class="line">root.title(&#x27;辞职信&#x27;)</span><br><span class="line"></span><br><span class="line">frame1 = tk.Frame(root,height=300,width=500)</span><br><span class="line">frame1.pack()</span><br><span class="line"></span><br><span class="line">tk.Label(frame1,text=&#x27;尊敬的各位领导:&#x27;,font=24,padx=30,pady=30).pack(side=tk.LEFT,anchor=tk.N)</span><br><span class="line">img = ImageTk.PhotoImage(Image.open(&#x27;photo/系统架构图.png&#x27;).resize((100,200)))</span><br><span class="line"># img = tk.PhotoImage(file=&#x27;&#x27;)</span><br><span class="line">label_img = tk.Label(frame1,image=img,padx=30,pady=30,bd=0)</span><br><span class="line">label_img.pack(side=tk.LEFT,anchor=tk.N)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">tk.Label(frame1,text=&#x27;辞职人:张三&#x27;,height=25,font=24,padx=30,pady=30,anchor=tk.S).pack(side=tk.LEFT)</span><br><span class="line"></span><br><span class="line">yes_btn = tk.Button(frame1,text=&quot;同意&quot;)</span><br><span class="line">no_btn = tk.Button(frame1,text=&quot;不同意&quot;)#db=0</span><br><span class="line"></span><br><span class="line">yes_btn.place(relx=0.3,rely=0.8,anchor=tk.CENTER)</span><br><span class="line">no_btn.place(relx=0.6,rely=0.8,anchor=tk.CENTER)</span><br><span class="line"></span><br><span class="line">frame2 = tk.Frame(root)</span><br><span class="line"># frame2.pack()</span><br><span class="line">tk.Label(frame2,text=&quot;老板大人,臣告退了\n这一退，可能就是一辈子了\n!!!&quot;,font=(&#x27;黑体&#x27;,18),justify=tk.LEFT,height=300,fg=&#x27;red&#x27;,padx=50).pack()</span><br><span class="line">tk.Button(frame2,text=&quot;退出&quot;,command=root.quit).place(relx=0.9,rely=0.8)</span><br><span class="line"></span><br><span class="line">def on_exit():</span><br><span class="line">    messagebox.showwarning(title=&quot;提示&quot;,message=&quot;此路不通&quot;)</span><br><span class="line">root.protocol(&#x27;WM_DELETE_WINDOW&#x27;,on_exit)</span><br><span class="line"></span><br><span class="line">def move(event):</span><br><span class="line">    no_btn.place(relx=random(),rely=random(),anchor=tk.CENTER)</span><br><span class="line">no_btn.bind(&#x27;&lt;Enter&gt;&#x27;,move)</span><br><span class="line"></span><br><span class="line">def sure():</span><br><span class="line">    frame1.pack_forget()</span><br><span class="line">    frame2.pack()</span><br><span class="line">yes_btn.config(command=sure)</span><br><span class="line"></span><br><span class="line">root.mainloop()</span><br></pre></td></tr></table></figure>
+
+<h4 id="记事本"><a href="#记事本" class="headerlink" title="记事本"></a>记事本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import tkinter as tk</span><br><span class="line">from tkinter import filedialog, messagebox</span><br><span class="line"></span><br><span class="line">root = tk.Tk()</span><br><span class="line">root.title(&#x27;04 记事本&#x27;)</span><br><span class="line">root.geometry(&quot;800x500+100+100&quot;)</span><br><span class="line">&quot;&quot;&quot;记事本事件 1&quot;&quot;&quot;</span><br><span class="line">filename = &quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def new_file():</span><br><span class="line">    &quot;&quot;&quot;新建文件&quot;&quot;&quot;</span><br><span class="line">    global filename</span><br><span class="line">    root.title(&#x27;未命名文件&#x27;)</span><br><span class="line">    filename = None</span><br><span class="line">    textPad.delete(1.0, tk.END)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def open_file():</span><br><span class="line">    &quot;&quot;&quot;打开已经存在的文件&quot;&quot;&quot;</span><br><span class="line">    global filename</span><br><span class="line">    filename = filedialog.askopenfilename()</span><br><span class="line">    if filename == &#x27;&#x27;:</span><br><span class="line">        filename = None</span><br><span class="line">    else:</span><br><span class="line">        root.title(&#x27;FileName:&#x27; + os.path.basename(filename))</span><br><span class="line">        textPad.delete(1.0, tk.END)</span><br><span class="line">        text = open(filename, &#x27;r&#x27;, encoding=&#x27;utf-8&#x27;).read()</span><br><span class="line">        textPad.insert(1.0, text)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def save_as():</span><br><span class="line">    global filename</span><br><span class="line">    filename = filedialog.asksaveasfilename(initialfile=&#x27;未命名.txt&#x27;, defaultextension=&#x27;.txt&#x27;)</span><br><span class="line">    open(filename, &#x27;w&#x27;).write(textPad.get(1.0, tk.END))</span><br><span class="line">    root.title(&#x27;FileName:&#x27; + os.path.basename(filename))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def author():</span><br><span class="line">    messagebox.showinfo(&#x27;作者信息&#x27;, &#x27;本软件有青灯教育正心老师编写&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def about():</span><br><span class="line">    messagebox.showinfo(&#x27;版权信息.Copyleft&#x27;, &#x27;本软件版权归属为青灯教育&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;记事本布局&quot;&quot;&quot;</span><br><span class="line">&quot;&quot;&quot;创建菜单栏&quot;&quot;&quot;</span><br><span class="line">menubar = tk.Menu(root, tearoff=False)</span><br><span class="line">root.config(menu=menubar)</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;创建二级菜单 文件&quot;&quot;&quot;</span><br><span class="line">file_menu = tk.Menu(menubar, tearoff=False)</span><br><span class="line">file_menu.add_command(label=&#x27;新建&#x27;)</span><br><span class="line">file_menu.add_command(label=&#x27;打开&#x27;, command=open_file)</span><br><span class="line">file_menu.add_command(label=&#x27;保存&#x27;)</span><br><span class="line">file_menu.add_command(label=&#x27;另存为&#x27;, command=save_as)</span><br><span class="line"># 设置二级菜单的名字</span><br><span class="line">menubar.add_cascade(label=&#x27;文件&#x27;, menu=file_menu)</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;创建二级菜单 编辑&quot;&quot;&quot;</span><br><span class="line">edit_menu = tk.Menu(menubar, tearoff=False)</span><br><span class="line">edit_menu.add_command(label=&#x27;撤销&#x27;)</span><br><span class="line">edit_menu.add_command(label=&#x27;重做&#x27;)</span><br><span class="line"># 添加分割线</span><br><span class="line">edit_menu.add_separator()</span><br><span class="line">edit_menu.add_command(label=&quot;复制&quot;)</span><br><span class="line">edit_menu.add_command(label=&quot;剪切&quot;)</span><br><span class="line">edit_menu.add_command(label=&quot;粘贴&quot;)</span><br><span class="line">menubar.add_cascade(label=&quot;编辑&quot;, menu=edit_menu)</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;创建二级菜单 关于&quot;&quot;&quot;</span><br><span class="line">about_menu = tk.Menu(menubar, tearoff=False)</span><br><span class="line">about_menu.add_command(label=&quot;作者&quot;, command=author)</span><br><span class="line">about_menu.add_command(label=&quot;版权&quot;, command=about)</span><br><span class="line">menubar.add_cascade(label=&quot;关于&quot;, menu=about_menu)</span><br><span class="line"></span><br><span class="line">var_status = tk.StringVar()</span><br><span class="line">var_format = &quot;字符数：&#123;&#125;&quot;</span><br><span class="line">var_status.set(var_format.format(0))</span><br><span class="line"># 状态栏</span><br><span class="line">status = tk.Label(root, textvariable=var_status, bd=1, relief=tk.SUNKEN, anchor=tk.W)</span><br><span class="line">status.pack(side=tk.BOTTOM, fill=tk.X)</span><br><span class="line"></span><br><span class="line">var_line = tk.StringVar()</span><br><span class="line"># 行数</span><br><span class="line">line_label = tk.Label(root, width=1, bg=&#x27;antique white&#x27;, textvariable=var_line, anchor=tk.N, font=18)</span><br><span class="line">line_label.pack(side=tk.LEFT, fill=tk.Y)</span><br><span class="line"></span><br><span class="line"># 文本编辑区域</span><br><span class="line">textPad = tk.Text(root, undo=True, font=18)</span><br><span class="line">textPad.pack(expand=tk.YES, fill=tk.BOTH)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;记事本事件 2&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def status_func(key):</span><br><span class="line">    &quot;&quot;&quot;设置状态栏信息&quot;&quot;&quot;</span><br><span class="line">    contents = textPad.get(1.0, tk.END)</span><br><span class="line">    length = contents.count(&#x27;\n&#x27;)</span><br><span class="line">    char = contents.replace(&#x27;\n&#x27;, &quot;&quot;)</span><br><span class="line">    char_len = len(char)</span><br><span class="line">    var_status.set(var_format.format(char_len))</span><br><span class="line"></span><br><span class="line">    &quot;&quot;&quot;设置显示行数的内容&quot;&quot;&quot;</span><br><span class="line">    line_str = &#x27;&#x27;</span><br><span class="line">    for i in range(1, length + 1):</span><br><span class="line">        line_str += f&quot;&#123;i&#125;\n&quot;</span><br><span class="line">    var_line.set(line_str)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 绑定状态栏</span><br><span class="line">textPad.bind(&#x27;&lt;Key&gt;&#x27;, status_func)</span><br><span class="line"></span><br><span class="line"># 滑动栏</span><br><span class="line">scroll = tk.Scrollbar(textPad, cursor=&quot;circle&quot;)</span><br><span class="line">textPad.config(yscrollcommand=scroll.set)</span><br><span class="line">scroll.config(command=textPad.yview)</span><br><span class="line">scroll.pack(side=tk.RIGHT, fill=tk.Y)</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    root.mainloop()</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
