@@ -12,7 +12,7 @@
     <meta name="keywords" content="Fechin,"> 
     <meta name="description" content="将.ui文件转换为.py文件方法一：python -m PyQt5.uic.pyuic demo.ui -o demo.py
 方法二：pyuic5 demo.ui -o  demo.py
-"> 
+QTdes,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     
@@ -23,7 +23,7 @@
     <meta name="twitter:title" content="PyQT5学习记录 - Hexo"/>
     <meta name="twitter:description" content="将.ui文件转换为.py文件方法一：python -m PyQt5.uic.pyuic demo.ui -o demo.py
 方法二：pyuic5 demo.ui -o  demo.py
-"/>
+QTdes,"/>
     
     
     
@@ -33,7 +33,7 @@
     <meta property="og:title" content="PyQT5学习记录 - Hexo"/>
     <meta property="og:description" content="将.ui文件转换为.py文件方法一：python -m PyQt5.uic.pyuic demo.ui -o demo.py
 方法二：pyuic5 demo.ui -o  demo.py
-"/>
+QTdes,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -71,6 +71,17 @@
         <div class="content markdown">
             <h1 id="将-ui文件转换为-py文件"><a href="#将-ui文件转换为-py文件" class="headerlink" title="将.ui文件转换为.py文件"></a>将.ui文件转换为.py文件</h1><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>python -m PyQt5.uic.pyuic demo.ui -o demo.py</p>
 <h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><p>pyuic5 demo.ui -o  demo.py</p>
+<h2 id="QTdesigner样式使用"><a href="#QTdesigner样式使用" class="headerlink" title="QTdesigner样式使用"></a>QTdesigner样式使用</h2><p>属性选择器</p>
+<p>属性选择符有四种匹配方式，属性值必须是标识符或字符串:</p>
+<p>属性匹配[att]</p>
+<p>当控件设置“att”属性时匹配，无论该属性的值是多少。</p>
+<p>完全匹配[att = val]</p>
+<p>当控件的“att”属性值完全为“val”时匹配。</p>
+<p>部分值匹配[att ~ = val]</p>
+<p>当控件的“att”属性值是空格分隔的“单词”列表时，其中一个就是“val”时就可匹配。如果使用此选择器，则该值中的单词必须不包含空格(因为它们是由空格分隔的)。</p>
+<p>[att | = val]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">2.QPushButton和QToolButton 鼠标普通态、停留态、按下态</span><br><span class="line">以QPushButton为例：</span><br><span class="line">/*按钮普通态*/</span><br><span class="line">QPushButton[text=&quot;my&quot;]</span><br><span class="line">&#123;</span><br><span class="line">    /*字体为微软雅黑*/</span><br><span class="line">    font-family:Microsoft Yahei;</span><br><span class="line">    /*字体大小为20点*/</span><br><span class="line">    font-size:20pt;</span><br><span class="line">    /*字体颜色为白色*/    </span><br><span class="line">    color:white;</span><br><span class="line">    /*背景颜色*/  </span><br><span class="line">    background-color:rgb(14 , 150 , 254);</span><br><span class="line">    /*边框圆角半径为8像素*/ </span><br><span class="line">    border-radius:8px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*按钮停留态*/</span><br><span class="line">QPushButton:hover</span><br><span class="line">&#123;</span><br><span class="line">    /*背景颜色*/  </span><br><span class="line">    background-color:rgb(44 , 137 , 255);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*按钮按下态*/</span><br><span class="line">QPushButton:pressed</span><br><span class="line">&#123;</span><br><span class="line">    /*背景颜色*/  </span><br><span class="line">    background-color:rgb(14 , 135 , 228);</span><br><span class="line">    /*左内边距为3像素，让按下时字向右移动3像素*/  </span><br><span class="line">    padding-left:3px;</span><br><span class="line">    /*上内边距为3像素，让按下时字向下移动3像素*/  </span><br><span class="line">    padding-top:3px;</span><br><span class="line">&#125;</span><br><span class="line">3.QLabel设置前景色、背景色、字体大小、字体类型</span><br><span class="line">QLabel &#123;</span><br><span class="line">    font-family: &quot;Microsoft YaHei&quot;;</span><br><span class="line">    font-size: 14px;</span><br><span class="line">    color: #BDC8E2;</span><br><span class="line">    background-color: #2E3648; </span><br><span class="line">&#125;</span><br><span class="line">4. 窗体背景图片设置</span><br><span class="line">例如: 设置主窗体背景图片为 new_back.png</span><br><span class="line"></span><br><span class="line">QWidget#MainWindow</span><br><span class="line">&#123;</span><br><span class="line">    image: url(:/new/prefix/resource/new_back.png);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
