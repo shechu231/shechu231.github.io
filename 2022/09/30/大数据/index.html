@@ -192,6 +192,9 @@
     sudo systemctl disable ssh
     说明：sudo是提升权限，systemctl是服务管理器，disable是systemctl
     的参数，表示禁止开机运行，ssh是要设置的服务名称。
+    
+    AuthorizationRootLogin yes
+    修改PermitRootLogin和PubkeyAuthentication两项(第一个是允许root登录，第二个是允许ssh公钥认证登录)
         
 man命令使用方法：
     man的级别
@@ -306,23 +309,12 @@ Linux上的kvm虚拟机安装方法：
         DEVICE=br0
         ONBOOT=yes
 </code></pre>
-<p>​<br>    乱码设置：<br>        Options-&gt;Session Options…-&gt;Appearance-&gt;SercureCRT的编码格式是“Default”改为“UTF-8”<br>    网卡配置：<br>        网关配置：/etc/resolv.conf<br>        cd /etc/sysconfig/network-scripts/ vi ifcfig-ens33进入<br>            #HWADDR = …..<br>            BOOTPROTO=static<br>            ONBOOT=yes<br>            IPADDR=192.168.27.6<br>            NETMASK=255.255.255.0<br>            GETEWAY=192.168.27.2<br>            DNS1=114.114.114.114<br>        service network restart 重启服务<br>        关闭防火墙：<br>            service iptables stop重新开机启动<br>            chkconfig iptables off开机不启动<br>            chkconfig或者systemctl list-unit-files列出服务清单<br>            systemctl stop firewalld.service 关闭防火墙systemctl disable firewalld.service永久关闭<br>            查看防火墙状态：systemctl status firewalld<br>        关闭selinux：<br>            cd /etc/selinux 然后 vi config 修改selinux = disable<br>            vi /etc/hosts 添加映射<br>        设置主机名：<br>            vi /etc/sysconfig/network<br>        查看硬件地址：<br>            虚拟机，net，高级<br>            cd /etc/udev/rules.d 删除70-persistent…<br>        windows配置主机映射：<br>            windwos-&gt;system32-&gt;drivers-&gt;etc-&gt;host</p>
-<pre><code>    用户不能使用sudo：vi /etc/sudoers           xxx ALL=(ALL) ALL (这里的xxx是你的用户名)
-安装jdk：
-    安装jdk方法:
-        /home/jdk1.8.0_11
-        /home/jdk1.8.0_11/jre
-        /home/jdk1.8.0_11/bin
-        /home/jdk1.8.0_11/lib;
-        /home/jdk1.8.0_11/jre/lib
-    安装tengine：
-        ./configure -prefix=/opt/sxt/nginx安装的目录
-        
-一个系统可以创建多个网卡：
+<p>​<br>​    乱码设置：<br>​        Options-&gt;Session Options…-&gt;Appearance-&gt;SercureCRT的编码格式是“Default”改为“UTF-8”<br>​    网卡配置：<br>​        网关配置：/etc/resolv.conf<br>​        cd /etc/sysconfig/network-scripts/ vi ifcfig-ens33进入<br>​            #HWADDR = …..<br>​            BOOTPROTO=static<br>​            ONBOOT=yes<br>​            IPADDR=192.168.27.6<br>​            NETMASK=255.255.255.0<br>​            GETEWAY=192.168.27.2<br>​            DNS1=114.114.114.114<br>​        service network restart 重启服务<br>​        关闭防火墙：<br>​            service iptables stop重新开机启动<br>​            chkconfig iptables off开机不启动<br>​            chkconfig或者systemctl list-unit-files列出服务清单<br>​            systemctl stop firewalld.service 关闭防火墙systemctl disable firewalld.service永久关闭<br>​            查看防火墙状态：systemctl status firewalld<br>​        关闭selinux：<br>​            cd /etc/selinux 然后 vi config 修改selinux = disable<br>​            vi /etc/hosts 添加映射<br>​        设置主机名：<br>​            vi /etc/sysconfig/network<br>​        查看硬件地址：<br>​            虚拟机，net，高级<br>​            cd /etc/udev/rules.d 删除70-persistent…<br>​        windows配置主机映射：<br>​            windwos-&gt;system32-&gt;drivers-&gt;etc-&gt;host<br>​<br>        用户不能使用sudo：vi /etc/sudoers           xxx ALL=(ALL) ALL (这里的xxx是你的用户名)<br>    安装jdk：<br>        安装jdk方法:<br>            /home/jdk1.8.0_11<br>            /home/jdk1.8.0_11/jre<br>            /home/jdk1.8.0_11/bin<br>            /home/jdk1.8.0_11/lib;<br>            /home/jdk1.8.0_11/jre/lib<br>        安装tengine：<br>            ./configure -prefix=/opt/sxt/nginx安装的目录</p>
+<pre><code>一个系统可以创建多个网卡：
     vim /etc/sysconfig/network-scripts/ifcfg-ens33或/etc/sysconfig/network-scripts/ifcfg-ens33:0
     改device和ipaddr
 </code></pre>
-<p>​<br>yum源配置:<br>​    先进入yum源配置目录<br>​    cd /etc/yum.repos.d<br>​    备份系统自带的yum源<br>​    mv CentOS-Base.repo CentOS-Base.repo.save<br>​    下载其他更快的yum源<br>​    中科大的yum源：<br>​    wget <a target="_blank" rel="noopener" href="http://centos.ustc.edu.cn/CentOS-Base.repo">http://centos.ustc.edu.cn/CentOS-Base.repo</a><br>​    163的yum源：<br>​    wget <a target="_blank" rel="noopener" href="http://mirrors.163.com/.help/CentOS-Base-163.repo">http://mirrors.163.com/.help/CentOS-Base-163.repo</a><br>​    sohu的yum源<br>​    wget <a target="_blank" rel="noopener" href="http://mirrors.sohu.com/help/CentOS-Base-sohu.repo">http://mirrors.sohu.com/help/CentOS-Base-sohu.repo</a><br>​    更新完yum源后，建议更新一下，使操作立即生效<br>​    yum makecache<br>​    CentOS 7<br>​    wget -O /etc/yum.repos.d/CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a><br>​    或者<br>​    curl -o /etc/yum.repos.d/CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a><br>​    curl -O 网址<br>​    3、之后运行yum makecache生成缓存</p>
+<p>yum源配置:<br>​    先进入yum源配置目录<br>​    cd /etc/yum.repos.d<br>​    备份系统自带的yum源<br>​    mv CentOS-Base.repo CentOS-Base.repo.save<br>​    下载其他更快的yum源<br>​    中科大的yum源：<br>​    wget <a target="_blank" rel="noopener" href="http://centos.ustc.edu.cn/CentOS-Base.repo">http://centos.ustc.edu.cn/CentOS-Base.repo</a><br>​    163的yum源：<br>​    wget <a target="_blank" rel="noopener" href="http://mirrors.163.com/.help/CentOS-Base-163.repo">http://mirrors.163.com/.help/CentOS-Base-163.repo</a><br>​    sohu的yum源<br>​    wget <a target="_blank" rel="noopener" href="http://mirrors.sohu.com/help/CentOS-Base-sohu.repo">http://mirrors.sohu.com/help/CentOS-Base-sohu.repo</a><br>​    更新完yum源后，建议更新一下，使操作立即生效<br>​    yum makecache<br>​    CentOS 7<br>​    wget -O /etc/yum.repos.d/CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a><br>​    或者<br>​    curl -o /etc/yum.repos.d/CentOS-Base.repo <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a><br>​    curl -O 网址<br>​    3、之后运行yum makecache生成缓存</p>
 <p>shell脚本编程开始：<br>    shell bash：<br>        解释器，启动器<br>        解释器：<br>            用户交互输入<br>            文本文件输入<br>    脚本本质：<br>        /bin/bash<br>        /usr/bin/python</p>
 <pre><code>重定向：
         ls -l /etc / 1&gt;ls.txt 2&gt;ls.txt  输出到文件，&gt;&gt;追加,&gt;&amp; 1或文件输出到屏幕
@@ -345,42 +337,16 @@ shell变量：
                 old=$IFS换行，空格，制表符
                 IFS=$&#39;\n&#39;全部替换
 </code></pre>
-<p>​<br>            后台运行：<br>                1. command &amp; ： 后台运行，你关掉终端会停止运行<br>                2. nohup command &amp; ： 后台运行，你关掉终端也会继续运行</p>
-<pre><code>            执行.sh文件：当前source *.sh直接执行(在当前bash环境下读取并执行FileName中的命令。)
-            bash FileName(在当前bash环境下读取并执行FileName中的命令)
-            ./FileName 打开一个子shell来读取并执行FileName中命令。
-        &amp; 将指令丢到后台中去执行
-        [ctrl]+z 將前台任务丟到后台中暂停
-        jobs 查看后台的工作状态
-        fg %jobnumber 将后台的任务拿到前台来处理
-        bg %jobnumber 将任务放到后台中去处理
-        kill 管理后台的任务
-        bash sh02.sh加上&amp;以后台方式启动,创建子进程，sleep(20)睡觉
-</code></pre>
-<p>​<br>​<br>    docker安装：<br>        卸载已经安装的软件<br>            sudo yum remove docker docker-client docker-client-latest docker-common docker-latestdocker-latest-logrotate docker-logrotatedocker-engine<br>            设置仓库：<br>                sudo yum install -y yum-utils device-mapper-persistent-data lvm2<br>            使用以下命令来设置稳定的仓库。<br>                sudo yum-config-manager –add-repo <a target="_blank" rel="noopener" href="https://download.docker.com/linux/centos/docker-ce.repo%E6%88%96https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo%E6%88%96http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo">https://download.docker.com/linux/centos/docker-ce.repo或https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo或http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</a><br>        安装 Docker Engine-Community<br>            sudo yum install docker-ce docker-ce-cli containerd.io<br>        要安装特定版本的 Docker Engine-Community，请在存储库中列出可用版本，然后选择并安装：<br>            1、列出并排序您存储库中可用的版本。此示例按版本号（从高到低）对结果进行排序。<br>            yum list docker-ce –showduplicates | sort -r<br>            2、通过其完整的软件包名称安装特定版本，该软件包名称是软件包名称（docker-ce）加上版本字符串（第二列），从第一个冒号（:）一直到第一个连字符，并用连字符（-）分隔。例如：docker-ce-18.09.1。<br>            sudo yum install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io<br>            3.启动 Docker。<br>            sudo systemctl start docker<br>            4.通过运行 hello-world 映像来验证是否正确安装了 Docker Engine-Community 。<br>            sudo docker run hello-world</p>
-<pre><code>    退出容器的 tty。
-        exit
-    现在，我们要去保存在Fedora实例里做的修改。要做到这个，我们首先需要知道实例的容器ID。而为了得到ID，我们又需要运行以下命令（LCTT 译注：在容器外执行该命令）。
-        docker ps -a
-    然后，我们会保存这些改变为一个新的镜像，请运行以下命令。
-        docker commit c16378f943fe fedora-httpd
-    这里，修改已经通过使用容器ID保存起来了，镜像名字叫fedora-httpd。为了确认新的镜像是否在运行，我们将运行以下命令。
-        docker images
-        
-    查询容器进程：docker ps -a 关闭:docker stop id 打开:docker start id
+<p>​<br>​            后台运行：<br>​                1. command &amp; ： 后台运行，你关掉终端会停止运行<br>​                2. nohup command &amp; ： 后台运行，你关掉终端也会继续运行<br>​<br>                执行.sh文件：当前source *.sh直接执行(在当前bash环境下读取并执行FileName中的命令。)<br>                bash FileName(在当前bash环境下读取并执行FileName中的命令)<br>                ./FileName 打开一个子shell来读取并执行FileName中命令。<br>            &amp; 将指令丢到后台中去执行<br>            [ctrl]+z 將前台任务丟到后台中暂停<br>            jobs 查看后台的工作状态<br>            fg %jobnumber 将后台的任务拿到前台来处理<br>            bg %jobnumber 将任务放到后台中去处理<br>            kill 管理后台的任务<br>            bash sh02.sh加上&amp;以后台方式启动,创建子进程，sleep(20)睡觉</p>
+<p>​<br>​<br>​    docker安装：<br>​        卸载已经安装的软件<br>​            sudo yum remove docker docker-client docker-client-latest docker-common docker-latestdocker-latest-logrotate docker-logrotatedocker-engine<br>​            设置仓库：<br>​                sudo yum install -y yum-utils device-mapper-persistent-data lvm2<br>​            使用以下命令来设置稳定的仓库。<br>​                sudo yum-config-manager –add-repo <a target="_blank" rel="noopener" href="https://download.docker.com/linux/centos/docker-ce.repo%E6%88%96https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo%E6%88%96http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo">https://download.docker.com/linux/centos/docker-ce.repo或https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo或http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</a><br>​        安装 Docker Engine-Community<br>​            sudo yum install docker-ce docker-ce-cli containerd.io<br>​        要安装特定版本的 Docker Engine-Community，请在存储库中列出可用版本，然后选择并安装：<br>​            1、列出并排序您存储库中可用的版本。此示例按版本号（从高到低）对结果进行排序。<br>​            yum list docker-ce –showduplicates | sort -r<br>​            2、通过其完整的软件包名称安装特定版本，该软件包名称是软件包名称（docker-ce）加上版本字符串（第二列），从第一个冒号（:）一直到第一个连字符，并用连字符（-）分隔。例如：docker-ce-18.09.1。<br>​            sudo yum install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io<br>​            3.启动 Docker。<br>​            sudo systemctl start docker<br>​            4.通过运行 hello-world 映像来验证是否正确安装了 Docker Engine-Community 。<br>​            sudo docker run hello-world<br>​<br>        退出容器的 tty。<br>            exit<br>        现在，我们要去保存在Fedora实例里做的修改。要做到这个，我们首先需要知道实例的容器ID。而为了得到ID，我们又需要运行以下命令（LCTT 译注：在容器外执行该命令）。<br>            docker ps -a<br>        然后，我们会保存这些改变为一个新的镜像，请运行以下命令。<br>            docker commit c16378f943fe fedora-httpd<br>        这里，修改已经通过使用容器ID保存起来了，镜像名字叫fedora-httpd。为了确认新的镜像是否在运行，我们将运行以下命令。<br>            docker images</p>
+<pre><code>    查询容器进程：docker ps -a 关闭:docker stop id 打开:docker start id
     删除容器：docker rm id
     删除镜像：docker rmi id
     启动镜像：docker run my/python:v1或者docker run -it my/python:v1 /bin/bash
     通过inspect查看一下网络信息：docker inspect web容器名#查看ip
 </code></pre>
-<p>​<br>        拉取镜像并运行：docker run -p 80 –name web -it centos /bin/bash<br>        -d :代表后台运行容器，返回容器ID<br>        –name: 自定义容器的名称，不加这命令docker会随便给一个名给你，所以建议打上这命令<br>        -p :代表映射的端口 本地端口:镜像的默认端口（注意，每个软件默认端口是不同的）<br>        -e: 配置mysql的root密码<br>        -i: 以交互模式运行容器，通常与 -t 同时使用；<br>        -t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；<br>        -P: 随机端口映射，容器内部端口随机映射到主机的高端口<br>        –volume , -v: 绑定一个卷<br>        获取nginx镜像：docker search nginx<br>            docker pull nginx:latest<br>        安装完成后，我们可以使用以下命令来运行 nginx 容器：<br>        docker run –name nginx-test -p 8080:80 -d nginx<br>        ctrl+p,ctrl+q退出容器而不停止容器运行，从docker回到Linux上</p>
-<pre><code>    把当前容器作为镜像提交本地仓库：
-        docker commit （containerid） （images）
-    登陆阿里云镜像仓库：docker login --username=用户名 registry.cn...#镜像名字
-    推送到远程仓库：docker push ....
-    然后阿里云控制台查看。
-    
-    搭建镜像仓库：
+<p>​<br>​        拉取镜像并运行：docker run -p 80 –name web -it centos /bin/bash<br>​        -d :代表后台运行容器，返回容器ID<br>​        –name: 自定义容器的名称，不加这命令docker会随便给一个名给你，所以建议打上这命令<br>​        -p :代表映射的端口 本地端口:镜像的默认端口（注意，每个软件默认端口是不同的）<br>​        -e: 配置mysql的root密码<br>​        -i: 以交互模式运行容器，通常与 -t 同时使用；<br>​        -t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；<br>​        -P: 随机端口映射，容器内部端口随机映射到主机的高端口<br>​        –volume , -v: 绑定一个卷<br>​        获取nginx镜像：docker search nginx<br>​            docker pull nginx:latest<br>​        安装完成后，我们可以使用以下命令来运行 nginx 容器：<br>​        docker run –name nginx-test -p 8080:80 -d nginx<br>​        ctrl+p,ctrl+q退出容器而不停止容器运行，从docker回到Linux上<br>​<br>        把当前容器作为镜像提交本地仓库：<br>            docker commit （containerid） （images）<br>        登陆阿里云镜像仓库：docker login –username=用户名 registry.cn…#镜像名字<br>        推送到远程仓库：docker push ….<br>        然后阿里云控制台查看。</p>
+<pre><code>    搭建镜像仓库：
         首先，下载Registry镜像并启动：
             docker pull registry
         然后，运行一个Registry镜像仓库的容器实例：
@@ -625,32 +591,8 @@ xlwt用法：
             sheet2.write(i+1,0,column0[i],set_stlye(&#39;Times New Roman&#39;,220,True))
             f.save(&#39;data.xls&#39;)
 </code></pre>
-<p>​<br>    pandas用法:<br>        Series是一种类似于一维数组的对象，它由一组数据（各种NumPy数据类型）以及一组 与之相关的数据标签（即索引）组成。仅由一组数据即可产生最简单的Series:<br>        导入包：<br>            from pandas import Series, DataFrame<br>            import pandas as pd<br>        Series数据结构：<br>            用法：obj = Series([4, 7, -5, 3])<br>            标签 数组<br>            0    4<br>            1    7<br>            2   -5<br>            3    3<br>            obj.values查看值<br>            obj.index查看索引<br>            另一种方式：<br>                obj2 = Series([4, 7,-5,3], index=[‘d’,’b’,’a’,’c’])<br>                obj2.index#打印结果：Index([u’d’, u’b’, u’a’, u’c’], dtype=’object’)<br>            修改索引：obj.index = [‘Bob’, ‘Steve’, ‘Jeff’, ‘Ryan’]<br>            可做操作：<br>                切片：<br>                    obj2[[‘c’,’a’,’d’]]#显示值<br>                    obj2[obj2 &gt; 0]<br>                obj2*2<br>                判断是否索引有值：’b’ in obj2<br>                obj3 = Series(字典)<br>                obj4 = Series(字典,index=索引)<br>                pd.isnull(obj4) # Series也有类似的实例方法:#obj4.isnull()或者pd.notnull(obj4) 返回true和false<br>                obj4.index.name = ‘state’#索引名字   obj4.name = ‘population’#整个列表名字<br>            重新命名索引：<br>                obj2 = obj.reindex([‘a’, ‘b’, ‘c’, ‘d’, ‘e’])或obj.reindex([‘a’, ‘b’, ‘c’, ‘d’, ‘e’], fill_value=0)<br>            填充：<br>                obj3.reindex(range(6), method=’ffill’)#bfill向后填充</p>
-<pre><code>    DataFrame数据结构：
-        具体形式：
-            data=&#123;&#39;state&#39;:列表,&#39;year&#39;:列表,&#39;pop&#39;:列表&#125;
-            frame = DataFrame(data)
-            基础属性：
-                values   元素
-                index    索引
-                columns    列名
-                dtypes    类型
-                size    元素个数
-                ndim    维度数
-                shape    数据形状
-            DataFrame(data, columns=[&#39;year&#39;, &#39;state&#39;, &#39;pop&#39;])#按顺序排列
-            通过类似字典标记的方式或属性的方式，可以将DataFrame的列获取为一个Series:
-                frame2[&#39;state&#39;]
-                frame2.ix[&#39;three&#39;]#访问行
-            如果赋值的是一个Series，就会精确匹配DataFrame的索引，所有的空位都将被填上缺失值：
-                val = Series([-1.2, -1.5, -1.7],index=[ &#39;two&#39;, &#39;four&#39;, &#39;five&#39;])
-                frame2[&#39;debt&#39;] = val
-            删除列和创造列：
-                frame2[&#39;eastern&#39;] = frame2.state == &#39;Ohio&#39;
-                del frame2[&#39;eastern&#39;]
-            每个索引都有一些方法和属性，它们可用于设置逻辑并回答有关该索引所包含的数据的 常见问题：
-            
-            DataFrame的reindex用法：
+<p>​<br>​    pandas用法:<br>​        Series是一种类似于一维数组的对象，它由一组数据（各种NumPy数据类型）以及一组 与之相关的数据标签（即索引）组成。仅由一组数据即可产生最简单的Series:<br>​        导入包：<br>​            from pandas import Series, DataFrame<br>​            import pandas as pd<br>​        Series数据结构：<br>​            用法：obj = Series([4, 7, -5, 3])<br>​            标签 数组<br>​            0    4<br>​            1    7<br>​            2   -5<br>​            3    3<br>​            obj.values查看值<br>​            obj.index查看索引<br>​            另一种方式：<br>​                obj2 = Series([4, 7,-5,3], index=[‘d’,’b’,’a’,’c’])<br>​                obj2.index#打印结果：Index([u’d’, u’b’, u’a’, u’c’], dtype=’object’)<br>​            修改索引：obj.index = [‘Bob’, ‘Steve’, ‘Jeff’, ‘Ryan’]<br>​            可做操作：<br>​                切片：<br>​                    obj2[[‘c’,’a’,’d’]]#显示值<br>​                    obj2[obj2 &gt; 0]<br>​                obj2*2<br>​                判断是否索引有值：’b’ in obj2<br>​                obj3 = Series(字典)<br>​                obj4 = Series(字典,index=索引)<br>​                pd.isnull(obj4) # Series也有类似的实例方法:#obj4.isnull()或者pd.notnull(obj4) 返回true和false<br>​                obj4.index.name = ‘state’#索引名字   obj4.name = ‘population’#整个列表名字<br>​            重新命名索引：<br>​                obj2 = obj.reindex([‘a’, ‘b’, ‘c’, ‘d’, ‘e’])或obj.reindex([‘a’, ‘b’, ‘c’, ‘d’, ‘e’], fill_value=0)<br>​            填充：<br>​                obj3.reindex(range(6), method=’ffill’)#bfill向后填充<br>​<br>        DataFrame数据结构：<br>            具体形式：<br>                data={‘state’:列表,’year’:列表,’pop’:列表}<br>                frame = DataFrame(data)<br>                基础属性：<br>                    values   元素<br>                    index    索引<br>                    columns    列名<br>                    dtypes    类型<br>                    size    元素个数<br>                    ndim    维度数<br>                    shape    数据形状<br>                DataFrame(data, columns=[‘year’, ‘state’, ‘pop’])#按顺序排列<br>                通过类似字典标记的方式或属性的方式，可以将DataFrame的列获取为一个Series:<br>                    frame2[‘state’]<br>                    frame2.ix[‘three’]#访问行<br>                如果赋值的是一个Series，就会精确匹配DataFrame的索引，所有的空位都将被填上缺失值：<br>                    val = Series([-1.2, -1.5, -1.7],index=[ ‘two’, ‘four’, ‘five’])<br>                    frame2[‘debt’] = val<br>                删除列和创造列：<br>                    frame2[‘eastern’] = frame2.state == ‘Ohio’<br>                    del frame2[‘eastern’]<br>                每个索引都有一些方法和属性，它们可用于设置逻辑并回答有关该索引所包含的数据的 常见问题：</p>
+<pre><code>            DataFrame的reindex用法：
                 frame = DataFrame(np.arange(9).reshape((3, 3))#二维数组, index=[&#39;a&#39;, &#39;c&#39;, &#39;d&#39;]#行,columns=[ &#39;Ohio&#39;, &#39;Texas&#39;, &#39;California&#39;]#列)
                 frame2 = frame.reindex([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;])
                 frame.reindex(columns=列表)
